@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Fixit.MailService\Fixit.MailService.csproj" />
     <ProjectReference Include="..\Fixit.Shared\Fixit.Shared.csproj" />
+    <ProjectReference Include="..\Fixit.SMSService\Fixit.SMSService.csproj" />
   </ItemGroup>
 
 

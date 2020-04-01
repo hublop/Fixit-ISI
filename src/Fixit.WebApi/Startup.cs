@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Fixit.MailService;
+using Fixit.SmsService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,7 @@ namespace Fixit.WebApi
         {
             services.AddControllers();
             services.AddMailService(Configuration);
+            services.AddSmsService(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

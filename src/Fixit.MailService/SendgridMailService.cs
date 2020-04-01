@@ -11,9 +11,9 @@ namespace Fixit.MailService
         private readonly SendGridClient _client;
         private readonly string _defaultSenderEmail;
 
-        public SendgridMailService(IOptions<SendgridMailServiceOptions> optionsProvidder)
+        public SendgridMailService(IOptions<SendgridMailServiceOptions> optionsAccessor)
         {
-            var options = optionsProvidder?.Value ?? throw new ArgumentNullException();
+            var options = optionsAccessor?.Value ?? throw new ArgumentNullException();
             _client = new SendGridClient(options.ApiKey);
             _defaultSenderEmail = options.DefaultSenderEmail;
         }
