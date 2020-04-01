@@ -2,7 +2,7 @@
 
 namespace Fixit.Shared.CQRS
 {
-    public interface ICommandHandler<in TRequest> : IRequestHandler<TRequest, Unit>
+    public interface ICommandHandler<in TRequest> : IRequestHandler<TRequest>
         where TRequest : ICommand
     {
 

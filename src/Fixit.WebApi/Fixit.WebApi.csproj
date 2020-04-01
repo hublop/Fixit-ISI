@@ -4,5 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Fixit.MailService\Fixit.MailService.csproj" />
+    <ProjectReference Include="..\Fixit.Shared\Fixit.Shared.csproj" />
+  </ItemGroup>
+
 
 </Project>
