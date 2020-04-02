@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fixit.WebApi", "Fixit.WebApi\Fixit.WebApi.csproj", "{375FAA74-55AB-4EE1-B6B4-CCB4C7EB80A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixit.Shared", "Fixit.Shared\Fixit.Shared.csproj", "{789D5C3C-243B-44B6-93AD-C0A4F0C365D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fixit.Shared", "Fixit.Shared\Fixit.Shared.csproj", "{789D5C3C-243B-44B6-93AD-C0A4F0C365D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixit.MailService", "Fixit.MailService\Fixit.MailService.csproj", "{1B1F20C4-10D6-44DB-B582-A97FF0A6F574}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fixit.MailService", "Fixit.MailService\Fixit.MailService.csproj", "{1B1F20C4-10D6-44DB-B582-A97FF0A6F574}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixit.SMSService", "Fixit.SMSService\Fixit.SMSService.csproj", "{33D21EB7-1BE9-46F8-866E-FA2766A691CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fixit.SMSService", "Fixit.SMSService\Fixit.SMSService.csproj", "{33D21EB7-1BE9-46F8-866E-FA2766A691CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixit.MediaService", "Fixit.MediaService\Fixit.MediaService.csproj", "{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{33D21EB7-1BE9-46F8-866E-FA2766A691CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D21EB7-1BE9-46F8-866E-FA2766A691CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D21EB7-1BE9-46F8-866E-FA2766A691CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

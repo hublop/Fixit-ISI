@@ -13,7 +13,7 @@ namespace Fixit.SmsService
 
         public TwilioSmsService(IOptions<TwilioSmsServiceOptions> optionsAccessor)
         {
-            var options = optionsAccessor?.Value ?? throw new ArgumentNullException();
+            var options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
 
             _senderNumber = options.SenderPhoneNumber;
             _isSmsEnabled = options.SmsEnabled;

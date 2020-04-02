@@ -13,7 +13,7 @@ namespace Fixit.MailService
 
         public SendgridMailService(IOptions<SendgridMailServiceOptions> optionsAccessor)
         {
-            var options = optionsAccessor?.Value ?? throw new ArgumentNullException();
+            var options = optionsAccessor?.Value ?? throw new ArgumentNullException(nameof(optionsAccessor));
             _client = new SendGridClient(options.ApiKey);
             _defaultSenderEmail = options.DefaultSenderEmail;
         }
