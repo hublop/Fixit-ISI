@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fixit.MailService", "Fixit.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fixit.SMSService", "Fixit.SMSService\Fixit.SMSService.csproj", "{33D21EB7-1BE9-46F8-866E-FA2766A691CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixit.MediaService", "Fixit.MediaService\Fixit.MediaService.csproj", "{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fixit.MediaService", "Fixit.MediaService\Fixit.MediaService.csproj", "{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixit.EventBus", "Fixit.EventBus\Fixit.EventBus.csproj", "{D40BF2CB-D38D-4957-A88B-1A9F57F68A5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE08AEFE-9459-4B2D-8B8A-FB9622A9FAEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D40BF2CB-D38D-4957-A88B-1A9F57F68A5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D40BF2CB-D38D-4957-A88B-1A9F57F68A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D40BF2CB-D38D-4957-A88B-1A9F57F68A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D40BF2CB-D38D-4957-A88B-1A9F57F68A5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

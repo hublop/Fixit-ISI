@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fixit.EventBus\Fixit.EventBus.csproj" />
     <ProjectReference Include="..\Fixit.MailService\Fixit.MailService.csproj" />
     <ProjectReference Include="..\Fixit.MediaService\Fixit.MediaService.csproj" />
     <ProjectReference Include="..\Fixit.Shared\Fixit.Shared.csproj" />
