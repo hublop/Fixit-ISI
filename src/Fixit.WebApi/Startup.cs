@@ -1,18 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Fixit.MailService;
-using Fixit.MediaService;
-using Fixit.SmsService;
+using Fixit.Application;
+using Fixit.EventBus.RabbitMQ;
+using Fixit.Infrastructure;
+using Fixit.Persistance;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Fixit.WebApi
 {
@@ -28,10 +22,21 @@ namespace Fixit.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddMailService(Configuration);
-            services.AddSmsService(Configuration);
-            services.AddMediaService(Configuration);
+            services.AddInfrastructure(Configuration);
+            services.AddPersistence(Configuration);
+            services.AddApplication(Configuration);
+
+            services.RegisterEventBus(Configuration);
+
+            //services.AddTransient<OrderStartedIntegrationEventHandler>();
+            
         }
+
+        //private void ConfigureEventBus(IApplicationBuilder app)
+        //{
+        //    var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+        //    eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
+        //}
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -50,6 +55,9 @@ namespace Fixit.WebApi
             {
                 endpoints.MapControllers();
             });
+
+            //var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            //eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
         }
     }
 }

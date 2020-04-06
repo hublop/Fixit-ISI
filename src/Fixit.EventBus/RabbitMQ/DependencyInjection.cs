@@ -13,7 +13,7 @@ namespace Fixit.EventBus.RabbitMQ
         public static IServiceCollection RegisterEventBus(this IServiceCollection services, IConfiguration config)
         {
             services.Configure<EventBusOptions>(options =>
-                config.GetSection(Fixit.Shared.Constants.ConfigSections.RabbitMQEventBus).Bind(options));
+                config.GetSection(Constants.ConfigSections.RabbitMQEventBus).Bind(options));
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
             services.AddSingleton<IRabbitMQPersistentConnection>(provider =>

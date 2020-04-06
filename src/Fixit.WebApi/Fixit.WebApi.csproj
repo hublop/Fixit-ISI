@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,10 +6,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fixit.EventBus\Fixit.EventBus.csproj" />
-    <ProjectReference Include="..\Fixit.MailService\Fixit.MailService.csproj" />
-    <ProjectReference Include="..\Fixit.MediaService\Fixit.MediaService.csproj" />
+    <ProjectReference Include="..\Fixit.Infrastructure\Fixit.Infrastructure.csproj" />
+    <ProjectReference Include="..\Fixit.Persistance\Fixit.Persistance.csproj" />
     <ProjectReference Include="..\Fixit.Shared\Fixit.Shared.csproj" />
-    <ProjectReference Include="..\Fixit.SMSService\Fixit.SMSService.csproj" />
   </ItemGroup>
 
 
