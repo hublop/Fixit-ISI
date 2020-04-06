@@ -2,6 +2,7 @@ using Fixit.Application;
 using Fixit.EventBus.RabbitMQ;
 using Fixit.Infrastructure;
 using Fixit.Persistance;
+using Fixit.WebApi.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -45,6 +46,7 @@ namespace Fixit.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
 
             app.UseRouting();
