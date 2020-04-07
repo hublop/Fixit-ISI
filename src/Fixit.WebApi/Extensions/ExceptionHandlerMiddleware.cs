@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Fixit.Application.Common.Exceptions;
+using Fixit.Domain.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -45,8 +46,13 @@ namespace Fixit.WebApi.Extensions
                     code = HttpStatusCode.BadRequest;
                     result = badRequestException.Message;
                     break;
-                case NotFoundException _:
+                case EntityNotFoundException notFoundException:
                     code = HttpStatusCode.NotFound;
+                    result = $"{notFoundException.Message}. {notFoundException.Details}";
+                    break;
+                case DomainException domainException:
+                    code = HttpStatusCode.BadRequest;
+                    result = $"{domainException.Message}. {domainException.Details}";
                     break;
             }
 

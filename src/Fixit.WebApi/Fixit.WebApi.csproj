@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Fixit.EventBus\Fixit.EventBus.csproj" />
     <ProjectReference Include="..\Fixit.Infrastructure\Fixit.Infrastructure.csproj" />
     <ProjectReference Include="..\Fixit.Persistance\Fixit.Persistance.csproj" />

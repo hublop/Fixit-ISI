@@ -1,8 +1,11 @@
 using Fixit.Application;
+using Fixit.Application.Common.Interfaces;
+using Fixit.Domain.Common;
 using Fixit.EventBus.RabbitMQ;
 using Fixit.Infrastructure;
 using Fixit.Persistance;
 using Fixit.WebApi.Extensions;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,8 +32,10 @@ namespace Fixit.WebApi
 
             services.RegisterEventBus(Configuration);
 
+            services.AddMvc()
+                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<IFixitDbContext>(); });
             //services.AddTransient<OrderStartedIntegrationEventHandler>();
-            
+
         }
 
         //private void ConfigureEventBus(IApplicationBuilder app)
