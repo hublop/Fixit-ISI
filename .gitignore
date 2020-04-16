@@ -348,3 +348,13 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+
+### Symfony 
+symfony/isi-payment/.env.local
+symfony/isi-payment/.env.local.php
+symfony/isi-payment/.env.*.local
+symfony/isi-payment/config/secrets/prod/prod.decrypt.private.php
+symfony/isi-payment/public/bundles/
+symfony/isi-payment/var/
+symfony/isi-payment/vendor/
