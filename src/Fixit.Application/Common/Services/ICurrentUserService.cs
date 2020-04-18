@@ -1,4 +1,4 @@
-﻿namespace Fixit.Application.Common.Interfaces
+﻿namespace Fixit.Application.Common.Services
 {
     public class ICurrentUserService
     {

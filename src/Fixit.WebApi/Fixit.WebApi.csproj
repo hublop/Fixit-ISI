@@ -16,5 +16,9 @@
     <ProjectReference Include="..\Fixit.Shared\Fixit.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
 
 </Project>

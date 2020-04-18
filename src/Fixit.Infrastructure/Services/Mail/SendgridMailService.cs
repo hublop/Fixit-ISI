@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Fixit.Application.Common.Services;
+using Fixit.Application.Common.Services.Mail;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;

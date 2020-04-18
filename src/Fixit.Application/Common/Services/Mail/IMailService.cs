@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Fixit.Application.Common.Services
+namespace Fixit.Application.Common.Services.Mail
 {
     public interface IMailService
     {

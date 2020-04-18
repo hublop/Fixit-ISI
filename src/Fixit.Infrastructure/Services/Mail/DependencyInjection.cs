@@ -1,4 +1,5 @@
 ﻿using Fixit.Application.Common.Services;
+using Fixit.Application.Common.Services.Mail;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

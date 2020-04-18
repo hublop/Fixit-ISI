@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using Fixit.Shared.CQRS;
 using Fixit.Shared.Pagination;
 using MediatR;
@@ -12,9 +13,15 @@ namespace Fixit.WebApi.Controllers
     [Produces("application/json")]
     public abstract class BaseController : ControllerBase
     {
-        private IMediator _mediator;
+        protected IMediator Mediator;
+        protected IMapper Mapper;
 
-        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+
+        public BaseController(IMediator mediator, IMapper mapper)
+        {
+            Mediator = mediator;
+            Mapper = mapper;
+        }
 
         protected async Task<IActionResult> HandleCommandWithLocationResultAsync(ICommand<int> command,
             string accessRouteName)
