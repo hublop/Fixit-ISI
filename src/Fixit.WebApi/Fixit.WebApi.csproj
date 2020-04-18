@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -13,6 +14,10 @@
     <ProjectReference Include="..\Fixit.Infrastructure\Fixit.Infrastructure.csproj" />
     <ProjectReference Include="..\Fixit.Persistance\Fixit.Persistance.csproj" />
     <ProjectReference Include="..\Fixit.Shared\Fixit.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\" />
   </ItemGroup>
 
 

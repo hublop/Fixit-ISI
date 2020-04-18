@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Fixit.Application.Categories.Commands.AddCategory;
 using Fixit.Application.Categories.Commands.AddSubcategory;
 using Fixit.Application.Categories.Commands.RemoveCategory;
 using Fixit.Application.Categories.Queries.GetCategories;
 using Fixit.Application.Categories.Queries.GetCategory;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,6 +58,10 @@ namespace Fixit.WebApi.Controllers
         public async Task<IActionResult> GetSubcategoryAsync([FromRoute] int categoryId, [FromRoute] int id)
         {
             throw new NotImplementedException();
+        }
+
+        public CategoriesController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+        {
         }
     }
 }
