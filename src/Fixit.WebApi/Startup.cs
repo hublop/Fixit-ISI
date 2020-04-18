@@ -36,6 +36,16 @@ namespace Fixit.WebApi
                 .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<IFixitDbContext>(); });
             //services.AddTransient<OrderStartedIntegrationEventHandler>();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "App name",
+                    Description = "Description"
+                });
+            });
+
         }
 
         //private void ConfigureEventBus(IApplicationBuilder app)
@@ -61,6 +71,12 @@ namespace Fixit.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
             //var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
