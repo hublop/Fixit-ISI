@@ -64,5 +64,4 @@ class PaymentType extends AbstractType
     {
         return ['IP'];
     }
-
 }
