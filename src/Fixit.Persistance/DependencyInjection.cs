@@ -1,4 +1,6 @@
 ﻿using Fixit.Application.Common.Interfaces;
+using Fixit.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,10 @@ namespace Fixit.Persistance
                 {
                     options.UseSqlServer(configuration[Constants.ConfigKey.DbConntectionSource]);
                 });
+
+            services.AddIdentity<User, UserRole>()
+                .AddEntityFrameworkStores<FixitDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddScoped<IFixitDbContext>(provider => provider.GetService<FixitDbContext>());
 
