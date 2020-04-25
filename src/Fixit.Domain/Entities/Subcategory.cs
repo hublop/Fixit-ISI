@@ -1,5 +1,5 @@
 ﻿using System;
-using Fixit.Domain.Common;
+using System.Collections.Generic;
 
 namespace Fixit.Domain.Entities
 {
@@ -18,5 +18,7 @@ namespace Fixit.Domain.Entities
         public Category Category { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }
