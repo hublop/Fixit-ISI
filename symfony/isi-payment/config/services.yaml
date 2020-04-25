@@ -11,7 +11,7 @@ parameters:
         privateKey: '%env(string:PAYU_PRIVATE_KEY)%'
         oauthClientId: '%env(int:PAYU_CLIENT_ID)%'
         oauthClientSecret: '%env(string:PAYU_CLIENT_SECRET)%'
-        url: "http://server264262.nazwa.pl:8080/payment"
+        url: "http://server-test.nazwa.pl:8080/payment"
         notifyUrl: "http://server264262.nazwa.pl:8080/payment/status"
         orderDescription: "Fix.IT subscription"
         orderProduct: "Fix.IT subscription 1 month"
