@@ -15,13 +15,13 @@ namespace Fixit.Persistance.Configurations
             builder.HasOne(x => x.Image)
                 .WithMany(x => x.OrderImages)
                 .HasForeignKey(x => x.ImageId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict); ;
 
 
             builder.HasOne(x => x.Order)
                 .WithMany(x => x.OrderImages)
                 .HasForeignKey(x => x.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -10,8 +10,7 @@ namespace Fixit.Persistance.Configurations
         {
             builder.HasMany(x => x.Orders)
                 .WithOne(x => x.Customer)
-                .HasForeignKey(x => x.CustomerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(x => x.CustomerId);
         }
     }
 }

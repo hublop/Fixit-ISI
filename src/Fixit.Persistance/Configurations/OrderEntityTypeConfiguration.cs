@@ -12,23 +12,19 @@ namespace Fixit.Persistance.Configurations
 
             builder.HasMany(x => x.OrderImages)
                 .WithOne(x => x.Order)
-                .HasForeignKey(x => x.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(x => x.OrderId);
 
             builder.HasMany(x => x.OrderOffers)
                 .WithOne(x => x.Order)
-                .HasForeignKey(x => x.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(x => x.OrderId);
 
             builder.HasOne(x => x.Subcategory)
                 .WithMany(x => x.Orders)
-                .HasForeignKey(x => x.SubcategoryId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(x => x.SubcategoryId);
 
             builder.HasOne(x => x.Customer)
                 .WithMany(x => x.Orders)
-                .HasForeignKey(x => x.CustomerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(x => x.CustomerId);
         }
     }
 }

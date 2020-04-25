@@ -59,6 +59,8 @@ namespace Fixit.Persistance
 
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(FixitDbContext).Assembly);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

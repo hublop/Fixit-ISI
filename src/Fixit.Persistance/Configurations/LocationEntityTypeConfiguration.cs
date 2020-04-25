@@ -19,13 +19,11 @@ namespace Fixit.Persistance.Configurations
 
             builder.HasMany(x => x.Contractors)
                 .WithOne(x => x.Location)
-                .HasForeignKey(x => x.LocationId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(x => x.LocationId);
 
             builder.HasMany(x => x.Orders)
                 .WithOne(x => x.Location)
-                .HasForeignKey(x => x.LocationId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(x => x.LocationId);
         }
     }
 }
