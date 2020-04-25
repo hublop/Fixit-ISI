@@ -9,6 +9,15 @@ namespace Fixit.Application.Common.Interfaces
     {
         DbSet<Category> Categories { get; set; }
         DbSet<Subcategory> Subcategories { get; set; }
+        DbSet<Contractor> Contractors { get; set; }
+        DbSet<Customer> Customers { get; set; }
+        DbSet<RepairService> RepairServices { get; set; }
+        DbSet<Image> Images { get; set; }
+        DbSet<Location> Locations { get; set; }
+        DbSet<Opinion> Opinions { get; set; }
+        DbSet<Order> Orders { get; set; }
+        DbSet<OrderImage> OrderImages { get; set; }
+        DbSet<OrderOffer> OrderOffers { get; set; }
 
         Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
     }
