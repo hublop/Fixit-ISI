@@ -20,12 +20,10 @@ abstract class AbstractType
                 json_decode($request->getContent(), true) ?? []
             );
             $this->setParams($params);
+            $this->setAdditionalParams($request);
         }
     }
-    /**
-     * @param array $params
-     * @return void
-     */
+
     public function setParams(array $params): void
     {
         foreach ($params as $key => $value) {
@@ -34,7 +32,17 @@ abstract class AbstractType
                 $this->{$setter}($this->prepareValue($value));
             }
         }
+
     }
+
+    private function setAdditionalParams(Request $request): void
+    {
+        foreach ($this->getAdditionalParams() as $key) {
+            $setter = 'set' . ucfirst($key);
+            $this->{$setter}($request);
+        }
+    }
+
     private function prepareValue($value)
     {
         if (is_string($value)) {
@@ -48,5 +56,10 @@ abstract class AbstractType
             return $result;
         }
         return $value;
+    }
+
+    protected function getAdditionalParams(): array
+    {
+        return [];
     }
 }

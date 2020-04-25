@@ -115,9 +115,42 @@ class Order implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id' => (string) $this->id,
             'status' => $this->status->getValue(),
-            'subscription' => $this->subscription->id()
+            'subscription' => $this->subscription->jsonSerialize()
         ];
     }
+
+    /**
+     * @return Subscription
+     */
+    public function getSubscription(): Subscription
+    {
+        return $this->subscription;
+    }
+
+    /**
+     * @return OrderValue
+     */
+    public function getOrderValue(): OrderValue
+    {
+        return $this->orderValue;
+    }
+
+    /**
+     * @return OrderId
+     */
+    public function getId(): OrderId
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return UserId
+     */
+    public function getUserId(): UserId
+    {
+        return $this->userId;
+    }
+
 }

@@ -25,8 +25,14 @@ final class Success extends Result
      */
     public function jsonSerialize()
     {
-        return [
+        $returnValue =  [
             'success' => true
         ];
+        if (count($this->events) == 1) {
+            /** @var DomainEvent $event */
+            $event = reset($this->events);
+            $returnValue = array_merge($returnValue, $event->jsonSerialize());
+        }
+        return $returnValue;
     }
 }

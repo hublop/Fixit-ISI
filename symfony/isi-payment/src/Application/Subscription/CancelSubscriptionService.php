@@ -4,9 +4,8 @@ namespace App\Application\Subscription;
 use App\Common\Result;
 use App\Common\UUID;
 use App\Domain\Subscription\Subscription;
-use App\Infrastructure\SubscriptionRepository;
+use App\Infrastructure\Doctrine\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
 
 final class CancelSubscriptionService
 {

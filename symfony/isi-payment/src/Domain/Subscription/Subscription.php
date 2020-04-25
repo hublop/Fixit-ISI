@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package App\Domain\Subscription
  * @ORM\Entity(repositoryClass="App\Infrastructure\SubscriptionRepository")
  */
-final class Subscription implements \JsonSerializable
+class Subscription implements \JsonSerializable
 {
     /**
      * @var SubscriptionId
@@ -97,7 +97,15 @@ final class Subscription implements \JsonSerializable
         return [
             'id' => (string) $this->id,
             'status' => $this->status->getValue(),
-            'email' => (string)$this->email
+            'email' => (string) $this->email
         ];
+    }
+
+    /**
+     * @return Email
+     */
+    public function getEmail(): Email
+    {
+        return $this->email;
     }
 }

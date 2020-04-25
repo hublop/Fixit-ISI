@@ -4,13 +4,25 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    payu_config:
+        env: 'sandbox'
+        posId: '385384'
+        shopName: "Fix.IT"
+        privateKey: '%env(string:PAYU_PRIVATE_KEY)%'
+        oauthClientId: '%env(int:PAYU_CLIENT_ID)%'
+        oauthClientSecret: '%env(string:PAYU_CLIENT_SECRET)%'
+        url: "http://server264262.nazwa.pl:8080/payment"
+        notifyUrl: "http://server264262.nazwa.pl:8080/payment/status"
+        orderDescription: "Fix.IT subscription"
+        orderProduct: "Fix.IT subscription 1 month"
 
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-
+        bind:
+            $payuConfig: '%payu_config%'
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -22,6 +34,8 @@ services:
     App\Action\:
         resource: '../src/Action'
         tags: ['controller.service_arguments']
+    App\Application\Order\OrderFacade: ~
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

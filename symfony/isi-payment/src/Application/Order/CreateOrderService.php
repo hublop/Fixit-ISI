@@ -9,13 +9,13 @@ use App\Domain\Order\OrderValue;
 use App\Domain\Order\Status;
 use App\Domain\Order\UserId;
 use App\Domain\Subscription\Subscription;
-use App\Infrastructure\OrderRepository;
+use App\Infrastructure\Doctrine\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CreateOrderService
 {
     /**
-     * @var OrderRepository
+     * @var \App\Infrastructure\Doctrine\OrderRepository
      */
     private OrderRepository $orderRepository;
     /**

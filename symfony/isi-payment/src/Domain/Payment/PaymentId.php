@@ -1,16 +1,20 @@
 <?php
+/**
+ * @category    symfony
+ * @date        25/04/2020
+ * @author      Michał Bolka <mbolka@divante.co>
+ * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
+ */
 
-namespace App\Domain\Order;
+namespace App\Domain\Payment;
 
 use App\Common\UUID;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class OrderId
- * @package App\Domain\Order
- * @ORM\Embeddable
- */
-class OrderId
+* @ORM\Embeddable()
+*/
+class PaymentId
 {
     /**
      * @ORM\Embedded(class="App\Common\UUID", columnPrefix=false)

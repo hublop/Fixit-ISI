@@ -1,0 +1,22 @@
+<html>
+<head></head>
+<body>
+<form action="/payment/process" method="post">
+    <input name="orderId" type="hidden" value="09d39bd1-ce4f-48d7-9c80-c9269cd38b7f">
+    <button id="pay-button">Pay now</button>
+</form>
+<script
+        src="https://secure.payu.com/front/widget/js/payu-bootstrap.js"
+        pay-button="#pay-button"
+        merchant-pos-id="145227"
+        shop-name="Nazwa sklepu"
+        total-amount="9.99"
+        currency-code="PLN"
+        customer-language="pl"
+        store-card="true"
+        recurring-payment="true"
+        customer-email="email@exampledomain.com"
+        sig="4752ce2b163684a9c27cc0923ad46068c04da5d34329f5669ce73dcf96394558">
+</script>
+</body>
+</html>
