@@ -6,13 +6,13 @@ use App\Common\Result;
 use App\Common\UUID;
 use App\Domain\Subscription\Status;
 use App\Domain\Subscription\Subscription;
-use App\Infrastructure\SubscriptionRepository;
+use App\Infrastructure\Doctrine\SubscriptionRepository;
 
 final class SubscriptionFacade
 {
     private CreateSubscriptionService $createSubscriptionService;
     /**
-     * @var SubscriptionRepository
+     * @var \App\Infrastructure\Doctrine\SubscriptionRepository
      */
     private SubscriptionRepository $subscriptionRepository;
     /**

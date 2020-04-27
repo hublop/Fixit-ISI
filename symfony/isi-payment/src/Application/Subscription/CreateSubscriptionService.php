@@ -5,13 +5,13 @@ namespace App\Application\Subscription;
 use App\Common\Email;
 use App\Domain\Subscription\Status;
 use App\Domain\Subscription\Subscription;
-use App\Infrastructure\SubscriptionRepository;
+use App\Infrastructure\Doctrine\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CreateSubscriptionService
 {
     /**
-     * @var SubscriptionRepository
+     * @var \App\Infrastructure\Doctrine\SubscriptionRepository
      */
     private SubscriptionRepository $repository;
     /**

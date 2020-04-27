@@ -2,6 +2,7 @@
 
 namespace App\Action\Order\Type;
 
+use App\Common\CurrencyCode;
 use App\Common\Email;
 use App\Common\ExternalUUID;
 use App\Common\Type\AbstractType;
@@ -67,12 +68,12 @@ class CreateOrderType extends AbstractType
      * @param int $totalAmount
      * @return CreateOrderType
      */
-    public function setTotalAmount($totalAmount): CreateOrderType
+    public function setTotalAmount(int $totalAmount): CreateOrderType
     {
         if (!is_int($totalAmount)) {
             throw new \InvalidArgumentException("Order value must be an integer");
         }
-        $this->totalAmount = new OrderValue($totalAmount);
+        $this->totalAmount = new OrderValue($totalAmount, CurrencyCode::pln());
         return $this;
     }
 
