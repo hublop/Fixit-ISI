@@ -61,7 +61,8 @@ class RecurringPaymentManager
                 yield Result::failure(sprintf(
                     "Could not process payment for subscription %s: missing payment token",
                     (string)$subscription->id()
-                ));
+                ),
+                400);
             }
             yield $this->paymentService->processPayment($order->getId(), IP::localIP(), $payment->getToken());
         }
