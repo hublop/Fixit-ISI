@@ -1,0 +1,50 @@
+<div class="login-component">
+
+  <div class="login-form photo-row ">
+    <img src="./../../../../assets/logo.PNG" class="logo">
+  </div>
+  <div class="title login-form">Zaloguj się do Fixit!</div>
+  <mat-card class="login-form mat-elevation-z6">
+    <mat-card-content>
+      <app-info class="error-info" *ngIf="error" [title]="error" [isSuccess]="false"></app-info>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" name="loginForm">
+        <div>
+          <mat-form-field class="login-form-element" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-error *ngIf="loginForm.get('email').hasError('required')">
+              Podaj email
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field class="login-form-element" appearance="outline">
+            <mat-label>Hasło</mat-label>
+            <input matInput placeholder="Hasło" formControlName="password" type="password">
+            <mat-error *ngIf="loginForm.get('password').hasError('required')">
+              Podaj hasło
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button class="login-button" mat-raised-button color="primary" type="sumbit" [disabled]="!loginForm.valid">Zaloguj</button>
+        </div>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="login-form mat-elevation-z6">
+    <div class="register-info-container">
+      <div>
+        Nie masz jeszcze konta?
+      </div>
+      <div class="register-link" (click)="redirectToRegisterCustomer()">
+        Załóż teraz!
+      </div>
+    </div>
+
+  </mat-card>
+</div>
