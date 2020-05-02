@@ -1,0 +1,5 @@
+<app-top-nav></app-top-nav>
+<div>
+    <mat-spinner class="loader" *ngIf="isLoading" mode="indeterminate"></mat-spinner>
+    <router-outlet *ngIf="!isLoading"></router-outlet>
+</div>

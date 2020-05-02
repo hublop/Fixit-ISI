@@ -1,0 +1,85 @@
+.login-form {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 15px;
+
+    .login-form-element {
+        width: 100%;
+    }
+
+    .login-button {
+        width: 100%;
+        margin-top: 10px;
+        height: 51px;
+    }
+}
+
+.photo-row {
+    width: 100%;
+}
+
+.register-info-container {
+    display: flex;
+    flex-direction: row;
+    font-weight: 400;
+    justify-content: center;
+    .register-link {
+        margin-left: 10px;
+        color: rgba(36, 36, 196, 0.658);
+        cursor: pointer;
+        font-weight: 500;
+        &:hover {
+            text-decoration: underline;           
+        }
+    }
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    display: block;
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+
+.error-info {
+    margin-bottom: 10px;
+}
+
+.title {
+    text-align: center;
+    width: 100%;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+@media screen and (min-width: 900px) {
+    .login-component {
+        width: 420px;
+        margin-top: 50px;
+        display: flex;
+        align-self: center;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .login-component {
+        width: 80%;
+        margin-left: 10%;
+        margin-right: 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        margin-top: 5%;
+    }
+}
+
+
