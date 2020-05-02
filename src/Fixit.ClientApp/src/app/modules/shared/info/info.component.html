@@ -1,0 +1,5 @@
+<div class="info-container">
+  <mat-icon [ngStyle]="getStyle()" *ngIf="isSuccess">info</mat-icon>
+  <mat-icon [ngStyle]="getStyle()" *ngIf="!isSuccess">error</mat-icon>
+  <span [ngStyle]="getStyle()" class="text-info">{{title}}</span>
+</div>
