@@ -2,6 +2,7 @@
 
 namespace App\Domain\Subscription;
 
+use App\Common\Clock;
 use App\Common\Email;
 use App\Common\Result;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Subscription
  * @package App\Domain\Subscription
- * @ORM\Entity(repositoryClass="App\Infrastructure\SubscriptionRepository")
+ * @ORM\Entity(repositoryClass="App\Infrastructure\Doctrine\SubscriptionRepository")
  */
 class Subscription implements \JsonSerializable
 {
@@ -30,14 +31,30 @@ class Subscription implements \JsonSerializable
      */
     private Email $email;
 
+    /**
+     * @var \DateTimeImmutable
+     * @ORM\Column(name="created_at", type="datetime_immutable")
+     */
+    private \DateTimeImmutable $dateTime;
+
+    /**
+     * @var \DateTimeImmutable
+     * @ORM\Column(name="next_payment_date", type="datetime_immutable")
+     */
+    private \DateTimeImmutable $nextPaymentDate;
+
     public function __construct(
         SubscriptionId $id,
         Status $status,
-        Email $email
+        Email $email,
+        \DateTimeImmutable $dateTime,
+        \DateTimeImmutable $nextPaymentDate
     ) {
         $this->id = $id;
         $this->status = $status;
         $this->email = $email;
+        $this->dateTime = $dateTime;
+        $this->nextPaymentDate = $nextPaymentDate;
     }
 
     public static function subscription(Status $status, Email $email): self
@@ -45,7 +62,9 @@ class Subscription implements \JsonSerializable
         return new self(
             SubscriptionId::newOne(),
             $status,
-            $email
+            $email,
+            Clock::system()->currentDateTime(),
+            Clock::system()->currentDateTime()->add(\DateInterval::createFromDateString("1 month"))
         );
     }
 

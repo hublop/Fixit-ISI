@@ -57,4 +57,9 @@ final class SubscriptionFacade
     {
         return $this->cancelSubscriptionService->cancelSubscription(new UUID($uuid));
     }
+
+    public function findSubscriptionToReccure(\DateTimeImmutable $dateTimeImmutable)
+    {
+        return $this->subscriptionRepository->findByDateStatus($dateTimeImmutable, (string) Status::active());
+    }
 }

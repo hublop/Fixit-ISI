@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Domain\Order;
+use App\Common\Clock;
 use App\Common\Result;
+use App\Domain\Payment\Payment;
 use App\Domain\Subscription\Subscription;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Order
  * @package App\Domain\Order
- * @ORM\Entity(repositoryClass="App\Infrastructure\OrderRepository")
+ * @ORM\Entity(repositoryClass="App\Infrastructure\Doctrine\OrderRepository")
  * @ORM\Table(name="subscription_order")
  */
 class Order implements \JsonSerializable
@@ -54,6 +56,19 @@ class Order implements \JsonSerializable
      */
     private Status $status;
 
+    /**
+     * @var Payment
+     * @ORM\ManyToOne(targetEntity="App\Domain\Payment\Payment")
+     * @ORM\JoinColumn(name="payment_id", referencedColumnName="id", nullable=true)
+     */
+    private ?Payment $payment;
+
+    /**
+     * @var \DateTimeImmutable
+     * @ORM\Column(name="created_at", type="datetime_immutable")
+     */
+    private \DateTimeImmutable $createdAt;
+
     public function __construct(
         OrderId $id,
         UserId $userId,
@@ -61,7 +76,9 @@ class Order implements \JsonSerializable
         Lastname $lastname,
         OrderValue $value,
         Status $status,
-        Subscription $subscription
+        Subscription $subscription,
+        ?Payment $payment,
+        \DateTimeImmutable $createdAt
     ) {
         $this->id = $id;
         $this->userId = $userId;
@@ -70,6 +87,8 @@ class Order implements \JsonSerializable
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->orderValue = $value;
+        $this->payment = $payment;
+        $this->createdAt = $createdAt;
     }
 
     public static function order(
@@ -78,6 +97,7 @@ class Order implements \JsonSerializable
         Lastname $lastname,
         OrderValue $value,
         Status $status,
+        ?Payment $payment,
         Subscription $subscription
     ): self {
         return new self(
@@ -87,7 +107,9 @@ class Order implements \JsonSerializable
             $lastname,
             $value,
             $status,
-            $subscription
+            $subscription,
+            $payment,
+            Clock::system()->currentDateTime()
         );
     }
 
@@ -153,4 +175,31 @@ class Order implements \JsonSerializable
         return $this->userId;
     }
 
+    public static function createRecurredOrder(self $oldOrder): self
+    {
+        return new self(
+            OrderId::newOne(),
+            $oldOrder->userId,
+            $oldOrder->firstname,
+            $oldOrder->lastname,
+            $oldOrder->orderValue,
+            Status::processing(),
+            $oldOrder->subscription,
+            $oldOrder->payment,
+            Clock::system()->currentDateTime()
+        );
+    }
+
+    public function addPayment(Payment $payment): void
+    {
+        $this->payment = $payment;
+    }
+
+    /**
+     * @return Payment
+     */
+    public function getPayment(): Payment
+    {
+        return $this->payment;
+    }
 }

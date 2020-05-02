@@ -17,7 +17,9 @@ final class Success extends Result
      */
     public function __construct(array $events)
     {
-        $this->events = array_map(function (DomainEvent $event): DomainEvent {return  $event; }, $events);
+        $this->events = array_map(function (DomainEvent $event): DomainEvent {
+            return $event;
+        }, $events);
     }
 
     /**
@@ -25,14 +27,21 @@ final class Success extends Result
      */
     public function jsonSerialize()
     {
-        $returnValue =  [
+        $returnValue = [
             'success' => true
         ];
         if (count($this->events) == 1) {
             /** @var DomainEvent $event */
-            $event = reset($this->events);
+            $event       = reset($this->events);
             $returnValue = array_merge($returnValue, $event->jsonSerialize());
         }
         return $returnValue;
+    }
+
+    public function __toString()
+    {
+        return "Success! " . implode(" ", array_map(function (DomainEvent $domainEvent) {
+                return (string) $domainEvent;
+            }, $this->events));
     }
 }

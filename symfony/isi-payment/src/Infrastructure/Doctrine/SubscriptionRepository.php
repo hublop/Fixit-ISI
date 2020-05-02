@@ -19,4 +19,14 @@ class SubscriptionRepository extends ServiceEntityRepository
         return $this->getEntityManager()
             ->find(Subscription::class, (string) $uuid);
     }
+
+    public function findByDateStatus(\DateTimeImmutable $dateTimeImmutable, string $status)
+    {
+        $qb = $this->createQueryBuilder("e");
+        $qb
+            ->where('e.nextPaymentDate < :to AND e.status.value = :status')
+            ->setParameter('to', $dateTimeImmutable)
+            ->setParameter('status', $status);
+        return $qb->getQuery()->getResult();
+    }
 }
