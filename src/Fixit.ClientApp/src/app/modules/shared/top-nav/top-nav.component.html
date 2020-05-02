@@ -1,0 +1,21 @@
+<mat-toolbar color="primary" *ngIf="isNavVisible()" class="top-nav">
+
+  <mat-toolbar-row class="navbar">
+    <img src="./../../../../assets/logo.PNG" class="logo" (click)="goToMainPage()">
+    <span class="app-name top-menu-item brand" (click)="goToMainPage()">HelpMe</span>
+
+    <span class="fill-remaining-space"></span>
+
+    <button class="top-menu-item" mat-button (click)="goToContractorsList()">Usługodawcy</button>
+
+
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible">
+    <button mat-button class="menu-item-row-element" (click)="goToContractorsList()">
+      <mat-icon class="element-icon">build</mat-icon>
+      <span>Usługodawcy</span>
+    </button>
+  </mat-toolbar-row>
+
+</mat-toolbar>
