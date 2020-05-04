@@ -6,7 +6,7 @@ use MyCLabs\Enum\Enum;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @method static self activated()
+ * @method static self active()
  * @method static self pastDue()
  * @method static self disabled()
  * @method static self inactive()

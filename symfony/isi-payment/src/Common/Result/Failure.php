@@ -35,4 +35,8 @@ class Failure extends Result
     {
         return $this->code;
     }
+    public function __toString()
+    {
+        return "Failure! " . $this->reason;
+    }
 }

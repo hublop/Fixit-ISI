@@ -12,7 +12,7 @@ abstract class Result implements \JsonSerializable
         return new Success($events);
     }
 
-    public static function failure(string $reason, $code = 0): Failure
+    public static function failure(string $reason, $code = 400): Failure
     {
         return new Failure($reason, $code);
     }

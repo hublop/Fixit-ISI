@@ -25,4 +25,9 @@ class IP
     {
         return $this->ip;
     }
+
+    public static function localIP(): self
+    {
+        return new self('127.0.0.1');
+    }
 }

@@ -16,7 +16,6 @@ use App\Domain\Payment\Gateway\GatewayInterface;
 use App\Domain\Payment\Payment;
 use App\Domain\Payment\PaymentToken;
 use App\Domain\Payment\Status;
-use App\Infrastructure\Doctrine\PaymentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProcessPaymentService
@@ -53,7 +52,7 @@ class ProcessPaymentService
     {
         $order = $this->orderService->findOrder($orderId->getId());
         if (!$order) {
-            return Result::failure('Could not find order with given ID');
+            return Result::failure('Could not find order with given ID', 404);
         }
         $orderRequest = [
             'notifyUrl' => $this->configuration['notifyUrl'],
@@ -82,8 +81,11 @@ class ProcessPaymentService
             ]
         ];
         $response = $this->paymentGateway->create($orderRequest);
-        $payment = Payment::payment($response->getStatus(), $response->getCardNumber(), $order, $response->getToken());
+//        $payment = Payment::payment($response->getStatus(), $response->getCardNumber(), $response->getToken());
+        $payment = Payment::payment($response->getStatus(), $response->getCardNumber(), new PaymentToken("TOKC_KPNZVSLJUNR4DHF5NPVKDPJGMX7"));
+        $order->addPayment($payment);
         $this->entityManager->persist($payment);
+        $this->entityManager->persist($order);
         $this->entityManager->flush();
         if ($response->getStatus() == Status::success) {
             return Result::success();
