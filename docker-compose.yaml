@@ -1,0 +1,119 @@
+version: '3.5'
+
+x-db: &db_template
+  image: mysql:5.7
+  environment:
+    - MYSQL_RANDOM_ROOT_PASSWORD=yes
+    - MYSQL_DATABASE=isi_payment
+    - MYSQL_PASSWORD=db_password
+    - MYSQL_USER=isi_payment
+  command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+  networks:
+    - fixit
+
+x-mssql: &mssql_template
+  image: "mcr.microsoft.com/mssql/server"
+  environment:
+    - sa_password=${MS_SQL_PASSWORD:-P@ssw0rd}
+    - SA_PASSWORD=${MS_SQL_PASSWORD:-P@ssw0rd}
+    - ACCEPT_EULA="Y"
+  networks:
+    - fixit
+
+x-php-fpm: &php_fpm_template
+  build: ./images/php-fpm
+  networks:
+    - fixit
+
+x-nginx: &nginx_template
+  image: nginx:1.17.1-alpine
+  networks:
+    - fixit
+
+x-dotnet: &dotnet-template
+  build: ./src
+  networks:
+    - fixit
+x-dotnet-migration: &dotnet-migration-template
+  build:
+    dockerfile: ./images/dotnet-migration/Dockerfile
+    context: ./src
+  networks:
+    - fixit
+x-frontend: &frontend-template
+  build: ./src/Fixit.ClientApp
+  networks:
+    - fixit
+services:
+  dotnet_migration:
+    container_name: isi-app-migration
+    <<: *dotnet-migration-template
+    volumes:
+      - ./images/dotnet-migration/run-migration.sh:/tmp/run-migration.sh
+    depends_on:
+      - dotnet
+      - mssql
+
+  dotnet:
+    container_name: isi-app
+    <<: *dotnet-template
+    ports:
+      - "${DOTNET_PORT:-80}:80"
+
+  php-fpm:
+    container_name: isi-payment_fpm
+    <<: *php_fpm_template
+    volumes:
+      - ./symfony/config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./symfony/config/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./symfony/config/php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./symfony/isi-payment:/var/www/isi-payment
+      - ./symfony/isi-payment/.composer/cache:/home/www-data/.composer/cache
+
+  nginx:
+    container_name: isi-payment_nginx
+    <<: *nginx_template
+    ports:
+      - "${NGINX_PORT:-8080}:80"
+    volumes:
+      - ./symfony/isi-payment:/var/www/isi-payment
+      - ./symfony/config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+  db:
+    container_name: isi-payment_db
+    <<: *db_template
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - data-mysql:/var/lib/mysql
+
+  mssql:
+    container_name: isi-mssql
+    <<: *mssql_template
+    volumes:
+      - data-mssql:/var/opt/mssql
+    ports:
+      - "${MSSQL_PORT:-1433}:1433"
+  frontend:
+    container_name: isi-frontend
+    image: node:lts-slim
+    command: bash -c "npm install && npm run start-global"
+    user: "node"
+    working_dir: /home/node/app
+    volumes:
+      - ./src/Fixit.ClientApp:/home/node/app
+    ports:
+      - "${FRONEND_PORT:-4200}:4200"
+    restart: on-failure
+    networks:
+      - fixit
+
+volumes:
+  data-mysql:
+    name: isi-payment_db
+  data-mssql:
+
+networks:
+  fixit:
+    name: fixit
+
