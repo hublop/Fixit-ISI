@@ -40,57 +40,65 @@ class ProcessPaymentService
         array $payuConfig,
         GatewayInterface $paymentGateway,
         EntityManagerInterface $entityManager
-    )
-    {
+    ) {
         $this->paymentGateway = $paymentGateway;
-        $this->configuration = $payuConfig;
-        $this->orderService = $orderService;
-        $this->entityManager = $entityManager;
+        $this->configuration  = $payuConfig;
+        $this->orderService   = $orderService;
+        $this->entityManager  = $entityManager;
     }
 
-    public function processPayment(OrderId $orderId, IP $customerIP, PaymentToken $paymentToken): Result
-    {
+    public function processPayment(
+        OrderId $orderId,
+        IP $customerIP,
+        PaymentToken $paymentToken,
+        bool $isFirst = true
+    ): Result {
         $order = $this->orderService->findOrder($orderId->getId());
+        $subscription = $order->getSubscription();
         if (!$order) {
             return Result::failure('Could not find order with given ID', 404);
         }
         $orderRequest = [
-            'notifyUrl' => $this->configuration['notifyUrl'],
-            'customerIp' => (string) $customerIP,
+            'notifyUrl'     => $this->configuration['notifyUrl'],
+            'customerIp'    => (string)$customerIP,
             'merchantPosId' => $this->configuration['posId'],
-            'recurring' => 'STANDARD',
-            'description' => $this->configuration['orderDescription'],
-            'currencyCode' => $order->getOrderValue()->getCurrencyCode(),
-            'totalAmount' => $order->getOrderValue()->getValue(),
-            'extOrderId' => (string) $orderId,
-            'products' => [
+            'recurring'     => $isFirst ? 'FIRST' : 'STANDARD',
+            'description'   => $this->configuration['orderDescription'],
+            'currencyCode'  => $order->getOrderValue()->getCurrencyCode(),
+            'totalAmount'   => $order->getOrderValue()->getValue(),
+            'extOrderId'    => (string)$orderId,
+            'products'      => [
                 [
-                    'name' => $this->configuration['orderProduct'],
+                    'name'      => $this->configuration['orderProduct'],
                     'unitPrice' => $order->getOrderValue()->getValue(),
-                    'quantity' => 1
+                    'quantity'  => 1
                 ]
             ],
-            'buyer' => [
-                'email' => (string) $order->getSubscription()->getEmail(),
+            'buyer'         => [
+                'email' => (string)$order->getSubscription()->getEmail(),
             ],
-            'payMethods' => [
+            'payMethods'    => [
                 'payMethod' => [
-                    'value' => (string) $paymentToken,
-                    'type' => 'CARD_TOKEN'
+                    'value' => (string)$paymentToken,
+                    'type'  => 'CARD_TOKEN'
                 ]
             ]
         ];
-        $response = $this->paymentGateway->create($orderRequest);
-//        $payment = Payment::payment($response->getStatus(), $response->getCardNumber(), $response->getToken());
-        $payment = Payment::payment($response->getStatus(), $response->getCardNumber(), new PaymentToken("TOKC_KPNZVSLJUNR4DHF5NPVKDPJGMX7"));
+        $result     = $this->paymentGateway->create($orderRequest, $isFirst);
+        $payment      = Payment::payment($result->getStatus(), $result->getCardNumber(), $result->getToken());
+        if ($result->isSuccessfull()) {
+            $order->markSucceded();
+            $subscription->activate();
+        }
         $order->addPayment($payment);
         $this->entityManager->persist($payment);
         $this->entityManager->persist($order);
+        $this->entityManager->persist($subscription);
         $this->entityManager->flush();
-        if ($response->getStatus() == Status::success) {
+        if ($result->getStatus() == Status::success) {
             return Result::success();
         } else {
-            return Result::failure($response->getMessage(), 400);
+            return Result::failure($result->getMessage(), 400);
         }
     }
 }

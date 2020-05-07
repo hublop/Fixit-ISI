@@ -62,9 +62,15 @@ class RecurringPaymentManager
                     "Could not process payment for subscription %s: missing payment token",
                     (string)$subscription->id()
                 ),
-                400);
+                    400);
             }
-            yield $this->paymentService->processPayment($order->getId(), IP::localIP(), $payment->getToken());
+
+            yield $this->paymentService->processPayment(
+                $order->getId(),
+                IP::localIP(),
+                $payment->getToken(),
+                false
+            );
         }
     }
 }

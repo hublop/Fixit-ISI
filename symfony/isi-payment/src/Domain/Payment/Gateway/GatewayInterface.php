@@ -12,5 +12,5 @@ use App\Domain\Payment\PaymentResult;
 
 interface GatewayInterface
 {
-    public function create(array $order): PaymentResult;
+    public function create(array $order, bool $isFirst): PaymentResult;
 }

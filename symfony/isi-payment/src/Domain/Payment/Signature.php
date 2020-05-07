@@ -24,7 +24,9 @@ class Signature
             $widget->getCustomerEmail(),
             $widget->getCustomerLanguage(),
             $widget->getMerchantPosId(),
+            json_encode($widget->getRecurringPayment()),
             $widget->getShopName(),
+            json_encode($widget->getStoreCard()),
             $widget->getTotalAmount(),
             $privateKey
         ];
