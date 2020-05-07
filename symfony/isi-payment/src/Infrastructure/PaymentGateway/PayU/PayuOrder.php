@@ -21,7 +21,7 @@ class PayuOrder implements GatewayInterface
         $configurator->configurePayment();
     }
 
-    public function create(array $order): PaymentResult
+    public function create(array $order, bool $isFirst = true): PaymentResult
     {
         try {
             /** @var OpenPayU_Result $response */
@@ -29,13 +29,21 @@ class PayuOrder implements GatewayInterface
         } catch (\OpenPayU_Exception $exception) {
             return new PaymentResult(Status::error(), null, '', $exception->getMessage());
         }
-        if ($response !== $response->getStatus()) {
-            return new PaymentResult(Status::error(), '', null);
+        if (\OpenPayU_Order::SUCCESS !== $response->getStatus()) {
+            return new PaymentResult(Status::error(), new PaymentToken(''), null);
+        }
+        if ($isFirst) {
+            $token = new PaymentToken($response->getResponse()->payMethods->payMethod->value);
+            $card = $response->getResponse()->payMethods->payMethod->card->number;
+        } else {
+            $token =  new PaymentToken($order['payMethods']['payMethod']['value']);
+            $card = '';
         }
         return new PaymentResult(
             Status::success(),
-            new PaymentToken($response->getResponse()->payMethods->payMethod->value),
-            $response->getResponse()->payMethods->payMethod->card->number
+            $token,
+            $card
         );
+
     }
 }

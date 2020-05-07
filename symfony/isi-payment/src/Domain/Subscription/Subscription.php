@@ -70,13 +70,14 @@ class Subscription implements \JsonSerializable
 
     public function activate(): Result
     {
-        $this->status = Status::activated();
+        $this->status = Status::active();
+        $this->nextPaymentDate = Clock::system()->currentDateTime()->add(\DateInterval::createFromDateString("1 month"));
         return Result::success();
     }
 
     public function disable(): Result
     {
-        if ($this->status == Status::disabled()) {
+        if ($this->status === Status::disabled()) {
             return Result::failure("This subscription is already disabled.", 400);
         }
         $this->status = Status::disabled();

@@ -110,4 +110,14 @@ class PaymentWidget implements \JsonSerializable
     {
         return $this->customerEmail;
     }
+
+    public function getStoreCard(): bool
+    {
+        return $this->storeCard;
+    }
+
+    public function getRecurringPayment(): bool
+    {
+        return $this->recurringPayment;
+    }
 }

@@ -31,6 +31,11 @@ class PaymentResult
         return $this->status;
     }
 
+    public function isSuccessfull(): bool
+    {
+        return $this->getStatus() == Status::success;
+    }
+
     /**
      * @return PaymentToken|null
      */
