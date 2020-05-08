@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { CategoriesModule } from '../categories/categories.module';
+import { RegisterInfoComponent } from './register-contractor/register-info/register-info.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { CategoriesModule } from '../categories/categories.module';
     CategoriesModule
   ],
   declarations: [
-    RegisterContractorComponent
+    RegisterContractorComponent,
+    RegisterInfoComponent
   ],
   exports: [
     RegisterContractorComponent
