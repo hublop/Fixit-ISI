@@ -24,6 +24,11 @@ export const routes: Routes = [
     path: 'customers',
     runGuardsAndResolvers: 'always',
     loadChildren: () => import('./modules/customers/customers.module').then(m => m.CustomersModule)
+  },
+  {
+    path: 'contractors',
+    runGuardsAndResolvers: 'always',
+    loadChildren: () => import('./modules/contractors/contractors.module').then(m => m.ContractorsModule)
   }
 ];
 
