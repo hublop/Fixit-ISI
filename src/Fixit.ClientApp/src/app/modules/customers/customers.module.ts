@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegisterCustomerComponent } from './register-customer/register-customer.component';
 import { AuthModule } from '../auth/auth.module';
+import { RegisterInfoComponent } from './register-customer/register-info/register-info.component';
 import { MaterialModule } from '../material/material.module';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { MaterialModule } from '../material/material.module';
     MaterialModule
   ],
   declarations: [
-    RegisterCustomerComponent
+    RegisterCustomerComponent,
+    RegisterInfoComponent,
   ]
 })
 export class CustomersModule { }
