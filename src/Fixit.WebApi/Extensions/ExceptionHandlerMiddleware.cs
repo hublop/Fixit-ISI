@@ -54,6 +54,10 @@ namespace Fixit.WebApi.Extensions
                     code = HttpStatusCode.BadRequest;
                     result = $"{domainException.Message}. {domainException.Details}";
                     break;
+                case UnauthorizedException unauthorizedException:
+                    code = HttpStatusCode.Unauthorized;
+                    result = $"{unauthorizedException.Message}. {unauthorizedException.Details}";
+                    break;
             }
 
             context.Response.ContentType = "application/json";
