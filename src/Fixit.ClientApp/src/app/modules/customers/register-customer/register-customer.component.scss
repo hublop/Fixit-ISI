@@ -1,0 +1,89 @@
+@media screen and (min-width: 900px) {
+    .register-container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 80px;
+        width: 60%;
+        margin-left: 20%;
+        margin-right: 20%;
+    
+        height: 100%;
+    }
+    
+    .register-card {
+        margin-right: 50px;
+        width: 40%;
+        max-width: 600px;
+    }
+    
+    .info-card {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .register-container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+        height: 100%;
+    }
+
+    .register-card {
+        width: 100%;
+    }
+    
+    .info-card {
+        width: 100%;
+    }
+}
+
+
+.register-title {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
+.register-form {
+    .form-field {
+        width: 100%;
+    }
+
+    .form-element {
+        width: 100%;
+        margin: 5px;
+    }
+
+    .register-button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+.register-contractor-info-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    font-weight: 400;
+    justify-content: center;
+    .register-link {
+        margin-left: 5px;
+        color: rgba(36, 36, 196, 0.658);
+        cursor: pointer;
+        font-weight: 500;
+        &:hover {
+            text-decoration: underline;           
+        }
+    }
+}
