@@ -64,4 +64,8 @@ export class RegisterCustomerComponent implements OnInit {
       this.errors = 'Użytkownik z podanym adresem e-mail już istnieje';
     });
   }
+
+  redirectToRegisterContractor() {
+    this.router.navigate(['/contractors/register']);
+  }
 }
