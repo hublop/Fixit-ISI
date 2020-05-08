@@ -6,19 +6,29 @@ import { LoginComponent } from './modules/auth/login/login.component';
 
 export const routes: Routes = [
   {
-      path: '',
-      redirectTo: 'login',
-      pathMatch: 'full'
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
   {
-      path: 'login',
-      canActivate: [LoginGuard],
-      component: LoginComponent
+    path: 'login',
+    canActivate: [LoginGuard],
+    component: LoginComponent
   },
   {
-      path: '**',
-      redirectTo: 'contractors/list',
-      pathMatch: 'full'
+    path: '**',
+    redirectTo: 'contractors/list',
+    pathMatch: 'full'
+  },
+  {
+    path: 'customers',
+    runGuardsAndResolvers: 'always',
+    loadChildren: () => import('./modules/customers/customers.module').then(m => m.CustomersModule)
+  },
+  {
+    path: 'contractors',
+    runGuardsAndResolvers: 'always',
+    loadChildren: () => import('./modules/contractors/contractors.module').then(m => m.ContractorsModule)
   }
 ];
 

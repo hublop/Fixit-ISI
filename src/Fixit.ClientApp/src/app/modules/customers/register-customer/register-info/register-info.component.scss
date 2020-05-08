@@ -1,0 +1,21 @@
+.list {
+    font-size: 17px;
+    margin-top: 20px;
+    > ul {
+        list-style-type: circle;
+        > li {
+            margin-top: 10px;
+        }
+    }
+}
+
+.elements {
+    margin-left: 20px;
+    margin-top: 10px;
+    > div {
+        margin-top: 5px;
+        .mat-icon {
+            margin-right: 5px;
+        }
+    }
+}

@@ -1,0 +1,99 @@
+<div class="register-container">
+
+  <div class="register-card">
+    <div class="register-title">
+      Utwórz konto
+    </div>
+    <mat-card class="mat-elevation-z6">
+      <mat-card-content>
+        <app-info *ngIf="errors" [isSuccess]="false" [title]="errors"></app-info>
+        <div class="register-form">
+          <form [formGroup]="registerForm" (ngSubmit)="register()" name="registerForm">
+
+            <div class="form-element">
+              <mat-form-field class="form-field" appearance="outline">
+                <input matInput placeholder="Imię" formControlName="firstName">
+                <mat-error *ngIf="registerForm.get('firstName').hasError('required')">
+                  Podaj imię
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('firstName').hasError('maxlength')">
+                  Imię jest zbyt długie
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-element">
+              <mat-form-field class="form-field" appearance="outline">
+                <input matInput placeholder="Nazwisko" formControlName="lastName">
+                <mat-error *ngIf="registerForm.get('lastName').hasError('required')">
+                  Podaj nazwisko
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('lastName').hasError('maxlength')">
+                  Nazwisko jest zbyt długie
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-element">
+              <mat-form-field class="form-field" appearance="outline">
+                <input matInput placeholder="Email" formControlName="email">
+                <mat-error *ngIf="registerForm.get('email').hasError('required')">
+                  Podaj email
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('email').hasError('maxlength')">
+                  Email jest zbyt długi
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('email').hasError('email') && !registerForm.get('email').hasError('maxlength') && !registerForm.get('email').hasError('required')">
+                  Podaj poprawny email
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-element">
+              <mat-form-field class="form-field" appearance="outline">
+                <input matInput placeholder="Hasło" formControlName="password" [type]="passwordVisible ? 'text' : 'password'">
+                <mat-icon matSuffix (click)="passwordVisible = !passwordVisible">{{passwordVisible ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="registerForm.get('password').hasError('required')">
+                  Podaj hasło
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('password').hasError('pattern') && !registerForm.get('password').hasError('required')">
+                  Hasło musi mieć co najmniej 8 znaków, co najmniej 1 dużą literę, co najmniej 1 małą literę i co najmniej 1 znak specjalny
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-element">
+              <mat-form-field class="form-field" appearance="outline">
+                <input matInput placeholder="Numer telefonu" formControlName="phoneNumber">
+                <mat-error *ngIf="registerForm.get('phoneNumber').hasError('required')">
+                  Podaj numer telefonu
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('phoneNumber').hasError('maxlength')">
+                  Numer telefonu jest zbyt długi
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-element">
+              <button class="register-button" mat-raised-button color="primary" type="sumbit" [disabled]="!registerForm.valid">Zarejestruj</button>
+            </div>
+
+          </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="register-contractor-info-container mat-elevation-z6">
+      <div>
+        Jesteś usługodawcą? Zarejestruj się
+      </div>
+      <div class="register-link" (click)="redirectToRegisterContractor()">
+        TUTAJ!
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="info-card">
+    <div class="register-title">Składaj zamówienia</div>
+    <app-register-info></app-register-info>
+  </div>
+</div>
