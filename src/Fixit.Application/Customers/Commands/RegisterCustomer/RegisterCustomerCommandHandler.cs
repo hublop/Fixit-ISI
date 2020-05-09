@@ -26,7 +26,7 @@ namespace Fixit.Application.Customers.Commands.RegisterCustomer
 
     public async Task<Unit> Handle(RegisterCustomerCommand request, CancellationToken cancellationToken)
     {
-      if (await _dbContext.Customers.AnyAsync(x => x.Email == request.Email))
+      if (await _dbContext.Customers.AnyAsync(x => x.Email == request.Email, cancellationToken: cancellationToken))
       {
         throw new UserAlreadyExistsException(request.Email);
       }

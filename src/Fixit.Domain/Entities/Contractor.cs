@@ -17,7 +17,9 @@ namespace Fixit.Domain.Entities
         public bool IsPremium { get; set; }
         public ICollection<OrderOffer> OrderOffers { get; set; }
 
-        public void ProvideRepairService(int subcategoryId, double price)
+        public string SubscriptionId { get; set; }
+
+    public void ProvideRepairService(int subcategoryId, double price)
         {
             if (ProvidesRepairService(subcategoryId))
             {
