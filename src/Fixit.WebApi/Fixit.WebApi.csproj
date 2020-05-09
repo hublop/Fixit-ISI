@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fixit.Application\Fixit.Application.csproj" />
     <ProjectReference Include="..\Fixit.EventBus\Fixit.EventBus.csproj" />
     <ProjectReference Include="..\Fixit.Infrastructure\Fixit.Infrastructure.csproj" />
     <ProjectReference Include="..\Fixit.Persistance\Fixit.Persistance.csproj" />
