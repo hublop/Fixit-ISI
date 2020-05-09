@@ -2,36 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4bb00025-7414-4710-96d6-6cb92cf24ecb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Payment/PaymentFailed.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Payment/PaymentSucceeded.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Subscription/SubscriptionActivated.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Subscription/SubscriptionCancelled.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Subscription/SubscriptionDeactivated.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Infrastructure/Messenger/Order/OrderCreatedEventSubscriber.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/php-fpm/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/images/php-fpm/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.sh" beforeDir="false" afterPath="$PROJECT_DIR$/setup.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Fixit.WebApi/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fixit.WebApi/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/.env" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Action/Order/Type/CreateOrderType.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Action/Order/Type/CreateOrderType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Order/CreateOrderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Order/CreateOrderService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Order/OrderFacade.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Order/OrderFacade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Payment/ProcessPaymentService.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Payment/ProcessPaymentService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Subscription/CancelSubscriptionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Subscription/CancelSubscriptionService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Subscription/CreateSubscriptionService.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Application/Subscription/CreateSubscriptionService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Order/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Order/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Order/OrderCreated.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Order/OrderCreated.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Order/OrderValue.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Order/OrderValue.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Order/UserId.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Subscription/UserId.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Subscription/Status.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Subscription/Status.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Subscription/Subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Domain/Subscription/Subscription.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/src/Migrations/Version20200502193236.php" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/src/Migrations/Version20200502193236.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony/isi-payment/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony/isi-payment/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1588955135621</updated>
       <workItem from="1588955137219" duration="1094000" />
-      <workItem from="1589026310693" duration="6756000" />
+      <workItem from="1589026310693" duration="7141000" />
     </task>
     <servers />
   </component>

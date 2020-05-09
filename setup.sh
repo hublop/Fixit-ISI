@@ -8,6 +8,7 @@ sed -i "s/RABBIT_USER/$RABBIT_USER/g" symfony/isi-payment/.env
 sed -i "s/RABBIT_PASS/$RABBIT_PASS/g" symfony/isi-payment/.env
 docker-compose down -v
 docker-compose build dotnet
+docekr-compose build frontend
 docker-compose up -d
 echo "Waiting until mysql boots up"
 sleep 10
