@@ -36,6 +36,8 @@ namespace Fixit.WebApi
                 .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<IFixitDbContext>(); });
             //services.AddTransient<OrderStartedIntegrationEventHandler>();
 
+            services.ConfigureJwt(Configuration);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
