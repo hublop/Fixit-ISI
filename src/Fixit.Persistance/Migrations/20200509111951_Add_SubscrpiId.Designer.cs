@@ -4,14 +4,16 @@ using Fixit.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fixit.Persistance.Migrations
 {
     [DbContext(typeof(FixitDbContext))]
-    partial class FixitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200509111951_Add_SubscrpiId")]
+    partial class Add_SubscrpiId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +84,7 @@ namespace Fixit.Persistance.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("LocationId")
+                        .HasColumnName("PlaceId")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:HiLoSequenceName", "LocationSequence")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
@@ -154,7 +156,7 @@ namespace Fixit.Persistance.Migrations
                     b.Property<DateTime?>("LastNotificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int>("PlaceId")
                         .HasColumnType("int");
 
                     b.Property<int?>("RepairServiceContractorId")
@@ -170,7 +172,7 @@ namespace Fixit.Persistance.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("PlaceId");
 
                     b.HasIndex("SubcategoryId");
 
@@ -518,7 +520,7 @@ namespace Fixit.Persistance.Migrations
                     b.Property<bool>("IsPremium")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("LocationId")
+                    b.Property<int>("PlaceId")
                         .HasColumnType("int");
 
                     b.Property<string>("SelfDescription")
@@ -529,7 +531,7 @@ namespace Fixit.Persistance.Migrations
                     b.Property<string>("SubscriptionId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("PlaceId");
 
                     b.HasDiscriminator().HasValue("Contractor");
                 });
@@ -584,7 +586,7 @@ namespace Fixit.Persistance.Migrations
 
                     b.HasOne("Fixit.Domain.Entities.Location", "Location")
                         .WithMany("Orders")
-                        .HasForeignKey("LocationId")
+                        .HasForeignKey("PlaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -716,8 +718,9 @@ namespace Fixit.Persistance.Migrations
                 {
                     b.HasOne("Fixit.Domain.Entities.Location", "Location")
                         .WithMany("Contractors")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("PlaceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

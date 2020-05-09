@@ -12,12 +12,14 @@ namespace Fixit.Domain.Entities
         public DateTime ContractorFrom { get; set; }
         private List<RepairService> _repairServices = new List<RepairService>();
         public IReadOnlyCollection<RepairService> RepairServices => _repairServices.AsReadOnly();
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public Location Location { get; set; }
         public bool IsPremium { get; set; }
         public ICollection<OrderOffer> OrderOffers { get; set; }
 
-        public void ProvideRepairService(int subcategoryId, double price)
+        public string SubscriptionId { get; set; }
+
+    public void ProvideRepairService(int subcategoryId, double price)
         {
             if (ProvidesRepairService(subcategoryId))
             {
