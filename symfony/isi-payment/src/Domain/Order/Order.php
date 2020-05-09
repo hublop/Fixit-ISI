@@ -22,12 +22,6 @@ class Order implements \JsonSerializable
     private OrderId $id;
 
     /**
-     * @var UserId
-     * @ORM\Embedded(class="App\Domain\Order\UserId", columnPrefix=false)
-     */
-    private UserId $userId;
-
-    /**
      * @var Subscription
      * @ORM\ManyToOne(targetEntity="App\Domain\Subscription\Subscription")
      * @ORM\JoinColumn(name="subscription_id", referencedColumnName="id")
@@ -71,7 +65,6 @@ class Order implements \JsonSerializable
 
     public function __construct(
         OrderId $id,
-        UserId $userId,
         Firstname $firstname,
         Lastname $lastname,
         OrderValue $value,
@@ -81,7 +74,6 @@ class Order implements \JsonSerializable
         \DateTimeImmutable $createdAt
     ) {
         $this->id = $id;
-        $this->userId = $userId;
         $this->status = $status;
         $this->subscription = $subscription;
         $this->firstname = $firstname;
@@ -92,7 +84,6 @@ class Order implements \JsonSerializable
     }
 
     public static function order(
-        UserId $userId,
         Firstname $firstname,
         Lastname $lastname,
         OrderValue $value,
@@ -102,7 +93,6 @@ class Order implements \JsonSerializable
     ): self {
         return new self(
             OrderId::newOne(),
-            $userId,
             $firstname,
             $lastname,
             $value,
@@ -167,19 +157,10 @@ class Order implements \JsonSerializable
         return $this->id;
     }
 
-    /**
-     * @return UserId
-     */
-    public function getUserId(): UserId
-    {
-        return $this->userId;
-    }
-
     public static function createRecurredOrder(self $oldOrder): self
     {
         return new self(
             OrderId::newOne(),
-            $oldOrder->userId,
             $oldOrder->firstname,
             $oldOrder->lastname,
             $oldOrder->orderValue,
@@ -202,4 +183,5 @@ class Order implements \JsonSerializable
     {
         return $this->payment;
     }
+
 }

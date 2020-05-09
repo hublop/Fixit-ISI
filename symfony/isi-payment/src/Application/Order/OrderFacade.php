@@ -10,6 +10,7 @@ use App\Common\Url;
 use App\Common\UUID;
 use App\Domain\Order;
 use App\Domain\Subscription;
+use App\Domain\Subscription\UserId;
 use App\Infrastructure\Doctrine\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -63,7 +64,7 @@ class OrderFacade
     }
 
     public function createOrder(
-        Order\UserId $userId,
+        UserId $userId,
         Email $userEmail,
         Order\Firstname $firstname,
         Order\Lastname $lastname,
@@ -81,12 +82,13 @@ class OrderFacade
             $widget = $this->widgetService->getPaymentWidget($order);
 
         } catch (\Exception $exception) {
-            $this->em->rollback();
             return Result::failure($exception->getMessage(), 400);
         }
         return Result::success([
             new Order\OrderCreated(
                 $order->getId(),
+                $order->getSubscription()->getUserId(),
+                $order->getOrderValue(),
                 $order->getSubscription()->id(),
                 new Url($this->configuration['url']),
                 $widget

@@ -5,6 +5,7 @@ namespace App\Application\Subscription;
 use App\Common\Email;
 use App\Domain\Subscription\Status;
 use App\Domain\Subscription\Subscription;
+use App\Domain\Subscription\UserId;
 use App\Infrastructure\Doctrine\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -30,9 +31,10 @@ class CreateSubscriptionService
         $this->entityManager = $entityManager;
     }
 
-    public function create(Email $email, Status $status): Subscription
+    public function create(UserId $userId, Email $email, Status $status): Subscription
     {
         $subscription = Subscription::subscription(
+            $userId,
             $status,
             $email
         );

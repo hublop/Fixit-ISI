@@ -168,7 +168,7 @@ namespace Fixit.Persistance.Migrations
                         name: "FK_AspNetUsers_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
-                        principalColumn: "LocationId",
+                        principalColumn: "PlaceId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Image_ImageId",
@@ -342,7 +342,7 @@ namespace Fixit.Persistance.Migrations
                         name: "FK_Order_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
-                        principalColumn: "LocationId",
+                        principalColumn: "PlaceId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Order_SubCategory_SubcategoryId",
@@ -439,7 +439,7 @@ namespace Fixit.Persistance.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_LocationId",
                 table: "AspNetUsers",
-                column: "LocationId");
+                column: "PlaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ImageId",
@@ -471,7 +471,7 @@ namespace Fixit.Persistance.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Order_LocationId",
                 table: "Order",
-                column: "LocationId");
+                column: "PlaceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_SubcategoryId",
