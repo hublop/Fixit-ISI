@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
+using Fixit.Application.Common.Services;
 using Fixit.Application.Contractors.Commands.RegisterContractor;
 using Fixit.WebApi.Controllers;
 using MediatR;
@@ -21,8 +19,8 @@ namespace Fixit.WebApi.Contractors
       return await HandleCommandAsync(command);
     }
 
-    public ContractorsController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
-    {
+    public ContractorsController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
+        {
     }
   }
 }

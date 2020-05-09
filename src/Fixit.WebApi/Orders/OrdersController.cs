@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using Fixit.Application.Common.Services;
 using Fixit.Application.Orders.Commands.AcceptOrder;
 using Fixit.Application.Orders.Commands.CancelOrder;
 using Fixit.Application.Orders.Commands.CreateDirectOrder;
@@ -63,7 +64,7 @@ namespace Fixit.WebApi.Orders
             return await HandleCommandAsync(rejectOrderCommand);
         }
 
-        public OrdersController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+        public OrdersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
         {
         }
     }

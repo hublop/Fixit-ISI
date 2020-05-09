@@ -1,4 +1,7 @@
-﻿using Fixit.Infrastructure.Services.Mail;
+﻿using Fixit.Application.Common.Services;
+using Fixit.Infrastructure.Services;
+using Fixit.Infrastructure.Services.Identity;
+using Fixit.Infrastructure.Services.Mail;
 using Fixit.Infrastructure.Services.Media;
 using Fixit.Infrastructure.Services.Sms;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +16,8 @@ namespace Fixit.Infrastructure
             services.AddMailService(config);
             services.AddSmsService(config);
             services.AddMediaService(config);
+            services.AddIdentityServices(config);
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             return services;
         }

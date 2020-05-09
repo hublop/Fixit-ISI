@@ -1,6 +1,6 @@
-﻿
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
+using Fixit.Application.Common.Services;
 using Fixit.WebApi.Controllers;
 using Fixit.Application.Customers.Commands.RegisterCustomer;
 using MediatR;
@@ -20,8 +20,8 @@ namespace Fixit.WebApi.Customers
       return await HandleCommandAsync(command);
     }
 
-    public CustomersController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
-    {
+    public CustomersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
+        {
     }
   }
 }

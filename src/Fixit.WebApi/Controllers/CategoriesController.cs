@@ -7,6 +7,7 @@ using Fixit.Application.Categories.Commands.AddSubcategory;
 using Fixit.Application.Categories.Commands.RemoveCategory;
 using Fixit.Application.Categories.Queries.GetCategories;
 using Fixit.Application.Categories.Queries.GetCategory;
+using Fixit.Application.Common.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -60,7 +61,7 @@ namespace Fixit.WebApi.Controllers
             throw new NotImplementedException();
         }
 
-        public CategoriesController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+        public CategoriesController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
         {
         }
     }
