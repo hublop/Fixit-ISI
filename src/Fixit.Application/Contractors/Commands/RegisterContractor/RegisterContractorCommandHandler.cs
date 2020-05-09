@@ -31,29 +31,13 @@ namespace Fixit.Application.Contractors.Commands.RegisterContractor
         throw new UserAlreadyExistsException(request.Email);
       }
 
-      /// If there is already location with specified PlaceId, then we use it. In other case we create new Location.
-      /// There is a difference between this and original project, as we get PlaceId from the forntend, not te foreign key to location.
-      var location =
-        await _dbContext.Locations.SingleOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
-       
-      if (location == null)
-      {
-        var response = await _dbContext.Locations.AddAsync(new Location
-        {
-          PlaceId = request.PlaceId,
-        }, cancellationToken);
-
-        location = response.Entity;
-      }
-
       var contractor = new Contractor
       {
         FirstName = request.FirstName,
         LastName = request.LastName,
         Email = request.Email,
         CompanyName = request.CompanyName,
-        PhoneNumber = request.PhoneNumber,
-        LocationId = location.Id
+        PhoneNumber = request.PhoneNumber
       };
 
       contractor.UserName = contractor.Email;

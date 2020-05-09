@@ -30,10 +30,6 @@ namespace Fixit.Application.Contractors.Commands.RegisterContractor
       RuleFor(x => x.PhoneNumber)
         .NotNull()
         .NotEmpty();
-
-      RuleFor(x => x.PlaceId)
-        .NotNull()
-        .NotEmpty();
     }
   }
 }
