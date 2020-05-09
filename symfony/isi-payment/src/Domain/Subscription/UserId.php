@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Domain\Order;
+namespace App\Domain\Subscription;
 
 use App\Common\ExternalUUID;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class UserId
- * @package App\Domain\Order
+ * @package App\Domain\Subscription
  * @ORM\Embeddable
  */
 class UserId

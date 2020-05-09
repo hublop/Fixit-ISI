@@ -43,13 +43,21 @@ class Subscription implements \JsonSerializable
      */
     private \DateTimeImmutable $nextPaymentDate;
 
+    /**
+     * @var UserId
+     * @ORM\Embedded(class="App\Domain\Subscription\UserId", columnPrefix=false)
+     */
+    private UserId $userId;
+
     public function __construct(
         SubscriptionId $id,
+        UserId $userId,
         Status $status,
         Email $email,
         \DateTimeImmutable $dateTime,
         \DateTimeImmutable $nextPaymentDate
     ) {
+        $this->userId = $userId;
         $this->id = $id;
         $this->status = $status;
         $this->email = $email;
@@ -57,10 +65,11 @@ class Subscription implements \JsonSerializable
         $this->nextPaymentDate = $nextPaymentDate;
     }
 
-    public static function subscription(Status $status, Email $email): self
+    public static function subscription(UserId $userId, Status $status, Email $email): self
     {
         return new self(
             SubscriptionId::newOne(),
+            $userId,
             $status,
             $email,
             Clock::system()->currentDateTime(),
@@ -116,6 +125,7 @@ class Subscription implements \JsonSerializable
     {
         return [
             'id' => (string) $this->id,
+            'userId' => (string) $this->userId,
             'status' => $this->status->getValue(),
             'email' => (string) $this->email
         ];
@@ -127,5 +137,29 @@ class Subscription implements \JsonSerializable
     public function getEmail(): Email
     {
         return $this->email;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getDateTime(): \DateTimeImmutable
+    {
+        return $this->dateTime;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getNextPaymentDate(): \DateTimeImmutable
+    {
+        return $this->nextPaymentDate;
+    }
+
+    /**
+     * @return UserId
+     */
+    public function getUserId(): UserId
+    {
+        return $this->userId;
     }
 }

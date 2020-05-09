@@ -16,19 +16,17 @@ use App\Domain\Payment\Gateway\GatewayInterface;
 use App\Domain\Payment\Payment;
 use App\Domain\Payment\PaymentToken;
 use App\Domain\Payment\Status;
+use App\Domain\Subscription\SubscriptionActivated;
+use App\Domain\Subscription\SubscriptionDeactivated;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class ProcessPaymentService
 {
     private array $configuration;
-    /**
-     * @var OrderFacade
-     */
     private OrderFacade $orderService;
-    /**
-     * @var GatewayInterface
-     */
     private GatewayInterface $paymentGateway;
+    private MessageBusInterface $messageBus;
 
     /**
      * @var EntityManagerInterface
@@ -39,12 +37,14 @@ class ProcessPaymentService
         OrderFacade $orderService,
         array $payuConfig,
         GatewayInterface $paymentGateway,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        MessageBusInterface $messageBus
     ) {
         $this->paymentGateway = $paymentGateway;
         $this->configuration  = $payuConfig;
         $this->orderService   = $orderService;
         $this->entityManager  = $entityManager;
+        $this->messageBus = $messageBus;
     }
 
     public function processPayment(
@@ -96,8 +96,21 @@ class ProcessPaymentService
         $this->entityManager->persist($subscription);
         $this->entityManager->flush();
         if ($result->getStatus() == Status::success) {
+            $this->messageBus->dispatch(new SubscriptionActivated(
+                $subscription->id(),
+                $subscription->getUserId(),
+                \App\Domain\Subscription\Status::active(),
+                $subscription->getNextPaymentDate(),
+                $subscription->getDateTime()
+            ));
             return Result::success();
         } else {
+            $this->messageBus->dispatch(new SubscriptionDeactivated(
+                $subscription->id(),
+                $subscription->getUserId(),
+                \App\Domain\Subscription\Status::active(),
+                $subscription->getDateTime()
+            ));
             return Result::failure($result->getMessage(), 400);
         }
     }

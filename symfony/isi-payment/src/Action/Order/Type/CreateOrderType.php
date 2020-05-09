@@ -9,7 +9,7 @@ use App\Common\Type\AbstractType;
 use App\Domain\Order\Firstname;
 use App\Domain\Order\Lastname;
 use App\Domain\Order\OrderValue;
-use App\Domain\Order\UserId;
+use App\Domain\Subscription\UserId;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
