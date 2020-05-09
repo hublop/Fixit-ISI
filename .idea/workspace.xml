@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4bb00025-7414-4710-96d6-6cb92cf24ecb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.sh" beforeDir="false" afterPath="$PROJECT_DIR$/setup.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Fixit.WebApi/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/Fixit.WebApi/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1588955135621</updated>
       <workItem from="1588955137219" duration="1094000" />
-      <workItem from="1589026310693" duration="7141000" />
+      <workItem from="1589026310693" duration="7188000" />
     </task>
     <servers />
   </component>
