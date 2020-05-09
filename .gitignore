@@ -359,3 +359,5 @@ symfony/isi-payment/public/bundles/
 symfony/isi-payment/var/
 symfony/isi-payment/vendor/
 symfony/.idea
+.idea/
+.idea

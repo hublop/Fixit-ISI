@@ -14,8 +14,8 @@ x-db: &db_template
 x-mssql: &mssql_template
   image: "mcr.microsoft.com/mssql/server"
   environment:
-    - sa_password=${MS_SQL_PASSWORD:-P@ssw0rd}
-    - SA_PASSWORD=${MS_SQL_PASSWORD:-P@ssw0rd}
+    - sa_password=${MSSQL_PASSWORD:-P@ssw0rd}
+    - SA_PASSWORD=${MSSQL_PASSWORD:-P@ssw0rd}
     - ACCEPT_EULA="Y"
   networks:
     - fixit
@@ -44,6 +44,14 @@ x-frontend: &frontend-template
   build: ./src/Fixit.ClientApp
   networks:
     - fixit
+x-rabbit: &rabbit-template
+  image: rabbitmq:3.8-management-alpine
+  environment:
+    - RABBITMQ_DEFAULT_USER=${RABBIT_USER:-rabbit}
+    - RABBITMQ_DEFAULT_PASS=${RABBIT_PASS:-rabbit}
+  networks:
+    - fixit
+
 services:
   dotnet_migration:
     container_name: isi-app-migration
@@ -107,6 +115,12 @@ services:
     restart: on-failure
     networks:
       - fixit
+  rabbit_mq:
+    container_name: isi_rabbit
+    <<: *rabbit-template
+    ports:
+      - "${RABBIT_PANEL:-8081}:15672"
+      - "5672:5672"
 
 volumes:
   data-mysql:

@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @method static self pastDue()
  * @method static self disabled()
  * @method static self inactive()
+ * @method static self cancelled()
  * @ORM\Embeddable
  */
 class Status extends Enum
@@ -18,6 +19,7 @@ class Status extends Enum
     private const pastDue = 'pastDue';
     private const disabled = 'disabled';
     private const inactive = 'inactive';
+    private const cancelled = 'cancelled';
     /**
      * @var string
      * @ORM\Column(type="string", name="status")

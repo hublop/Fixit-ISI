@@ -13,7 +13,7 @@ class OrderValue
 {
     /**
      * @var int
-     * @ORM\Column(name="orderValue", type="integer")
+     * @ORM\Column(name="totalValue", type="integer")
      */
     private int $value;
 

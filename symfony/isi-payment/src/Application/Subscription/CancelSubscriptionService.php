@@ -1,27 +1,35 @@
 <?php
+
 namespace App\Application\Subscription;
 
+use App\Application\Order\OrderFacade;
 use App\Common\Result;
+use App\Common\SystemClock;
 use App\Common\UUID;
+use App\Domain\Subscription\Status;
 use App\Domain\Subscription\Subscription;
+use App\Domain\Subscription\SubscriptionCancelled;
 use App\Infrastructure\Doctrine\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 final class CancelSubscriptionService
 {
-    /**
-     * @var SubscriptionRepository
-     */
     private SubscriptionRepository $subscriptionRepository;
-    /**
-     * @var EntityManagerInterface
-     */
     private EntityManagerInterface $entityManager;
+    private MessageBusInterface $messageBus;
+    private OrderFacade $orderFacade;
 
-    public function __construct(SubscriptionRepository $subscriptionRepository, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        SubscriptionRepository $subscriptionRepository,
+        EntityManagerInterface $entityManager,
+        MessageBusInterface $messageBus,
+        OrderFacade $orderFacade
+    ) {
         $this->subscriptionRepository = $subscriptionRepository;
-        $this->entityManager = $entityManager;
+        $this->entityManager          = $entityManager;
+        $this->messageBus             = $messageBus;
+        $this->orderFacade            = $orderFacade;
     }
 
     /**
@@ -40,6 +48,12 @@ final class CancelSubscriptionService
         }
         $this->entityManager->persist($subscription);
         $this->entityManager->flush();
+        $this->messageBus->dispatch(new SubscriptionCancelled(
+            $subscription->id(),
+            $subscription->getUserId(),
+            Status::cancelled(),
+            SystemClock::system()->currentDateTime()
+        ));
         return Result::success();
     }
 }
