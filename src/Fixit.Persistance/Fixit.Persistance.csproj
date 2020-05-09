@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fixit.Application\Fixit.Application.csproj" />
+    <ProjectReference Include="..\Fixit.Domain\Fixit.Domain.csproj" />
     <ProjectReference Include="..\Fixit.Infrastructure\Fixit.Infrastructure.csproj" />
     <ProjectReference Include="..\Fixit.Shared\Fixit.Shared.csproj" />
   </ItemGroup>
