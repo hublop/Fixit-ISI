@@ -11,7 +11,7 @@ namespace Fixit.Application.Contractors.Queries.GetList
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string CompanyName { get; set; }
-        public string City { get; set; }
+        public string PlaceId { get; set; }
         public double AvgRating { get; set; }
         public int OpinionsCount { get; set; }
         public string NewestOpinion { get; set; }
@@ -24,9 +24,8 @@ namespace Fixit.Application.Contractors.Queries.GetList
         public GetContractorsListQueryMapping()
         {
             CreateMap<Contractor, ContractorForList>()
-                // TODO: MAP FROM GOOGLE MAPS SOMEHOW, HARDCODED FOR NOW
-                .ForMember(dest => dest.City, opts =>
-                    opts.MapFrom(src => "Warszawa"))
+                .ForMember(dest => dest.PlaceId, opts =>
+                    opts.MapFrom(src => src.Location.PlaceId))
                 //.ForMember(dest => dest.City, opts =>
                 //    opts.MapFrom(src => src.Location.City))
                 .ForMember(dest => dest.AvgRating, opts =>
