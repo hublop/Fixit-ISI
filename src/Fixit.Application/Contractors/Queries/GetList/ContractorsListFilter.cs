@@ -4,6 +4,6 @@
     {
         public int? SubcategoryId { get; set; }
         public string NameSearchString { get; set; }
-        public int? LocationId { get; set; }
+        public string PlaceId { get; set; }
     }
 }

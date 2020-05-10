@@ -41,9 +41,9 @@ namespace Fixit.Application.Contractors.Queries.GetList
                     x.RepairServices.Any(y => y.SubCategoryId == request.ContractorsListFilter.SubcategoryId.Value));
             }
 
-            if (request.ContractorsListFilter.LocationId.HasValue)
+            if (!string.IsNullOrEmpty(request.ContractorsListFilter.PlaceId))
             {
-                contractorsQuery = contractorsQuery.Where(x => x.LocationId == request.ContractorsListFilter.LocationId);
+                contractorsQuery = contractorsQuery.Where(x => x.Location.PlaceId == request.ContractorsListFilter.PlaceId);
             }
 
             if (!string.IsNullOrEmpty(request.ContractorsListFilter.NameSearchString))
