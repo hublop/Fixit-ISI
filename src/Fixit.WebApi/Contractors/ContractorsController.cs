@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Fixit.Application.Common.Services;
+using Fixit.Application.Contractors.Commands.AddRepairService;
 using Fixit.Application.Contractors.Commands.RegisterContractor;
 using Fixit.Application.Contractors.Queries.GetList;
 using Fixit.Application.Contractors.Queries.GetProfile;
 using Fixit.Shared.Pagination;
+using Fixit.WebApi.Common;
 using Fixit.WebApi.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -44,6 +46,26 @@ namespace Fixit.WebApi.Contractors
         public async Task<IActionResult> GetProfile([FromRoute] int contractorId)
         {
             return await HandleQueryAsync(new GetProfileQuery { ContractorId = contractorId });
+        }
+
+        [HttpPost("{contractorId}/services/{subcategoryId}")]
+        [ProducesResponseType(200)]
+        [Authorize(Policy = Roles.Contractor)]
+        public async Task<IActionResult> AddRepairServiceAsync([FromRoute] int contractorId,
+            [FromRoute] int subcategoryId)
+        {
+            if (!CurrentUserService.IsUser(contractorId))
+            {
+                return BadRequest();
+            }
+
+            var command = new AddRepairServiceCommand
+            {
+                ContractorId = contractorId,
+                SubcategoryId = subcategoryId
+            };
+
+            return await HandleCommandAsync(command);
         }
 
         public ContractorsController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
