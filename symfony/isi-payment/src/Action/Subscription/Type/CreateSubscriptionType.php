@@ -112,7 +112,7 @@ class CreateSubscriptionType extends AbstractType
     {
         parent::__construct($request);
         $this->name = new Name("Fit.IT Premium account");
-
+        $this->setCost(4999);
     }
 
 }
