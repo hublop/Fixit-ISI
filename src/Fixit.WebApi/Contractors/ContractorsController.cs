@@ -4,6 +4,7 @@ using AutoMapper;
 using Fixit.Application.Common.Services;
 using Fixit.Application.Contractors.Commands.AddRepairService;
 using Fixit.Application.Contractors.Commands.RegisterContractor;
+using Fixit.Application.Contractors.Commands.RemoveRepairService;
 using Fixit.Application.Contractors.Queries.GetList;
 using Fixit.Application.Contractors.Queries.GetProfile;
 using Fixit.Shared.Pagination;
@@ -67,6 +68,27 @@ namespace Fixit.WebApi.Contractors
 
             return await HandleCommandAsync(command);
         }
+
+        [HttpDelete("{contractorId}/services/{subcategoryId}")]
+        [ProducesResponseType(200)]
+        [Authorize(Policy = Roles.Contractor)]
+        public async Task<IActionResult> RemoveRepairServiceAsync([FromRoute] int contractorId,
+            [FromRoute] int subcategoryId)
+        {
+            if (!CurrentUserService.IsUser(contractorId))
+            {
+                return BadRequest();
+            }
+
+            var command = new RemoveRepairServiceCommand
+            {
+                ContractorId = contractorId,
+                SubcategoryId = subcategoryId
+            };
+
+            return await HandleCommandAsync(command);
+        }
+
 
         public ContractorsController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
         {
