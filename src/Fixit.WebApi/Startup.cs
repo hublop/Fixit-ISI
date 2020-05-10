@@ -67,6 +67,12 @@ namespace Fixit.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseCors(builder =>
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
 
             app.UseCustomExceptionHandler();
             app.UseHttpsRedirection();
