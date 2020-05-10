@@ -3,14 +3,9 @@
 namespace App\Application\Order;
 
 use App\Application\Payment\WidgetService;
-use App\Application\Subscription\CreateSubscriptionService;
-use App\Common\Email;
-use App\Common\Result;
-use App\Common\Url;
 use App\Common\UUID;
 use App\Domain\Order;
 use App\Domain\Subscription;
-use App\Domain\Subscription\UserId;
 use App\Infrastructure\Doctrine\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -21,17 +16,13 @@ class OrderFacade
      */
     private CreateOrderService $createOrderService;
     /**
-     * @var \App\Infrastructure\Doctrine\OrderRepository
+     * @var OrderRepository
      */
     private OrderRepository $orderRepository;
     /**
      * @var EntityManagerInterface
      */
     private EntityManagerInterface $em;
-    /**
-     * @var CreateSubscriptionService
-     */
-    private CreateSubscriptionService $createSubscriptionService;
     /**
      * @var WidgetService
      */
@@ -41,14 +32,12 @@ class OrderFacade
     public function __construct(
         CreateOrderService $createOrderService,
         OrderRepository $orderRepository,
-        CreateSubscriptionService $createSubscriptionService,
         EntityManagerInterface $entityManager,
         WidgetService $widgetService,
         array $payuConfig
     ) {
         $this->createOrderService        = $createOrderService;
         $this->orderRepository           = $orderRepository;
-        $this->createSubscriptionService = $createSubscriptionService;
         $this->em                        = $entityManager;
         $this->widgetService = $widgetService;
         $this->configuration = $payuConfig;
@@ -63,39 +52,6 @@ class OrderFacade
         return $this->orderRepository->findByUUID($uuid);
     }
 
-    public function createOrder(
-        UserId $userId,
-        Email $userEmail,
-        Order\Firstname $firstname,
-        Order\Lastname $lastname,
-        Order\OrderValue $totalAmount
-    ) {
-        try {
-            $order = $this->createOrderService->create(
-                $userId,
-                $userEmail,
-                $firstname,
-                $lastname,
-                $totalAmount,
-                Subscription\Status::inactive()
-            );
-            $widget = $this->widgetService->getPaymentWidget($order);
-
-        } catch (\Exception $exception) {
-            return Result::failure($exception->getMessage(), 400);
-        }
-        return Result::success([
-            new Order\OrderCreated(
-                $order->getId(),
-                $order->getSubscription()->getUserId(),
-                $order->getOrderValue(),
-                $order->getSubscription()->id(),
-                new Url($this->configuration['url']),
-                $widget
-            )
-        ]);
-    }
-
     /**
      * @param Subscription\Subscription $subscription
      * @return Order\Order
@@ -105,8 +61,8 @@ class OrderFacade
         return $this->orderRepository->findOneBy(['subscription' => $subscription->id()], ['createdAt' => 'DESC']);
     }
 
-    public function createRucurringOrder(Order\Order $oldOrder): Order\Order
+    public function createRucurringOrder(Subscription\Subscription $oldOrder): Order\Order
     {
-        return $this->createOrderService->createRecurredOrder($oldOrder);
+        return $this->createOrderService->createRecurringOrderFromSubscription($oldOrder);
     }
 }

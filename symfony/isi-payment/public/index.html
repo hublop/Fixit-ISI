@@ -54,10 +54,10 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="totalAmount">Total amount</label>
-                        <input name="totalAmount" type="number" class="form-control" id="totalAmount" placeholder="1000" required="">
+                        <label for="cost">Total amount</label>
+                        <input name="cost" type="number" class="form-control" id="cost" placeholder="1000" required="">
                         <div class="invalid-feedback">
-                            Please enter total amount value
+                            Please enter cost value
                         </div>
                     </div>
                     <button class="btn btn-success">Pay now</button>
@@ -137,7 +137,7 @@
                             event.stopPropagation();
                             event.preventDefault();
                             $.ajax({
-                                url: "/order",
+                                url: "/subscription",
                                 dataType: "json",
                                 data: data,
                                 method: "POST"

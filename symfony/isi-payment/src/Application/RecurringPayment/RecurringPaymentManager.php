@@ -55,14 +55,19 @@ class RecurringPaymentManager
         $subscriptions = $this->subscriptionService->findSubscriptionToReccure($dateTimeImmutable);
         foreach ($subscriptions as $subscription) {
             $oldOrder = $this->orderService->getLastSubscriptionOrder($subscription);
+            if ($subscription->isCancelled()) {
+                yield $this->subscriptionService->disableSubscription($subscription);
+                continue;
+            }
             $payment  = $oldOrder->getPayment();
-            $order    = $this->orderService->createRucurringOrder($oldOrder);
+            $order    = $this->orderService->createRucurringOrder($subscription);
             if (!$payment->getToken() instanceof PaymentToken) {
                 yield Result::failure(sprintf(
                     "Could not process payment for subscription %s: missing payment token",
                     (string)$subscription->id()
                 ),
                     400);
+                continue;
             }
 
             yield $this->paymentService->processPayment(

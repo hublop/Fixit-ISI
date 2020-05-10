@@ -1,25 +1,32 @@
 <?php
+/**
+ * @category    Fixit-ISI
+ * @date        10/05/2020
+ * @author      Michał Bolka <mbolka@divante.co>
+ * @copyright   Copyright (c) 2020 Divante Ltd. (https://divante.co)
+ */
 
-namespace App\Domain\Order;
+namespace App\Domain\Subscription;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Firstname
- * @package App\Domain\Order
+ * Class Name
+ * @package App\Domain\Subscription
  * @ORM\Embeddable
  */
-class Firstname
+class Name
 {
     /**
      * @var string
-     * @ORM\Column(name="firstname", type="string")
+     * @ORM\Column(name="name", type="string")
      */
     private string $value;
 
     public function __construct(string $value)
     {
         if ($value == "") {
-            throw new \InvalidArgumentException('Invalid firstname format');
+            throw new \InvalidArgumentException('Invalid subscription name');
         }
 
         $this->value = $value;
