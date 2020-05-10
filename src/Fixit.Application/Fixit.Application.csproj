@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Services\Identity\" />
-    <Folder Include="Contractors\Queries\" />
     <Folder Include="Customers\Queries\" />
     <Folder Include="Orders\Exceptions\" />
     <Folder Include="Orders\Queries\" />
