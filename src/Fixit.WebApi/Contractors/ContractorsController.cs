@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Fixit.Application.Common.Services;
 using Fixit.Application.Contractors.Commands.RegisterContractor;
+using Fixit.Application.Contractors.Queries.GetList;
+using Fixit.Shared.Pagination;
 using Fixit.WebApi.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +22,22 @@ namespace Fixit.WebApi.Contractors
       return await HandleCommandAsync(command);
     }
 
-    public ContractorsController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
+    [HttpGet]
+    [ProducesResponseType(typeof(IList<ContractorForList>), 200)]
+    [AllowAnonymous]
+    public async Task<IActionResult> Get([FromQuery] PagingParams pagingParams,
+        [FromQuery] ContractorsListFilter filter)
+    {
+        var query = new GetContractorsListQuery
+        {
+            ContractorsListFilter = filter,
+            PagingParams = pagingParams
+        };
+
+        return await HandleQueryWithPagingAsync(query);
+    }
+
+        public ContractorsController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
         {
     }
   }
