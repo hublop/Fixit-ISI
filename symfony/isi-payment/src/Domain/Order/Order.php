@@ -2,6 +2,9 @@
 
 namespace App\Domain\Order;
 use App\Common\Clock;
+use App\Common\Email;
+use App\Common\Firstname;
+use App\Common\Lastname;
 use App\Common\Result;
 use App\Domain\Payment\Payment;
 use App\Domain\Subscription\Subscription;
@@ -29,15 +32,20 @@ class Order implements \JsonSerializable
     private Subscription $subscription;
     /**
      * @var Firstname
-     * @ORM\Embedded(class="App\Domain\Order\Firstname", columnPrefix=false)
+     * @ORM\Embedded(class="App\Common\Firstname", columnPrefix=false)
      */
     private Firstname $firstname;
 
     /**
      * @var Lastname
-     * @ORM\Embedded(class="App\Domain\Order\Lastname", columnPrefix=false)
+     * @ORM\Embedded(class="App\Common\Lastname", columnPrefix=false)
      */
     private Lastname $lastname;
+    /**
+     * @var Email
+     * @ORM\Embedded(class="App\Common\Email", columnPrefix=false)
+     */
+    private Email $email;
 
     /**
      * @var OrderValue
@@ -67,6 +75,7 @@ class Order implements \JsonSerializable
         OrderId $id,
         Firstname $firstname,
         Lastname $lastname,
+        Email $email,
         OrderValue $value,
         Status $status,
         Subscription $subscription,
@@ -78,6 +87,7 @@ class Order implements \JsonSerializable
         $this->subscription = $subscription;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
+        $this->email = $email;
         $this->orderValue = $value;
         $this->payment = $payment;
         $this->createdAt = $createdAt;
@@ -86,6 +96,7 @@ class Order implements \JsonSerializable
     public static function order(
         Firstname $firstname,
         Lastname $lastname,
+        Email $email,
         OrderValue $value,
         Status $status,
         ?Payment $payment,
@@ -95,6 +106,7 @@ class Order implements \JsonSerializable
             OrderId::newOne(),
             $firstname,
             $lastname,
+            $email,
             $value,
             $status,
             $subscription,
@@ -155,20 +167,6 @@ class Order implements \JsonSerializable
     public function getId(): OrderId
     {
         return $this->id;
-    }
-
-    public static function createRecurredOrder(self $oldOrder): self
-    {
-        return new self(
-            OrderId::newOne(),
-            $oldOrder->firstname,
-            $oldOrder->lastname,
-            $oldOrder->orderValue,
-            Status::processing(),
-            $oldOrder->subscription,
-            $oldOrder->payment,
-            Clock::system()->currentDateTime()
-        );
     }
 
     public function addPayment(Payment $payment): void

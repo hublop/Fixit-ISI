@@ -4,8 +4,9 @@ then
   export $(cat .env | sed 's/#.*//g' | xargs)
 fi
 sed -i "s/MSSQL_PASSWORD_IT_WILL_BE_REPLACED/$MSSQL_PASSWORD/g" src/Fixit.WebApi/appsettings.json
-sed -i "s/RABBIT_USER/$RABBIT_USER/g" symfony/isi-payment/.env
-sed -i "s/RABBIT_PASS/$RABBIT_PASS/g" symfony/isi-payment/.env
+cp symfony/isi-payment/.env symfony/isi-payment/.env.local
+sed -i "s/RABBIT_USER/$RABBIT_USER/g" symfony/isi-payment/.env.local
+sed -i "s/RABBIT_PASS/$RABBIT_PASS/g" symfony/isi-payment/.env.local
 docker-compose down -v
 docker-compose build dotnet
 docekr-compose build frontend

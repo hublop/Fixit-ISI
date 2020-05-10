@@ -50,4 +50,8 @@ class SubscriptionActivated implements DomainEvent, \JsonSerializable
             'createdAt' => $this->createdAt
         ];
     }
+    public function __toString()
+    {
+     return sprintf("Subscription %s was activated", $this->subscriptionId);
+    }
 }

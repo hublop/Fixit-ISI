@@ -4,6 +4,8 @@ namespace App\Domain\Subscription;
 
 use App\Common\Clock;
 use App\Common\Email;
+use App\Common\Firstname;
+use App\Common\Lastname;
 use App\Common\Result;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,6 +22,11 @@ class Subscription implements \JsonSerializable
      */
     private SubscriptionId $id;
     /**
+     * @var Name
+     * @ORM\Embedded(class="App\Domain\Subscription\Name", columnPrefix=false)
+     */
+    private Name $name;
+    /**
      * @var Status
      * @ORM\Embedded(class="App\Domain\Subscription\Status", columnPrefix=false)
      */
@@ -30,6 +37,18 @@ class Subscription implements \JsonSerializable
      * @ORM\Embedded(class="App\Common\Email", columnPrefix=false)
      */
     private Email $email;
+
+    /**
+     * @var Firstname
+     * @ORM\Embedded(class="App\Common\Firstname", columnPrefix=false)
+     */
+    private Firstname $firstname;
+
+    /**
+     * @var Lastname
+     * @ORM\Embedded(class="App\Common\Lastname", columnPrefix=false)
+     */
+    private Lastname $lastname;
 
     /**
      * @var \DateTimeImmutable
@@ -48,30 +67,53 @@ class Subscription implements \JsonSerializable
      * @ORM\Embedded(class="App\Domain\Subscription\UserId", columnPrefix=false)
      */
     private UserId $userId;
+    /**
+     * @var Cost
+     * @ORM\Embedded(class="App\Domain\Subscription\Cost", columnPrefix=false)
+     */
+    private Cost $cost;
 
     public function __construct(
         SubscriptionId $id,
-        UserId $userId,
+        Name $name,
         Status $status,
+        Cost $cost,
+        UserId $userId,
         Email $email,
+        Firstname $firstname,
+        Lastname $lastname,
         \DateTimeImmutable $dateTime,
         \DateTimeImmutable $nextPaymentDate
     ) {
-        $this->userId = $userId;
-        $this->id = $id;
-        $this->status = $status;
-        $this->email = $email;
-        $this->dateTime = $dateTime;
+        $this->userId          = $userId;
+        $this->name            = $name;
+        $this->id              = $id;
+        $this->cost            = $cost;
+        $this->status          = $status;
+        $this->email           = $email;
+        $this->firstname       = $firstname;
+        $this->lastname        = $lastname;
+        $this->dateTime        = $dateTime;
         $this->nextPaymentDate = $nextPaymentDate;
     }
 
-    public static function subscription(UserId $userId, Status $status, Email $email): self
-    {
+    public static function newSubscription(
+        Name $name,
+        UserId $userId,
+        Cost $cost,
+        Email $email,
+        Firstname $firstname,
+        Lastname $lastname
+    ): self {
         return new self(
             SubscriptionId::newOne(),
+            $name,
+            Status::inactive(),
+            $cost,
             $userId,
-            $status,
             $email,
+            $firstname,
+            $lastname,
             Clock::system()->currentDateTime(),
             Clock::system()->currentDateTime()->add(\DateInterval::createFromDateString("1 month"))
         );
@@ -79,7 +121,7 @@ class Subscription implements \JsonSerializable
 
     public function activate(): Result
     {
-        $this->status = Status::active();
+        $this->status          = Status::active();
         $this->nextPaymentDate = Clock::system()->currentDateTime()->add(\DateInterval::createFromDateString("1 month"));
         return Result::success();
     }
@@ -94,16 +136,18 @@ class Subscription implements \JsonSerializable
         return Result::success();
     }
 
-    public function markAsPastDue(): Result
+    public function cancel(): Result
     {
-        $this->status = Status::pastDue();
-
+        if ($this->status != Status::active()) {
+            return Result::failure("Only active subscriptions can be cancelled");
+        }
+        $this->status = Status::cancelled();
         return Result::success();
     }
 
     public function isActive(): bool
     {
-        return $this->status->equals(Status::activated());
+        return $this->status->equals(Status::active());
     }
 
     public function isDisabled(): bool
@@ -111,9 +155,10 @@ class Subscription implements \JsonSerializable
         return $this->status->equals(Status::disabled());
     }
 
-    public function isPastDue(): bool
+
+    public function isCancelled(): bool
     {
-        return $this->status->equals(Status::pastDue());
+        return $this->status->equals(Status::cancelled());
     }
 
     public function id(): SubscriptionId
@@ -124,10 +169,11 @@ class Subscription implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'id' => (string) $this->id,
-            'userId' => (string) $this->userId,
+            'id'     => (string)$this->id,
+            'name'   => (string)$this->name,
+            'userId' => (string)$this->userId,
             'status' => $this->status->getValue(),
-            'email' => (string) $this->email
+            'email'  => (string)$this->email
         ];
     }
 
@@ -161,5 +207,29 @@ class Subscription implements \JsonSerializable
     public function getUserId(): UserId
     {
         return $this->userId;
+    }
+
+    /**
+     * @return Cost
+     */
+    public function getCost(): Cost
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @return Firstname
+     */
+    public function getFirstname(): Firstname
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @return Lastname
+     */
+    public function getLastname(): Lastname
+    {
+        return $this->lastname;
     }
 }

@@ -1,25 +1,23 @@
 <?php
 
-namespace App\Domain\Order;
+namespace App\Common;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Lastname
- * @package App\Domain\Order
  * @ORM\Embeddable
  */
-class Lastname
+class Firstname
 {
     /**
      * @var string
-     * @ORM\Column(name="lastname", type="string")
+     * @ORM\Column(name="firstname", type="string")
      */
     private string $value;
 
     public function __construct(string $value)
     {
         if ($value == "") {
-            throw new \InvalidArgumentException('Invalid lastname format');
+            throw new \InvalidArgumentException('Invalid firstname format');
         }
 
         $this->value = $value;

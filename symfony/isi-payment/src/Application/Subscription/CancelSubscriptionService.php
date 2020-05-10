@@ -42,7 +42,7 @@ final class CancelSubscriptionService
         if (!$subscription instanceof Subscription) {
             return Result::failure(sprintf('Subscription with UUID \'%s\' was not found', (string)$uuid), 404);
         }
-        $result = $subscription->disable();
+        $result = $subscription->cancel();
         if (!$result instanceof Result\Success) {
             return $result;
         }
