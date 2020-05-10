@@ -33,7 +33,12 @@ namespace Fixit.WebApi
             services.RegisterEventBus(Configuration);
 
             services.AddMvc()
-                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<IFixitDbContext>(); });
+                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<IFixitDbContext>(); })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
             //services.AddTransient<OrderStartedIntegrationEventHandler>();
 
             services.ConfigureJwt(Configuration);
