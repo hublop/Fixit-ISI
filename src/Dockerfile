@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 as base
+ENV ASPNETCORE_ENVIRONMENT Development
 WORKDIR /app
 EXPOSE 80
 
@@ -17,10 +18,10 @@ COPY Fixit.WebApi/*.csproj ./Fixit.WebApi/
 RUN dotnet restore
 COPY . .
 WORKDIR /src/Fixit.WebApi
-RUN dotnet build -c Release -o /app
+RUN dotnet build -c Development -o /app
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /app
+RUN dotnet publish -c Development -o /app
 
 FROM base AS final
 WORKDIR /app
