@@ -54,9 +54,6 @@ export class RegisterContractorComponent implements OnInit {
       phoneNumber: new FormControl('', [
         Validators.required,
         Validators.maxLength(100)
-      ]),
-      locationId: new FormControl('', [
-        Validators.required
       ])
     });
   }
@@ -73,6 +70,4 @@ export class RegisterContractorComponent implements OnInit {
       this.errors = 'Użytkownik z podanym adresem e-mail już istnieje';
     });
   }
-
-
 }
