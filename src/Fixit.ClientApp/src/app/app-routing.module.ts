@@ -7,13 +7,8 @@ import { LoginComponent } from './modules/auth/login/login.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'contractors',
     pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    canActivate: [LoginGuard],
-    component: LoginComponent
   },
   {
     path: '**',
@@ -29,11 +24,16 @@ export const routes: Routes = [
     path: 'contractors',
     runGuardsAndResolvers: 'always',
     loadChildren: () => import('./modules/contractors/contractors.module').then(m => m.ContractorsModule)
-  }
+  },
+  {
+    path: 'login',
+    canActivate: [LoginGuard],
+    component: LoginComponent
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
