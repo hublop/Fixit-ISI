@@ -2,7 +2,7 @@
 
 namespace Fixit.Application.Customers.Commands.UpdatePersonalData
 {
-    public class UpdatePersonalDataCommandValidator : AbstractValidator<UpdatePersonalDataCommand>
+    public class UpdatePersonalDataCommandValidator : AbstractValidator<UpdateCustomerPersonalDataCommand>
     {
         public UpdatePersonalDataCommandValidator()
         {
