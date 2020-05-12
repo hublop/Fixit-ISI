@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fixit.Domain\Fixit.Domain.csproj" />
+    <ProjectReference Include="..\Fixit.EventBus\Fixit.EventBus.csproj" />
     <ProjectReference Include="..\Fixit.Shared\Fixit.Shared.csproj" />
   </ItemGroup>
 
