@@ -3,6 +3,8 @@ using AutoMapper;
 using Fixit.Application.Common.Services;
 using Fixit.WebApi.Controllers;
 using Fixit.Application.Customers.Commands.RegisterCustomer;
+using Fixit.Application.Customers.Commands.UpdatePersonalData;
+using Fixit.WebApi.Common;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,23 @@ namespace Fixit.WebApi.Customers
       return await HandleCommandAsync(command);
     }
 
-    public CustomersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
+    [HttpPut("{id}")]
+    [ProducesResponseType(200)]
+    [Authorize(Policy = RolePolicies.RequireCustomer)]
+    public async Task<IActionResult> UpdateContractorPersonalDataAsync([FromRoute] int id,
+        [FromBody] UpdatePersonalDataCommand command)
+    {
+        if (!CurrentUserService.IsUser(id))
+        {
+            return BadRequest();
+        }
+
+        command.Id = id;
+
+        return await HandleCommandAsync(command);
+    }
+
+        public CustomersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
         {
     }
   }
