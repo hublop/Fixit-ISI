@@ -25,7 +25,8 @@ namespace Fixit.Application.Contractors.Queries.GetProfile
         public IList<CategoryInProfile> Categories { get; set; }
         public IList<OpinionsInProfile> Opinions { get; set; }
         public IList<RepairService> RepairServices { get; set; }
-    }
+        public string ContractorUUID { get; set; }
+  }
 
     public class GetProfileQueryMapping : Profile
     {

@@ -17,7 +17,8 @@ namespace Fixit.Application.Contractors.Queries.GetList
         public string NewestOpinion { get; set; }
         public string ImageUrl { get; set; }
         public List<string> Specializations { get; set; }
-    }
+        public string ContractorUUID { get; set; }
+  }
 
     public class GetContractorsListQueryMapping : Profile
     {

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fixit.Persistance.Migrations
 {
     [DbContext(typeof(FixitDbContext))]
-    [Migration("20200509111951_Add_SubscrpiId")]
-    partial class Add_SubscrpiId
+    [Migration("20200512205033_fixForContractor")]
+    partial class fixForContractor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,6 +24,7 @@ namespace Fixit.Persistance.Migrations
                 .HasAnnotation("Relational:Sequence:.LocationSequence", "'LocationSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.OpinionSequence", "'OpinionSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.SubCategorySequence", "'SubCategorySequence', '', '1', '10', '', '', 'Int64', 'False'")
+                .HasAnnotation("Relational:Sequence:.SubscriptionStatusSequence", "'SubscriptionStatusSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.UserSequence", "'UserSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -84,7 +85,7 @@ namespace Fixit.Persistance.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("PlaceId")
+                        .HasColumnName("LocationId")
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:HiLoSequenceName", "LocationSequence")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
@@ -156,7 +157,7 @@ namespace Fixit.Persistance.Migrations
                     b.Property<DateTime?>("LastNotificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PlaceId")
+                    b.Property<int>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<int?>("RepairServiceContractorId")
@@ -172,7 +173,7 @@ namespace Fixit.Persistance.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("PlaceId");
+                    b.HasIndex("LocationId");
 
                     b.HasIndex("SubcategoryId");
 
@@ -276,6 +277,23 @@ namespace Fixit.Persistance.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("SubCategory");
+                });
+
+            modelBuilder.Entity("Fixit.Domain.Entities.SubscriptionStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("SubscriptionStatusId")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:HiLoSequenceName", "SubscriptionStatusSequence")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubscriptionStatus");
                 });
 
             modelBuilder.Entity("Fixit.Domain.Entities.User", b =>
@@ -504,7 +522,7 @@ namespace Fixit.Persistance.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Fixit.Domain.Entities.ContractorUUID", b =>
+            modelBuilder.Entity("Fixit.Domain.Entities.Contractor", b =>
                 {
                     b.HasBaseType("Fixit.Domain.Entities.User");
 
@@ -517,21 +535,29 @@ namespace Fixit.Persistance.Migrations
                         .HasColumnName("ContractorFrom")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ContractorUUID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsPremium")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PlaceId")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("NextPaymentDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SelfDescription")
                         .HasColumnName("SelfDescription")
                         .HasColumnType("nvarchar(4000)")
                         .HasMaxLength(4000);
 
-                    b.Property<string>("SubscriptionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("SubscriptionStatusId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("PlaceId");
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("SubscriptionStatusId");
 
                     b.HasDiscriminator().HasValue("ContractorUUID");
                 });
@@ -586,7 +612,7 @@ namespace Fixit.Persistance.Migrations
 
                     b.HasOne("Fixit.Domain.Entities.Location", "Location")
                         .WithMany("Orders")
-                        .HasForeignKey("PlaceId")
+                        .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -618,7 +644,7 @@ namespace Fixit.Persistance.Migrations
 
             modelBuilder.Entity("Fixit.Domain.Entities.OrderOffer", b =>
                 {
-                    b.HasOne("Fixit.Domain.Entities.ContractorUUID", "ContractorUUID")
+                    b.HasOne("Fixit.Domain.Entities.Contractor", "Contractor")
                         .WithMany("OrderOffers")
                         .HasForeignKey("ContractorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -633,7 +659,7 @@ namespace Fixit.Persistance.Migrations
 
             modelBuilder.Entity("Fixit.Domain.Entities.RepairService", b =>
                 {
-                    b.HasOne("Fixit.Domain.Entities.ContractorUUID", "ContractorUUID")
+                    b.HasOne("Fixit.Domain.Entities.Contractor", "Contractor")
                         .WithMany("RepairServices")
                         .HasForeignKey("ContractorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -714,13 +740,17 @@ namespace Fixit.Persistance.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Fixit.Domain.Entities.ContractorUUID", b =>
+            modelBuilder.Entity("Fixit.Domain.Entities.Contractor", b =>
                 {
                     b.HasOne("Fixit.Domain.Entities.Location", "Location")
                         .WithMany("Contractors")
-                        .HasForeignKey("PlaceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Fixit.Domain.Entities.SubscriptionStatus", "SubscriptionStatus")
+                        .WithMany("Contractors")
+                        .HasForeignKey("SubscriptionStatusId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

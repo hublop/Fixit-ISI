@@ -504,7 +504,7 @@ namespace Fixit.Persistance.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Fixit.Domain.Entities.Contractor", b =>
+            modelBuilder.Entity("Fixit.Domain.Entities.ContractorUUID", b =>
                 {
                     b.HasBaseType("Fixit.Domain.Entities.User");
 
@@ -533,7 +533,7 @@ namespace Fixit.Persistance.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.HasDiscriminator().HasValue("Contractor");
+                    b.HasDiscriminator().HasValue("ContractorUUID");
                 });
 
             modelBuilder.Entity("Fixit.Domain.Entities.Customer", b =>
@@ -618,7 +618,7 @@ namespace Fixit.Persistance.Migrations
 
             modelBuilder.Entity("Fixit.Domain.Entities.OrderOffer", b =>
                 {
-                    b.HasOne("Fixit.Domain.Entities.Contractor", "Contractor")
+                    b.HasOne("Fixit.Domain.Entities.ContractorUUID", "ContractorUUID")
                         .WithMany("OrderOffers")
                         .HasForeignKey("ContractorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -633,7 +633,7 @@ namespace Fixit.Persistance.Migrations
 
             modelBuilder.Entity("Fixit.Domain.Entities.RepairService", b =>
                 {
-                    b.HasOne("Fixit.Domain.Entities.Contractor", "Contractor")
+                    b.HasOne("Fixit.Domain.Entities.ContractorUUID", "ContractorUUID")
                         .WithMany("RepairServices")
                         .HasForeignKey("ContractorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -714,7 +714,7 @@ namespace Fixit.Persistance.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Fixit.Domain.Entities.Contractor", b =>
+            modelBuilder.Entity("Fixit.Domain.Entities.ContractorUUID", b =>
                 {
                     b.HasOne("Fixit.Domain.Entities.Location", "Location")
                         .WithMany("Contractors")

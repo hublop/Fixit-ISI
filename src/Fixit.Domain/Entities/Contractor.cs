@@ -14,10 +14,15 @@ namespace Fixit.Domain.Entities
         public IReadOnlyCollection<RepairService> RepairServices => _repairServices.AsReadOnly();
         public int? LocationId { get; set; }
         public Location Location { get; set; }
+        //todo: to delete
         public bool IsPremium { get; set; }
         public ICollection<OrderOffer> OrderOffers { get; set; }
 
-        public string SubscriptionId { get; set; }
+        public string ContractorUUID { get; set; }
+
+        public int? SubscriptionStatusId { get; set; }
+        public SubscriptionStatus SubscriptionStatus { get; set; }
+        public DateTime? NextPaymentDate { get; set; }
 
     public void ProvideRepairService(int subcategoryId, double price)
         {
