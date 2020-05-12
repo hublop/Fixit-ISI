@@ -45,7 +45,7 @@ namespace Fixit.Application.Contractors.Queries.GetProfile
                 .ForMember(dest => dest.AvgRating, opts =>
                     opts.MapFrom(x => x.GetAvgRating()))
                 .ForMember(dest => dest.Opinions, opts =>
-                    opts.MapFrom(x => x.RepairServices.SelectMany(y => y.Opinions)
+                    opts.MapFrom(x => x.RepairServices.Where(y => y.Opinions.Any()).SelectMany(y => y.Opinions)
                         .OrderByDescending(y => y.CreatedOn)))
                 .ForMember(dest => dest.AvgRating, opts =>
                     opts.MapFrom(x => x.GetAvgRating()))
@@ -70,6 +70,8 @@ namespace Fixit.Application.Contractors.Queries.GetProfile
             CreateMap<RepairService, RepairServiceInProfile>();
 
             CreateMap<Customer, CustomerInProfile>();
+
+            CreateMap<Rating, RatingInProfile>();
 
         }
     }
