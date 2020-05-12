@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Fixit.Application.Common.Services;
+using Fixit.Application.Contractors.Commands.AddOpinion;
 using Fixit.Application.Contractors.Commands.AddRepairService;
 using Fixit.Application.Contractors.Commands.RegisterContractor;
 using Fixit.Application.Contractors.Commands.RemoveRepairService;
@@ -85,6 +86,16 @@ namespace Fixit.WebApi.Contractors
                 ContractorId = contractorId,
                 SubcategoryId = subcategoryId
             };
+
+            return await HandleCommandAsync(command);
+        }
+
+        [HttpPost("{contractorId}/opinions")]
+        [ProducesResponseType(200)]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddOpinions([FromRoute] int contractorId, [FromBody] AddOpinionCommand command)
+        {
+            command.ContractorId = contractorId;
 
             return await HandleCommandAsync(command);
         }
