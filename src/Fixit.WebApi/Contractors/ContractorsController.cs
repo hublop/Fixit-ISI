@@ -6,6 +6,7 @@ using Fixit.Application.Contractors.Commands.AddOpinion;
 using Fixit.Application.Contractors.Commands.AddRepairService;
 using Fixit.Application.Contractors.Commands.RegisterContractor;
 using Fixit.Application.Contractors.Commands.RemoveRepairService;
+using Fixit.Application.Contractors.Commands.UpdatePersonalData;
 using Fixit.Application.Contractors.Queries.GetList;
 using Fixit.Application.Contractors.Queries.GetProfile;
 using Fixit.Shared.Pagination;
@@ -97,6 +98,21 @@ namespace Fixit.WebApi.Contractors
         {
             command.ContractorId = contractorId;
 
+            return await HandleCommandAsync(command);
+        }
+
+        [HttpPut("{contractorId}")]
+        [ProducesResponseType(200)]
+        [Authorize(Policy = Roles.Contractor)]
+        public async Task<IActionResult> UpdateContractorPersonalDataAsync([FromRoute] int contractorId,
+            [FromBody] UpdatePersonalDataCommand command)
+        {
+            if (!CurrentUserService.IsUser(contractorId))
+            {
+                return BadRequest();
+            }
+
+            command.Id = contractorId;
             return await HandleCommandAsync(command);
         }
 

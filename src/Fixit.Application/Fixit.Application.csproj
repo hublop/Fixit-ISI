@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Services\Identity\" />
-    <Folder Include="Customers\Queries\" />
     <Folder Include="Orders\Exceptions\" />
     <Folder Include="Orders\Queries\" />
   </ItemGroup>
