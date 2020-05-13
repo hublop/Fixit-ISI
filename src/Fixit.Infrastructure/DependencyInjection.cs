@@ -3,6 +3,7 @@ using Fixit.Infrastructure.Services;
 using Fixit.Infrastructure.Services.Identity;
 using Fixit.Infrastructure.Services.Mail;
 using Fixit.Infrastructure.Services.Media;
+using Fixit.Infrastructure.Services.OrdersNotifierWorker;
 using Fixit.Infrastructure.Services.Sms;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ namespace Fixit.Infrastructure
             services.AddSmsService(config);
             services.AddMediaService(config);
             services.AddIdentityServices(config);
+            services.AddOrderNotifierWorker(config);
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             return services;
