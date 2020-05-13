@@ -20,7 +20,8 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
 
         public async Task<Unit> Handle(NotifyAboutOrdersCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogWarning("Notification about orders in command handler.");
+            _logger.LogWarning(
+                $"Notification about orders in command handler. TimeAfterNonPremiumGetNotificationInMinutes: {request.TimeAfterNonPremiumGetNotificationInMinutes}");
             return Unit.Value;
         }
     }

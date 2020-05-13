@@ -36,7 +36,13 @@ namespace Fixit.Infrastructure.Services.OrdersNotifierWorker
                 {
                     using var scope = _scopeFactory.CreateScope();
                     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    await mediator.Send(new NotifyAboutOrdersCommand(), stoppingToken);
+                    
+                    await mediator.Send(
+                        new NotifyAboutOrdersCommand
+                        {
+                            TimeAfterNonPremiumGetNotificationInMinutes =
+                                _options.TimeAfterNonPremiumGetNotificationInMinutes
+                        }, stoppingToken);
 
                     _logger.LogDebug("Service job loop finished...");
                 }
