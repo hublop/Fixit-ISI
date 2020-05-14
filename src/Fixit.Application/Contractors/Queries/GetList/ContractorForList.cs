@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Fixit.Domain.Entities;
@@ -18,6 +19,10 @@ namespace Fixit.Application.Contractors.Queries.GetList
         public string ImageUrl { get; set; }
         public List<string> Specializations { get; set; }
         public string ContractorUUID { get; set; }
+
+        public DateTime NextPaymentDate { get; set; }
+
+        public string SubscriptionStatus { get; set; }
   }
 
     public class GetContractorsListQueryMapping : Profile
@@ -27,6 +32,8 @@ namespace Fixit.Application.Contractors.Queries.GetList
             CreateMap<Contractor, ContractorForList>()
                 .ForMember(dest => dest.PlaceId, opts =>
                     opts.MapFrom(src => src.Location.PlaceId))
+                .ForMember(dest => dest.SubscriptionStatus,
+                  opts => opts.MapFrom(x => x.SubscriptionStatus.Status))
                 //.ForMember(dest => dest.City, opts =>
                 //    opts.MapFrom(src => src.Location.City))
                 .ForMember(dest => dest.AvgRating, opts =>
