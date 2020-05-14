@@ -44,9 +44,9 @@ namespace Fixit.WebApi
                     options.SerializerSettings.ReferenceLoopHandling =
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-            services.AddTransient<SubscriptionActivatedIntegrationEvent>();
-            services.AddTransient<SubscriptionCancelledIntegrationEvent>();
-            services.AddTransient<SubscriptionDeactivatedIntegrationEvent>();
+            services.AddTransient<SubscriptionActivatedIntegrationEventHandler>();
+            services.AddTransient<SubscriptionCancelledIntegrationEventHandler>();
+            services.AddTransient<SubscriptionDeactivatedIntegrationEventHandler>();
 
             services.ConfigureJwt(Configuration);
 
