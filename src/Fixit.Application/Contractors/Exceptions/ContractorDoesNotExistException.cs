@@ -9,5 +9,11 @@ namespace Fixit.Application.Contractors.Exceptions
                 $"Contractor with id: {contractorId} does not exist.")
         {
         }
-    }
+
+        public ContractorDoesNotExistException(string contractorId)
+          : base("Contractor has not been found.",
+            $"Contractor with id: {contractorId} does not exist.")
+        {
+        }
+  }
 }

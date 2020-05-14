@@ -1,6 +1,11 @@
 using Fixit.Application;
 using Fixit.Application.Common.Interfaces;
+using Fixit.Application.Contractors.Events.ActivateSubscription;
+using Fixit.Application.Contractors.Events.CancelSubscription;
+using Fixit.Application.Contractors.Events.DeactivateSubscription;
+using Fixit.Application.Test;
 using Fixit.Domain.Common;
+using Fixit.EventBus.Abstractions;
 using Fixit.EventBus.RabbitMQ;
 using Fixit.Infrastructure;
 using Fixit.Persistance;
@@ -39,7 +44,9 @@ namespace Fixit.WebApi
                     options.SerializerSettings.ReferenceLoopHandling =
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
-            //services.AddTransient<OrderStartedIntegrationEventHandler>();
+            services.AddTransient<SubscriptionActivatedIntegrationEvent>();
+            services.AddTransient<SubscriptionCancelledIntegrationEvent>();
+            services.AddTransient<SubscriptionDeactivatedIntegrationEvent>();
 
             services.ConfigureJwt(Configuration);
 
@@ -55,13 +62,15 @@ namespace Fixit.WebApi
 
         }
 
-        //private void ConfigureEventBus(IApplicationBuilder app)
-        //{
-        //    var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-        //    eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
-        //}
+    private void ConfigureEventBus(IApplicationBuilder app)
+    {
+      var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+      eventBus.Subscribe<SubscriptionActivatedIntegrationEvent, SubscriptionActivatedIntegrationEventHandler>();
+      eventBus.Subscribe<SubscriptionCancelledIntegrationEvent, SubscriptionCancelledIntegrationEventHandler>();
+      eventBus.Subscribe<SubscriptionDeactivatedIntegrationEvent, SubscriptionDeactivatedIntegrationEventHandler>();
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -85,9 +94,9 @@ namespace Fixit.WebApi
 
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+            
 
-            //var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            //eventBus.Subscribe<OrderStartedIntegrationEvent, OrderStartedIntegrationEventHandler>();
+            ConfigureEventBus(app);
         }
     }
 }
