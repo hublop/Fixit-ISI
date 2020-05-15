@@ -7,6 +7,7 @@ import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { CategoriesModule } from '../categories/categories.module';
 import { RegisterInfoComponent } from './register-contractor/register-info/register-info.component';
+import { ContractorsListComponent } from './contractors-list/contractors-list.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { RegisterInfoComponent } from './register-contractor/register-info/regis
   ],
   declarations: [
     RegisterContractorComponent,
-    RegisterInfoComponent
+    RegisterInfoComponent,
+    ContractorsListComponent
   ],
   exports: [
     RegisterContractorComponent
