@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fixit.Application.Customers.Commands.UpdatePersonalData
 {
-    public class UpdatePersonalDataCommandHandler : ICommandHandler<UpdatePersonalDataCommand>
+    public class UpdatePersonalDataCommandHandler : ICommandHandler<UpdateCustomerPersonalDataCommand>
     {
         private readonly IFixitDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ namespace Fixit.Application.Customers.Commands.UpdatePersonalData
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdatePersonalDataCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCustomerPersonalDataCommand request, CancellationToken cancellationToken)
         {
             var customer = await _dbContext.Customers
                 .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);

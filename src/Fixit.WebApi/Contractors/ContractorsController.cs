@@ -105,7 +105,7 @@ namespace Fixit.WebApi.Contractors
         [ProducesResponseType(200)]
         [Authorize(Policy = Roles.Contractor)]
         public async Task<IActionResult> UpdateContractorPersonalDataAsync([FromRoute] int contractorId,
-            [FromBody] UpdatePersonalDataCommand command)
+            [FromBody] UpdateContractorPersonalDataCommand command)
         {
             if (!CurrentUserService.IsUser(contractorId))
             {

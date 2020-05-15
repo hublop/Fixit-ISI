@@ -25,7 +25,10 @@ namespace Fixit.Application.Contractors.Queries.GetProfile
         public IList<CategoryInProfile> Categories { get; set; }
         public IList<OpinionsInProfile> Opinions { get; set; }
         public IList<RepairService> RepairServices { get; set; }
-    }
+        public string ContractorUUID { get; set; }
+        public DateTime NextPaymentDate { get; set; }
+        public string SubscriptionStatus { get; set; }
+  }
 
     public class GetProfileQueryMapping : Profile
     {
@@ -36,6 +39,8 @@ namespace Fixit.Application.Contractors.Queries.GetProfile
                     opts.MapFrom(src => src.Image == null ? null : src.Image.Url))
                 .ForMember(dest => dest.PlaceId, opts =>
                     opts.MapFrom(src => src.Location.PlaceId))
+                .ForMember(dest => dest.SubscriptionStatus, 
+                  opts => opts.MapFrom(x => x.SubscriptionStatus.Status))
                 .ForMember(dest => dest.AvgQuality, opts =>
                     opts.MapFrom(x => x.GetQualityAverage()))
                 .ForMember(dest => dest.AvgInvolvement, opts =>

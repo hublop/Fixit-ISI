@@ -7,7 +7,7 @@ namespace Fixit.Application.Contractors.Commands.UpdatePersonalData
     {
         public UpdatePersonalDataCommandMapping()
         {
-            CreateMap<UpdatePersonalDataCommand, Contractor>();
+            CreateMap<UpdateContractorPersonalDataCommand, Contractor>();
         }
     }
 }

@@ -41,6 +41,10 @@ namespace Fixit.Application.Contractors.Commands.RegisterContractor
       };
 
       contractor.UserName = contractor.Email;
+
+      var contractorUUID = System.Guid.NewGuid().ToString();
+      contractor.ContractorUUID = contractorUUID;
+
       var roles = new List<string> { "Contractor" };
 
       var user = contractor;

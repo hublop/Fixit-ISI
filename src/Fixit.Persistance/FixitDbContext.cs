@@ -20,8 +20,9 @@ namespace Fixit.Persistance
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderImage> OrderImages { get; set; }
         public DbSet<OrderOffer> OrderOffers { get; set; }
+        public DbSet<SubscriptionStatus> SubscriptionStatuses { get; set; }
 
-        public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken)
+    public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken)
         {
 
             return await base.SaveChangesAsync(cancellationToken) > 0;
@@ -57,6 +58,10 @@ namespace Fixit.Persistance
             modelBuilder.HasSequence("ImagesSequence")
                 .StartsAt(1)
                 .IncrementsBy(10);
+
+            modelBuilder.HasSequence("SubscriptionStatusSequence")
+              .StartsAt(31)
+              .IncrementsBy(10);
 
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(FixitDbContext).Assembly);
