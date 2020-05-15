@@ -32,6 +32,7 @@ namespace Fixit.Application.Contractors.Queries.GetProfile
                 .Include(x => x.RepairServices)
                 .ThenInclude(x => x.Opinions)
                 .Include(x => x.Image)
+                .Include(x => x.SubscriptionStatus)
                 .FirstOrDefaultAsync(x => x.Id == request.ContractorId, cancellationToken: cancellationToken);
 
             if (contractor == null)

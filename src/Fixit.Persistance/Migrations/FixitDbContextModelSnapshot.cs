@@ -22,6 +22,7 @@ namespace Fixit.Persistance.Migrations
                 .HasAnnotation("Relational:Sequence:.LocationSequence", "'LocationSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.OpinionSequence", "'OpinionSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.SubCategorySequence", "'SubCategorySequence', '', '1', '10', '', '', 'Int64', 'False'")
+                .HasAnnotation("Relational:Sequence:.SubscriptionStatusSequence", "'SubscriptionStatusSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.UserSequence", "'UserSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -276,6 +277,23 @@ namespace Fixit.Persistance.Migrations
                     b.ToTable("SubCategory");
                 });
 
+            modelBuilder.Entity("Fixit.Domain.Entities.SubscriptionStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("SubscriptionStatusId")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:HiLoSequenceName", "SubscriptionStatusSequence")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubscriptionStatus");
+                });
+
             modelBuilder.Entity("Fixit.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -515,21 +533,29 @@ namespace Fixit.Persistance.Migrations
                         .HasColumnName("ContractorFrom")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ContractorUUID")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsPremium")
                         .HasColumnType("bit");
 
                     b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("NextPaymentDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("SelfDescription")
                         .HasColumnName("SelfDescription")
                         .HasColumnType("nvarchar(4000)")
                         .HasMaxLength(4000);
 
-                    b.Property<string>("SubscriptionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("SubscriptionStatusId")
+                        .HasColumnType("int");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("SubscriptionStatusId");
 
                     b.HasDiscriminator().HasValue("Contractor");
                 });
@@ -717,6 +743,11 @@ namespace Fixit.Persistance.Migrations
                     b.HasOne("Fixit.Domain.Entities.Location", "Location")
                         .WithMany("Contractors")
                         .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Fixit.Domain.Entities.SubscriptionStatus", "SubscriptionStatus")
+                        .WithMany("Contractors")
+                        .HasForeignKey("SubscriptionStatusId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618

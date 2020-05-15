@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Fixit.Application.Contractors.Commands.UpdatePersonalData
 {
-    public class UpdatePersonalDataCommandHandler : ICommandHandler<UpdatePersonalDataCommand>
+    public class UpdatePersonalDataCommandHandler : ICommandHandler<UpdateContractorPersonalDataCommand>
     {
         private readonly IFixitDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -22,7 +22,7 @@ namespace Fixit.Application.Contractors.Commands.UpdatePersonalData
             _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(UpdatePersonalDataCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateContractorPersonalDataCommand request, CancellationToken cancellationToken)
         {
             var contractor = await _dbContext.Contractors
                 .Include(x => x.Location)

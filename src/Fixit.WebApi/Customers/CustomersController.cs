@@ -34,7 +34,7 @@ namespace Fixit.WebApi.Customers
         [ProducesResponseType(200)]
         [Authorize(Policy = RolePolicies.RequireCustomer)]
         public async Task<IActionResult> UpdateContractorPersonalDataAsync([FromRoute] int id,
-        [FromBody] UpdatePersonalDataCommand command)
+        [FromBody] UpdateCustomerPersonalDataCommand command)
         {
             if (!CurrentUserService.IsUser(id))
             {

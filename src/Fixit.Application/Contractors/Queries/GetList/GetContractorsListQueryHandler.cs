@@ -33,6 +33,7 @@ namespace Fixit.Application.Contractors.Queries.GetList
                 .Include(x => x.RepairServices)
                 .ThenInclude(x => x.SubCategory.Category)
                 .Include(x => x.Image)
+                .Include(x => x.SubscriptionStatus)
                 .AsNoTracking();
 
             if (request.ContractorsListFilter.SubcategoryId.HasValue)
