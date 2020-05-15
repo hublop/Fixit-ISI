@@ -3,7 +3,6 @@ using Fixit.Application.Common.Interfaces;
 using Fixit.Application.Contractors.Events.ActivateSubscription;
 using Fixit.Application.Contractors.Events.CancelSubscription;
 using Fixit.Application.Contractors.Events.DeactivateSubscription;
-using Fixit.Application.Test;
 using Fixit.Domain.Common;
 using Fixit.EventBus.Abstractions;
 using Fixit.EventBus.RabbitMQ;
