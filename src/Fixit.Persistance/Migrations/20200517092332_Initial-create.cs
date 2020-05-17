@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Fixit.Persistance.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,6 +25,11 @@ namespace Fixit.Persistance.Migrations
 
             migrationBuilder.CreateSequence(
                 name: "SubCategorySequence",
+                incrementBy: 10);
+
+            migrationBuilder.CreateSequence(
+                name: "SubscriptionStatusSequence",
+                startValue: 31L,
                 incrementBy: 10);
 
             migrationBuilder.CreateSequence(
@@ -84,6 +89,18 @@ namespace Fixit.Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Location", x => x.LocationId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubscriptionStatus",
+                columns: table => new
+                {
+                    SubscriptionStatusId = table.Column<int>(nullable: false),
+                    Status = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubscriptionStatus", x => x.SubscriptionStatusId);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,7 +176,10 @@ namespace Fixit.Persistance.Migrations
                     SelfDescription = table.Column<string>(maxLength: 4000, nullable: true),
                     ContractorFrom = table.Column<DateTime>(nullable: true),
                     LocationId = table.Column<int>(nullable: true),
-                    IsPremium = table.Column<bool>(nullable: true)
+                    IsPremium = table.Column<bool>(nullable: true),
+                    ContractorUUID = table.Column<string>(nullable: true),
+                    SubscriptionStatusId = table.Column<int>(nullable: true),
+                    NextPaymentDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,7 +188,13 @@ namespace Fixit.Persistance.Migrations
                         name: "FK_AspNetUsers_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
-                        principalColumn: "PlaceId",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_SubscriptionStatus_SubscriptionStatusId",
+                        column: x => x.SubscriptionStatusId,
+                        principalTable: "SubscriptionStatus",
+                        principalColumn: "SubscriptionStatusId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Image_ImageId",
@@ -342,7 +368,7 @@ namespace Fixit.Persistance.Migrations
                         name: "FK_Order_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
-                        principalColumn: "PlaceId",
+                        principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Order_SubCategory_SubcategoryId",
@@ -439,7 +465,12 @@ namespace Fixit.Persistance.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_LocationId",
                 table: "AspNetUsers",
-                column: "PlaceId");
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_SubscriptionStatusId",
+                table: "AspNetUsers",
+                column: "SubscriptionStatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_ImageId",
@@ -471,7 +502,7 @@ namespace Fixit.Persistance.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Order_LocationId",
                 table: "Order",
-                column: "PlaceId");
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order_SubcategoryId",
@@ -549,6 +580,9 @@ namespace Fixit.Persistance.Migrations
                 name: "Location");
 
             migrationBuilder.DropTable(
+                name: "SubscriptionStatus");
+
+            migrationBuilder.DropTable(
                 name: "Image");
 
             migrationBuilder.DropTable(
@@ -568,6 +602,9 @@ namespace Fixit.Persistance.Migrations
 
             migrationBuilder.DropSequence(
                 name: "SubCategorySequence");
+
+            migrationBuilder.DropSequence(
+                name: "SubscriptionStatusSequence");
 
             migrationBuilder.DropSequence(
                 name: "UserSequence");
