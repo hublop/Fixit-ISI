@@ -22,7 +22,7 @@ namespace Fixit.Persistance.Migrations
                 .HasAnnotation("Relational:Sequence:.LocationSequence", "'LocationSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.OpinionSequence", "'OpinionSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.SubCategorySequence", "'SubCategorySequence', '', '1', '10', '', '', 'Int64', 'False'")
-                .HasAnnotation("Relational:Sequence:.SubscriptionStatusSequence", "'SubscriptionStatusSequence', '', '1', '10', '', '', 'Int64', 'False'")
+                .HasAnnotation("Relational:Sequence:.SubscriptionStatusSequence", "'SubscriptionStatusSequence', '', '31', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.UserSequence", "'UserSequence', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
