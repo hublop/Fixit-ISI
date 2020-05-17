@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="title">Znajdź specjalistę i zamów usługę</div>
+
+  <div class="filter">
+    <mat-card class="mat-elevation-z6">
+      <app-contractors-list-filter [categories]="categories" (contractorsListFilterChanged)="onFilterChanged($event)">
+      </app-contractors-list-filter>
+    </mat-card>
+  </div>
+
+  <div class="contractors-list">
+    <div *ngFor="let contractor of contractors">
+      <app-contractors-list-element [contractor]="contractor"></app-contractors-list-element>
+    </div>
+
+    <div class="paginator">
+      <mat-paginator #paginator [length]="pagination.totalItems" [pageSize]="pagination.pageSize" [showFirstLastButtons]="true"
+        (page)="onPageChanged($event)">
+      </mat-paginator>
+    </div>
+
+  </div> 
+</div>

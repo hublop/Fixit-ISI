@@ -1,0 +1,31 @@
+<div>
+  <form [formGroup]="listFilterGroup" (ngSubmit)="applyFilter()">
+    <div class="filter-container">
+      <div class="filter-upper-element filter-element">
+        <mat-form-field appearance="outline">
+          <mat-label>Imię lub nazwisko</mat-label>
+          <input matInput formControlName="nameSearchString" placeholder="Imię lub nazwisko">
+        </mat-form-field>
+      </div>
+
+      <div class="serviceField filter-element">
+        <mat-form-field appearance="outline">
+          <mat-label>Usługa</mat-label>
+          <input type="text" matInput placeholder="Usługa" formControlName="subcategoryId" [matAutocomplete]="autoGroup">
+          <mat-autocomplete #autoGroup="matAutocomplete">
+            <mat-optgroup *ngFor="let category of options" [label]="category.name">
+              <mat-option *ngFor="let subcategory of category.subCategories" [value]="subcategory.name">
+                {{subcategory.name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <button class="searchButton filter-element" type="submit" mat-raised-button color="primary">
+        <mat-icon>search</mat-icon>
+        <span>Szukaj</span>
+      </button>
+    </div>
+  </form>
+</div>

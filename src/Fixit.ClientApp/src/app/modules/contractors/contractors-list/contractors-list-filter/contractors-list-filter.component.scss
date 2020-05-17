@@ -1,0 +1,61 @@
+.filter-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .filter-element {
+        margin-left: 3%;
+        margin-right: 3%;
+        margin-top: 1%;
+    }
+    .filter-upper-element {
+        width: 44%;
+    }
+    
+    .mat-form-field {
+        width: 100%;
+    }
+
+    .searchButton {
+        width: 20%;
+        height: 55px;
+        min-width: 150px;
+        align-self: center;
+        margin-left: 40%;
+        margin-right: 40%;
+    }
+
+    .serviceField {
+        width: 96%;
+    }
+}
+
+@media screen and (max-width: 1015px) {
+    .filter-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    
+        .filter-element {
+            margin-left: 3%;
+            margin-right: 3%;
+            margin-top: 1%;
+        }
+        .filter-upper-element {
+            width: 94%;
+        }
+        
+        .mat-form-field {
+            width: 100%;
+        }
+    
+        .searchButton {
+            width: 94%;
+            height: 55px;
+        }
+    
+        .serviceField {
+            width: 96%;
+        }
+    }
+}
