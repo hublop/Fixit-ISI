@@ -8,6 +8,8 @@ import { SharedModule } from '../shared/shared.module';
 import { CategoriesModule } from '../categories/categories.module';
 import { RegisterInfoComponent } from './register-contractor/register-info/register-info.component';
 import { ContractorsListComponent } from './contractors-list/contractors-list.component';
+import { ContractorsListElementComponent } from './contractors-list/contractors-list-element/contractors-list-element.component';
+import { ContractorsListFilterComponent } from './contractors-list/contractors-list-filter/contractors-list-filter.component';
 
 @NgModule({
   imports: [
@@ -21,7 +23,9 @@ import { ContractorsListComponent } from './contractors-list/contractors-list.co
   declarations: [
     RegisterContractorComponent,
     RegisterInfoComponent,
-    ContractorsListComponent
+    ContractorsListComponent,
+    ContractorsListElementComponent,
+    ContractorsListFilterComponent
   ],
   exports: [
     RegisterContractorComponent
