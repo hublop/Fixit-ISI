@@ -1,0 +1,42 @@
+<div class="element">
+  <mat-card class="mat-elevation-z4">
+    <mat-card-header>
+        <div class="header-container">
+          <div mat-card-avatar class="person-icon" *ngIf="!contractor.imageUrl">
+            <mat-icon class="icon-img ">person</mat-icon>
+          </div>
+          <img [src]="contractor.imageUrl" mat-card-avatar class="photo-image" *ngIf="contractor.imageUrl">
+          <button class="order-button" *ngIf="addOrderButtonVisible()" mat-raised-button color="primary" (click)="navigateToAddOrder()">
+            <mat-icon class="ordering">calendar_today</mat-icon>
+            <span>Złóż zgłoszenie</span>
+          </button>
+        </div>
+        <div class="details-container">
+          <div class="titles">
+            <mat-card-title (click)="navigateToProfile(contractor)">{{contractor.firstName}} {{contractor.lastName}}</mat-card-title>
+            <mat-card-subtitle>{{getDisplaySpec()}}</mat-card-subtitle>
+            <div>
+              <div class="grade-inscription">
+                <span class="grade-inscription">Ocena ({{contractor.avgRating | number: '1.2-2'}}):</span>
+              </div>
+              <mat-icon [ngStyle]="getStarStyle(ind)" *ngFor="let ind of [1, 2, 3, 4, 5]">star_rate</mat-icon>
+              <div>
+                <span class="opinions-count">({{contractor.opinionsCount}} opinii)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="newest-opinion" *ngIf="contractor.newestOpinion">
+            <div class="newest-opinion-header">
+              Najnowsza opinia:
+            </div>
+            <div class="newest-opinion-content">
+              "{{contractor.newestOpinion}}"
+            </div>
+          </div>
+
+        </div>
+
+    </mat-card-header>
+  </mat-card>
+</div>
