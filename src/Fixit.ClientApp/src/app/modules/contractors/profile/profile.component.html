@@ -1,0 +1,21 @@
+<div class="profile-container">
+  <div class="upper-panel" *ngIf="canEditProfile()">
+    <button mat-raised-button color="primary" (click)="navigateToEdit()">
+      <mat-icon>edit</mat-icon>
+      <span>Edytuj dane osobowe</span>
+    </button>
+  </div>
+  <app-profile-header class="element" [contractor]="contractorProfile"></app-profile-header>
+  <app-opinions class="element" 
+    [opinions]="contractorProfile.opinions"
+    [avgInvolvement]="contractorProfile.avgInvolvement"
+    [avgPunctuality]="contractorProfile.avgPunctuality"
+    [avgQuality]="contractorProfile.avgQuality"
+    [avgRating]="contractorProfile.avgRating"
+    [id]="contractorProfile.id">
+  </app-opinions>
+  <app-provided-services class="element"
+    [providedCategories]="contractorProfile.categories"
+    [id]="contractorProfile.id">
+  </app-provided-services>
+</div>

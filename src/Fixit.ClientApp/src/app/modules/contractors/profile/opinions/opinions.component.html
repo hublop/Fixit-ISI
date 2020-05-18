@@ -1,0 +1,26 @@
+<div>
+  <mat-card class="mat-elevation-z4 opinions-element">
+
+    <div class="title">
+      <span>Opinie klientów</span>
+      <button *ngIf="addOpinionButtonVisible()" mat-raised-button color="primary" (click)="navigateToAddOpinion()">
+        <mat-icon>add</mat-icon>
+        <span>Dodaj opinię</span>
+      </button>
+    </div>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <app-opinions-header class="header" [avgInvolvement]="avgInvolvement" [avgPunctuality]="avgPunctuality" [avgQuality]="avgQuality"
+      [avgRating]="avgRating" [opinionsCount]="getOpinionsCount()">
+    </app-opinions-header>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <div class="comment-list">
+      <app-opinions-list class="comment-list" [opinions]="opinions"></app-opinions-list>
+    </div>
+
+    
+  </mat-card>
+</div>

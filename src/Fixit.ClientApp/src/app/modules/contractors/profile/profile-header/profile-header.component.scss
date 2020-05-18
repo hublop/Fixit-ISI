@@ -1,0 +1,90 @@
+.header {
+    width: 100%;
+}
+
+.person-icon {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    background-color: gray !important;
+}
+
+.icon-img {
+    width: 200px;
+    height: 200px;
+    font-size: 200px;
+    color: white;
+}
+
+.photo-image {
+    border-radius: 50%;
+    height: 250px;
+    width: 250px;
+    display: block;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.mat-card-title {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.mat-card-subtitle {
+    font-size: 13px;
+}
+
+.titles {
+    margin-left: 15px;
+}
+
+.grade-inscription {
+    margin-top: 30px !important;
+    margin-bottom: 5px;
+}
+
+.opinions-count {
+    color: gray;
+    font-size: 15px;
+}
+
+.localization {
+    margin-top: 20px;
+    .mat-icon {
+        color: gray;
+    }
+}
+
+.order-button {
+    .ordering {
+        color: white !important;
+        margin-right: 5px;
+    }
+    margin-top: 20px;
+}
+
+
+.about {
+    margin-top: 30px;
+    font-size: 16px;
+}
+
+.contact {
+    margin-right: 5%;
+    margin-left: auto;
+    position: relative;
+    float: right;
+    margin-top: 10px;
+    .mat-icon {
+        color: gray;
+    }
+    > div {
+        margin-top: 10px;
+        > span {
+            margin-left: 10px;
+        }
+    }
+    > span {
+        font-size: 17px;
+    }
+}

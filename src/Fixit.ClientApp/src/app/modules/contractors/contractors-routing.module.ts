@@ -4,6 +4,8 @@ import { RegisterContractorComponent } from './register-contractor/register-cont
 import { ContractorsListComponent } from './contractors-list/contractors-list.component';
 import { CategoriesListResolver } from '../categories/_resolvers/categories-list.resolver';
 import { ContractorsListResolver } from './_resolvers/contractors-list.resolver';
+import { ProfileComponent } from './profile/profile.component';
+import { ContractorProfileResolver } from './_resolvers/contractor-profile.resolver';
 
 export const contractorsRoutes: Routes = [
     {
@@ -14,6 +16,13 @@ export const contractorsRoutes: Routes = [
     {
         path: 'register',
         component: RegisterContractorComponent
+    },
+    {
+        path: 'profile/:id',
+        component: ProfileComponent,
+        resolve: {
+            profile: ContractorProfileResolver
+        }
     },
     {
         path: 'list',

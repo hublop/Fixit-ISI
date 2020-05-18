@@ -1,0 +1,54 @@
+.detailed-insc {
+    margin-top: 3px;
+    .rating {
+        font-size: 21px !important;
+        width: 21px !important;
+        height: 21px;
+        margin-left: 20px;
+    }
+    .mat-icon {
+        font-size: 18px;
+        width: 15px;
+        height: 15px;
+    }
+    width: 305px;   
+    margin-right: 10%;
+    .name {
+        margin-left: 10px;
+        font-size: 16px;
+    }
+    .rating {
+        float: right;
+        margin-left: auto;
+    }
+}
+
+.comment-header {
+    margin-top: 45px;
+    margin-bottom: 17px;
+    .comment-title {
+        font-size: 20px;
+        font-weight: 500;
+    }    
+    .comment-date {
+        font-size: 16px;
+        color: gray;
+        margin-left: 15px;
+    }
+}
+
+.comment {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    max-width: 100%;
+    white-space: pre-wrap;       
+    white-space: -moz-pre-wrap; 
+    white-space: -pre-wrap;    
+    white-space: -o-pre-wrap;    
+    word-wrap: break-word;   
+}
+
+.opinion-content {
+    margin-left: 20px;
+    margin-right: 10px;
+}

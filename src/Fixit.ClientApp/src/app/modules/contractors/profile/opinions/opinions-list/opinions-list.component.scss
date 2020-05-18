@@ -1,0 +1,21 @@
+.divider {
+    width: 94%;
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.opinion {
+    margin-bottom: 20px;
+}
+
+.show-more {
+    color: rgb(40, 58, 218);
+    &:hover {
+        text-decoration: underline;
+    }
+    cursor: pointer;
+    float: right;
+    margin-top: 20px;
+}

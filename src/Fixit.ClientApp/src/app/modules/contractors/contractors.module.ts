@@ -10,6 +10,14 @@ import { RegisterInfoComponent } from './register-contractor/register-info/regis
 import { ContractorsListComponent } from './contractors-list/contractors-list.component';
 import { ContractorsListElementComponent } from './contractors-list/contractors-list-element/contractors-list-element.component';
 import { ContractorsListFilterComponent } from './contractors-list/contractors-list-filter/contractors-list-filter.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
+import { OpinionsComponent } from './profile/opinions/opinions.component';
+import { OpinionsHeaderComponent } from './profile/opinions/opinions-header/opinions-header.component';
+import { OpinionsListComponent } from './profile/opinions/opinions-list/opinions-list.component';
+import { ProvidedServicesComponent } from './profile/provided-services/provided-services.component';
+import { ProvidedCategoriesComponent } from './profile/provided-services/provided-categories/provided-categories.component';
+import { ListElementComponent } from './profile/opinions/opinions-list/list-element/list-element.component';
 
 @NgModule({
   imports: [
@@ -25,7 +33,15 @@ import { ContractorsListFilterComponent } from './contractors-list/contractors-l
     RegisterInfoComponent,
     ContractorsListComponent,
     ContractorsListElementComponent,
-    ContractorsListFilterComponent
+    ContractorsListFilterComponent,
+    ProfileComponent,
+    ProfileHeaderComponent,
+    OpinionsComponent,
+    OpinionsHeaderComponent,
+    OpinionsListComponent,
+    ListElementComponent,
+    ProvidedServicesComponent,
+    ProvidedCategoriesComponent
   ],
   exports: [
     RegisterContractorComponent

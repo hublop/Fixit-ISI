@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="title">
+    {{providedCategory.name}}
+  </div>
+  <div class="subcategories">
+    <div class="subcategories-element" *ngFor="let subcategory of providedCategory.subcategories">
+      <span>{{subcategory.name}}</span>
+    </div>
+  </div>
+</div>

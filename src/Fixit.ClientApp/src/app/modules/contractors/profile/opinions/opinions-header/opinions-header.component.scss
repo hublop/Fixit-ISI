@@ -1,0 +1,68 @@
+.opinion-header-container {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    position: relative;
+    width: 100%;
+}
+
+.general-opinion {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    .general-opinion-details {
+        margin-left: 30px;
+        .mat-icon {
+            font-size: 35px;           
+        }
+        .mat-icon:not(:first-child) {
+            margin-left: 10px;
+        }
+    }
+    .info {
+        margin-top: 8px;
+        margin-bottom: 3px;
+        margin-left: 5px;
+    }
+    .avg {
+        font-size: 15px;
+        color: gray;
+        margin-left: 5px;
+    }
+}
+
+.detailed-opinion {
+    width: 50%;
+    min-width: 320px;
+    > div {
+        margin-top: 5px;
+        
+    }
+}
+
+.detailed-insc {
+    width: 90%;   
+    margin-right: 10%;
+    vertical-align: middle;
+    .name {
+        margin-left: 10px;
+    }
+    .rating {
+        float: right;
+        margin-left: auto;
+    }
+}
+
+.grade-icon {
+    border-radius: 50%;
+    height: 90px;
+    width: 90px;
+    background-color: rgb(238, 162, 162) !important;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 90px;
+}

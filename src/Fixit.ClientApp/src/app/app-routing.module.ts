@@ -11,9 +11,9 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: '**',
-    redirectTo: 'contractors/list',
-    pathMatch: 'full'
+    path: 'contractors',
+    runGuardsAndResolvers: 'always',
+    loadChildren: () => import('./modules/contractors/contractors.module').then(m => m.ContractorsModule)
   },
   {
     path: 'customers',
@@ -21,15 +21,15 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/customers/customers.module').then(m => m.CustomersModule)
   },
   {
-    path: 'contractors',
-    runGuardsAndResolvers: 'always',
-    loadChildren: () => import('./modules/contractors/contractors.module').then(m => m.ContractorsModule)
-  },
-  {
     path: 'login',
     canActivate: [LoginGuard],
     component: LoginComponent
   },
+  {
+    path: '**',
+    redirectTo: 'contractors/list',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
