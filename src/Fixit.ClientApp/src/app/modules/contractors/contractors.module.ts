@@ -17,6 +17,7 @@ import { OpinionsHeaderComponent } from './profile/opinions/opinions-header/opin
 import { OpinionsListComponent } from './profile/opinions/opinions-list/opinions-list.component';
 import { ProvidedServicesComponent } from './profile/provided-services/provided-services.component';
 import { ProvidedCategoriesComponent } from './profile/provided-services/provided-categories/provided-categories.component';
+import { ListElementComponent } from './profile/opinions/opinions-list/list-element/list-element.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { ProvidedCategoriesComponent } from './profile/provided-services/provide
     OpinionsComponent,
     OpinionsHeaderComponent,
     OpinionsListComponent,
+    ListElementComponent,
     ProvidedServicesComponent,
     ProvidedCategoriesComponent
   ],
