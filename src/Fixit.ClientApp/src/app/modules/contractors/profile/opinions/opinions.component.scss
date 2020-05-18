@@ -1,0 +1,29 @@
+.opinions-element {
+    width: 100%;
+    position: relative;
+}
+
+.divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header {
+    margin-top: 10px;
+}
+
+.comment-list {
+    margin-top: 30px;
+    padding-bottom: 30px;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    > button {
+        float: right;
+        margin-left: auto;
+        margin-bottom: 10px;
+    }
+}

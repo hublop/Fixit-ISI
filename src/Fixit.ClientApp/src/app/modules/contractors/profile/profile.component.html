@@ -6,4 +6,12 @@
     </button>
   </div>
   <app-profile-header class="element" [contractor]="contractorProfile"></app-profile-header>
+  <app-opinions class="element" 
+    [opinions]="contractorProfile.opinions"
+    [avgInvolvement]="contractorProfile.avgInvolvement"
+    [avgPunctuality]="contractorProfile.avgPunctuality"
+    [avgQuality]="contractorProfile.avgQuality"
+    [avgRating]="contractorProfile.avgRating"
+    [id]="contractorProfile.id">
+  </app-opinions>
 </div>

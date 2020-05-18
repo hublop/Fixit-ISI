@@ -12,6 +12,9 @@ import { ContractorsListElementComponent } from './contractors-list/contractors-
 import { ContractorsListFilterComponent } from './contractors-list/contractors-list-filter/contractors-list-filter.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
+import { OpinionsComponent } from './profile/opinions/opinions.component';
+import { OpinionsHeaderComponent } from './profile/opinions/opinions-header/opinions-header.component';
+import { OpinionsListComponent } from './profile/opinions/opinions-list/opinions-list.component';
 
 @NgModule({
   imports: [
@@ -29,7 +32,10 @@ import { ProfileHeaderComponent } from './profile/profile-header/profile-header.
     ContractorsListElementComponent,
     ContractorsListFilterComponent,
     ProfileComponent,
-    ProfileHeaderComponent
+    ProfileHeaderComponent,
+    OpinionsComponent,
+    OpinionsHeaderComponent,
+    OpinionsListComponent
   ],
   exports: [
     RegisterContractorComponent
