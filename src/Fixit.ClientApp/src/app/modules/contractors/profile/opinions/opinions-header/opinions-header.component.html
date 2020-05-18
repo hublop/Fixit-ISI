@@ -1,0 +1,46 @@
+<div class="opinion-header-container">
+
+  <div class="general-opinion">
+    <div class="grade-icon">
+      {{avgRating | number: '1.1-1'}}
+    </div>
+
+    <div class="general-opinion-details">
+      <mat-icon class="rating" [ngStyle]="getStarStyle(ind, avgRating)" *ngFor="let ind of [1, 2, 3, 4, 5]">star_rate</mat-icon>
+      <div class="info">
+        Ogólna ocena
+      </div>
+      <div class="avg">
+        {{opinionsCount}} opinii
+      </div>
+    </div>
+  </div>
+
+  <div class="detailed-opinion">
+    <div>
+      <div class="detailed-insc">
+        <mat-icon>access_time</mat-icon>
+        <span class="name">Punktualność</span>
+        <mat-icon class="rating" [ngStyle]="getStarStyle(ind, avgPunctuality)" *ngFor="let ind of [1, 2, 3, 4, 5].reverse()">star_rate</mat-icon>
+      </div>
+
+    </div>
+
+    <div>
+      <div class="detailed-insc">
+        <mat-icon>tag_faces</mat-icon>
+        <span class="name">Zaangażowanie</span>
+        <mat-icon class="rating" [ngStyle]="getStarStyle(ind, avgInvolvement)" *ngFor="let ind of [1, 2, 3, 4, 5].reverse()">star_rate</mat-icon>
+      </div>
+    </div>
+
+    <div>
+      <div class="detailed-insc">
+        <mat-icon>show_chart</mat-icon>
+        <span class="name">Jakość wykonania</span>
+        <mat-icon class="rating" [ngStyle]="getStarStyle(ind, avgQuality)" *ngFor="let ind of [1, 2, 3, 4, 5].reverse()">star_rate</mat-icon>
+      </div>
+    </div>
+  </div>
+
+</div>
