@@ -1,0 +1,48 @@
+<div>
+
+  <div class="comment-header">
+    <span class="comment-title">
+      {{opinion.subcategory.name}}
+    </span>
+    <span class="comment-date">
+      {{opinion.createdOn | date: 'dd.MM.yyyy'}}
+    </span>
+  </div>
+
+  <div class="opinion-content">
+    <div>
+      <div>
+        <div class="detailed-insc">
+          <mat-icon>access_time</mat-icon>
+          <span class="name">Punktualność</span>
+          <mat-icon class="rating" [ngStyle]="getStarStyle(ind, opinion.rating.punctuality)" *ngFor="let ind of [1, 2, 3, 4, 5].reverse()">star_rate</mat-icon>
+        </div>
+      </div>
+
+      <div>
+        <div class="detailed-insc">
+          <mat-icon>tag_faces</mat-icon>
+          <span class="name">Zaangażowanie</span>
+          <mat-icon class="rating" [ngStyle]="getStarStyle(ind, opinion.rating.quality)" *ngFor="let ind of [1, 2, 3, 4, 5].reverse()">star_rate</mat-icon>
+        </div>
+      </div>
+
+      <div>
+        <div class="detailed-insc">
+          <mat-icon>show_chart</mat-icon>
+          <span class="name">Jakość wykonania</span>
+          <mat-icon class="rating" [ngStyle]="getStarStyle(ind, opinion.rating.involvement)" *ngFor="let ind of [1, 2, 3, 4, 5].reverse()">star_rate</mat-icon>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="comment">
+      {{opinion.comment}}
+    </div>
+  </div>
+
+
+
+
+</div>

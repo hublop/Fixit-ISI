@@ -1,0 +1,16 @@
+<div>
+  <div *ngIf="!hasOpinions()">
+    Dany usługodawca nie posiada jeszcze opinii.
+  </div>
+
+  <div *ngIf="hasOpinions()">
+    <div *ngFor="let opinion of displayedOpinions">
+      <app-list-element class="opinion" [opinion]="opinion"></app-list-element>
+      <mat-divider class="divider"></mat-divider>
+    </div>
+    <div class="show-more" *ngIf="showAllOpinionsVisible()" (click)="showAllOpinions()">
+      Pokaż wszystkie...
+    </div>
+  </div>
+
+</div>
