@@ -1,0 +1,26 @@
+<div>
+  <mat-card class="mat-elevation-z4 services-element">
+
+    <div class="title">
+      <span>Świadczone usługi</span>
+      <button mat-raised-button color="primary" *ngIf="canEditProfile()" (click)="navigateToEdit()">
+        <mat-icon>edit</mat-icon>
+        <span>Edytuj świadczone usługi</span>
+      </button>
+    </div>
+
+    <div class="divider">
+      <mat-divider></mat-divider>
+    </div>
+
+    <div class="services-list" *ngIf="hasAnyServices()">
+      <div class="element" *ngFor="let providedCategory of providedCategories">
+        <app-provided-categories [providedCategory]="providedCategory"></app-provided-categories>
+      </div>
+    </div>
+    <div class="empty-info" *ngIf="!hasAnyServices()">
+      Dany usługodawca jeszcze nie wybrał żadnych usług
+    </div>
+
+  </mat-card>
+</div>

@@ -1,0 +1,39 @@
+.services-element {
+    width: 100%;
+    position: relative;
+}
+
+.divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.services-list {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    .element {
+        margin-top: 10px;
+        width: 50%;
+        min-width: 250px;
+    }
+}
+
+.empty-info {
+    margin-top: 40px;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    > button {
+        float: right;
+        margin-left: auto;
+        margin-bottom: 10px;
+        .mat-icon {
+            margin-right: 5px;
+        }
+    }
+}
