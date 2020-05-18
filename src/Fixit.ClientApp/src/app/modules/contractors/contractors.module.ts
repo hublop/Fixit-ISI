@@ -15,6 +15,8 @@ import { ProfileHeaderComponent } from './profile/profile-header/profile-header.
 import { OpinionsComponent } from './profile/opinions/opinions.component';
 import { OpinionsHeaderComponent } from './profile/opinions/opinions-header/opinions-header.component';
 import { OpinionsListComponent } from './profile/opinions/opinions-list/opinions-list.component';
+import { ProvidedServicesComponent } from './profile/provided-services/provided-services.component';
+import { ProvidedCategoriesComponent } from './profile/provided-services/provided-categories/provided-categories.component';
 
 @NgModule({
   imports: [
@@ -35,7 +37,9 @@ import { OpinionsListComponent } from './profile/opinions/opinions-list/opinions
     ProfileHeaderComponent,
     OpinionsComponent,
     OpinionsHeaderComponent,
-    OpinionsListComponent
+    OpinionsListComponent,
+    ProvidedServicesComponent,
+    ProvidedCategoriesComponent
   ],
   exports: [
     RegisterContractorComponent
