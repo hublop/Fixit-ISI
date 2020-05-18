@@ -11,6 +11,7 @@ import { ContractorsListComponent } from './contractors-list/contractors-list.co
 import { ContractorsListElementComponent } from './contractors-list/contractors-list-element/contractors-list-element.component';
 import { ContractorsListFilterComponent } from './contractors-list/contractors-list-filter/contractors-list-filter.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileHeaderComponent } from './profile/profile-header/profile-header.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ProfileComponent } from './profile/profile.component';
     ContractorsListComponent,
     ContractorsListElementComponent,
     ContractorsListFilterComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProfileHeaderComponent
   ],
   exports: [
     RegisterContractorComponent

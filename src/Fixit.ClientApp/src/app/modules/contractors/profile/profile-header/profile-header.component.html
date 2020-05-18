@@ -1,0 +1,53 @@
+<div>
+  <mat-card class="mat-elevation-z4 header">
+    <mat-card-header>
+
+      <div mat-card-avatar class="person-icon" *ngIf="!contractor.imageUrl">
+        <mat-icon class="icon-img ">person</mat-icon>
+      </div>
+      <img [src]="contractor.imageUrl" mat-card-avatar class="photo-image" *ngIf="contractor.imageUrl">
+      <div class="titles">
+        <mat-card-title>{{contractor.firstName}} {{contractor.lastName}}</mat-card-title>
+        <mat-card-subtitle>{{getDisplaySpec()}}</mat-card-subtitle>
+        <div>
+          <div class="grade-inscription">
+            <span class="grade-inscription">Ocena ({{contractor.avgRating | number: '1.2-2'}}):</span>
+          </div>
+          <mat-icon [ngStyle]="getStarStyle(ind)" *ngFor="let ind of [1, 2, 3, 4, 5]">star_rate</mat-icon>
+          <div>
+            <span class="opinions-count">({{getOpinionsCount()}} opinii)</span>
+          </div>
+        </div>
+
+        <div class="localization">
+          <mat-icon>room</mat-icon>
+          <span>TODO MIASTO, </span>
+          <span>{{contractor.companyName}}</span>
+        </div>
+      </div>
+
+      <div class="contact">
+        <span>Kontakt:</span>
+        <div>
+          <mat-icon>email</mat-icon>
+          <span>{{contractor.email}}</span>
+        </div>
+        <div>
+          <mat-icon>phone</mat-icon>
+          <span>{{contractor.phoneNumber}}</span>
+        </div>
+        <button class="order-button" *ngIf="addOrderButtonVisible()" mat-raised-button color="primary" (click)="navigateToAddOrder()">
+          <mat-icon class="ordering">calendar_today</mat-icon>
+          <span>Złóż zgłoszenie</span>
+        </button>
+      </div>
+
+    </mat-card-header>
+
+    <mat-card-content class="about">
+      <div>
+        {{contractor.selfDescription}}
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
