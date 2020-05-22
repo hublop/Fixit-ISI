@@ -86,7 +86,8 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
       companyName: this.personalDataFormGroup.controls.companyName.value,
       phoneNumber: this.personalDataFormGroup.controls.phoneNumber.value,
       selfDescription: this.personalDataFormGroup.controls.selfDescription.value,
-      locationId: this.personalDataFormGroup.controls.locationId.value
+      // todo change later when google maps implemented
+      placeId: "ChIJv4q11MLpD0cR9eAFwq5WCbc"
     };
 
     this.contractorsService.updatePersonalData(personalData).subscribe(result => {
