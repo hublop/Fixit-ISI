@@ -1,0 +1,20 @@
+<div class="edit-container">
+  <mat-card class="fit-edit-content mat-elevation-z6">
+    <mat-tab-group [selectedIndex]="selectedTab.value" (selectedIndexChange)="setTabName($event)">
+      <mat-tab label="" class="fit-edit-content">
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">account_circle</mat-icon>
+          O mnie
+        </ng-template>
+        <app-edit-personal-data-customer (dataHasBeenChanged)="onDataEdited($event)" [customerProfile]="customerProfile" class="fit-edit-content"></app-edit-personal-data-customer>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">lock</mat-icon>
+          Zmiana hasła
+        </ng-template>
+        <app-change-password></app-change-password>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

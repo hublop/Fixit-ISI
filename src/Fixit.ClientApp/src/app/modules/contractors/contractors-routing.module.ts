@@ -6,6 +6,8 @@ import { CategoriesListResolver } from '../categories/_resolvers/categories-list
 import { ContractorsListResolver } from './_resolvers/contractors-list.resolver';
 import { ProfileComponent } from './profile/profile.component';
 import { ContractorProfileResolver } from './_resolvers/contractor-profile.resolver';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { EditProfileGuard } from './_guards/can-edit-profile.guard';
 
 export const contractorsRoutes: Routes = [
     {
@@ -22,6 +24,15 @@ export const contractorsRoutes: Routes = [
         component: ProfileComponent,
         resolve: {
             profile: ContractorProfileResolver
+        }
+    },
+    {
+        path: 'profile/:id/edit',
+        canActivate: [EditProfileGuard],
+        component: EditProfileComponent,
+        resolve: {
+            profile: ContractorProfileResolver,
+            categories: CategoriesListResolver
         }
     },
     {

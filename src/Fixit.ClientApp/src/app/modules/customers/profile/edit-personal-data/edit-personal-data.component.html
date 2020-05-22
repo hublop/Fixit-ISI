@@ -1,0 +1,49 @@
+<div class="container">
+    <form [formGroup]="personalDataFormGroup" (ngSubmit)="update()">
+
+        <div class="form-group">
+            <div class="label">Imię</div>
+            <mat-form-field class="form-group" appearance="outline">
+                <input matInput formControlName="firstName">
+                <mat-error *ngIf="personalDataFormGroup.get('firstName').hasError('required')">
+                    Podaj imię
+                </mat-error>
+                <mat-error *ngIf="personalDataFormGroup.get('firstName').hasError('maxlength') && !personalDataFormGroup.get('firstName').hasError('required')">
+                    Imię jest zbyt długie
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <div class="label">Nazwisko</div>
+            <mat-form-field class="form-group" appearance="outline">
+                <input matInput formControlName="lastName">
+                <mat-error *ngIf="personalDataFormGroup.get('lastName').hasError('required')">
+                    Podaj nazwisko
+                </mat-error>
+                <mat-error *ngIf="personalDataFormGroup.get('lastName').hasError('maxlength') && !personalDataFormGroup.get('lastName').hasError('required')">
+                    Nazwisko jest zbyt długie
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <div class="label">Numer telefonu</div>
+            <mat-form-field class="form-group" appearance="outline">
+                <input matInput formControlName="phoneNumber">
+                <mat-error *ngIf="personalDataFormGroup.get('phoneNumber').hasError('required')">
+                    Podaj numer telefonu
+                </mat-error>
+                <mat-error *ngIf="personalDataFormGroup.get('phoneNumber').hasError('maxlength') && !personalDataFormGroup.get('phoneNumber').hasError('required')">
+                    Numer telefonu jest zbyt długi
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <button class="saveButton" mat-raised-button color="primary" type="sumbit" [disabled]="!hasChanges() || !personalDataFormGroup.valid">
+                Zapisz
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,40 @@
+.content {
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    height: fit-content;
+}
+
+.header {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.header-background {
+    background-color: lightgray;
+}
+
+.divider {
+    .line-len {
+        width: 95%;
+        margin-left: 2.5%;
+        margin-right: 2.5%;
+    }
+    margin-top: 15px;
+}
+
+.toggle {
+    float: right;
+    margin-left: auto;
+}
+
+.line {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.sub-cat {
+    font-size: 16px;
+}

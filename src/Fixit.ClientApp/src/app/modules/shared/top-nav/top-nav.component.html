@@ -22,6 +22,63 @@
       </button>
     </mat-menu>
 
+
+
+    <button id="profile" class="top-menu-item" mat-button [matMenuTriggerFor]="profileMenu" *ngIf="isLoggedIn()">
+      <mat-icon class="user-icon">account_circle</mat-icon>
+      <span class="nav-username">{{getUserName()}}</span>
+    </button>
+    <mat-menu #profileMenu>
+      <button mat-menu-item (click)="goToProfile()" *ngIf="isContractor()">
+        <mat-icon>assignment_ind</mat-icon>
+        <span>Profil</span>
+      </button>
+      <button mat-menu-item (click)="goToContractorsOrders()" *ngIf="isContractor()">
+        <mat-icon>event</mat-icon>
+        <span>Zamówienia</span>
+      </button>
+      <button mat-menu-item (click)="goToSettings()">
+        <mat-icon>settings</mat-icon>
+        <span>Ustawienia</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>power_settings_new</mat-icon>
+        <span>Wyloguj</span>
+      </button>
+    </mat-menu>
+
+    <button class="small-menu-item" mat-button (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar-row>
+
+
+  <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible && !isLoggedIn()">
+    <button mat-button (click)="goToLogin()" class="menu-item-row-element">
+      <mat-icon class="element-icon">arrow_forward</mat-icon>
+      <span>Zaloguj się</span>
+    </button>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible && !isLoggedIn()">
+    <button mat-button (click)="goToContractorsRegisterForm()" class="menu-item-row-element">
+      <mat-icon class="element-icon">build</mat-icon>
+      <span>Zarejestruj jako Usługodawca</span>
+    </button>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible && !isLoggedIn()">
+    <button mat-button (click)="goToCustomerRegisterForm()" class="menu-item-row-element">
+      <mat-icon class="element-icon">accessibility_new</mat-icon>
+      <span>Zarejestruj jako Wykonawca</span>
+    </button>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible">
+    <button mat-button class="menu-item-row-element">
+      <mat-icon class="element-icon">accessibility_new</mat-icon>
+      <span>Kategorie</span>
+    </button>
   </mat-toolbar-row>
 
   <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible">
