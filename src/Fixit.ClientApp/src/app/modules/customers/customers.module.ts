@@ -6,6 +6,8 @@ import { RegisterCustomerComponent } from './register-customer/register-customer
 import { AuthModule } from '../auth/auth.module';
 import { RegisterInfoComponent } from './register-customer/register-info/register-info.component';
 import { MaterialModule } from '../material/material.module';
+import { ProfileComponent } from './profile/profile.component';
+import { EditPersonalDataComponent } from './profile/edit-personal-data/edit-personal-data.component';
 
 @NgModule({
   imports: [
@@ -18,6 +20,8 @@ import { MaterialModule } from '../material/material.module';
   declarations: [
     RegisterCustomerComponent,
     RegisterInfoComponent,
+    ProfileComponent,
+    EditPersonalDataComponent
   ]
 })
 export class CustomersModule { }
