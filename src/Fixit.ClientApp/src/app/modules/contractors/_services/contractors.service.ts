@@ -9,6 +9,10 @@ import { ContractorForList } from '../_models/ContractorForList';
 import { appendPaginationParams, getPaginationFromResponse } from '../../shared/pagination/Pagination';
 import { map } from 'rxjs/operators';
 import { ContractorProfile } from '../_models/ContractorProfile';
+import { AuthService } from '../../auth/_services/auth.service';
+import { AddRepairServiceData } from '../_models/AddRepairServiceData';
+import { UpdatePersonalInfoData } from '../_models/UpdatePersonalInfoData';
+import { UpdatePhotoData } from '../_models/UpdatePhotoData';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +20,8 @@ import { ContractorProfile } from '../_models/ContractorProfile';
 export class ContractorsService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) { }
 
   baseUrl = environment.apiUrl + 'contractors/';
@@ -63,4 +68,46 @@ export class ContractorsService {
 
     return params;
   }
+
+  provideRepairService(subcategoryId: number) {
+    let contractorId = -1;
+    const loggedInUser = this.authService.getloggedInUser();
+    if (loggedInUser) {
+      contractorId = loggedInUser.id;
+    }
+    const data: AddRepairServiceData = {subcategoryId: subcategoryId};
+
+    return this.http.post(this.baseUrl + contractorId + '/services/' + subcategoryId, subcategoryId);
+  }
+
+  unprovideRepairService(subcategoryId: number) {
+    let contractorId = -1;
+    const loggedInUser = this.authService.getloggedInUser();
+    if (loggedInUser) {
+      contractorId = loggedInUser.id;
+    }
+
+    return this.http.delete(this.baseUrl + contractorId + '/services/' + subcategoryId);
+  }
+
+  updatePersonalData(data: UpdatePersonalInfoData) {
+    const loggedInUser = this.authService.getloggedInUser();
+
+    if (!loggedInUser) {
+      return;
+    }
+
+    return this.http.put(this.baseUrl + loggedInUser.id, data);
+  }
+
+  updatePhoto(data: UpdatePhotoData) {
+    const loggedInUser = this.authService.getloggedInUser();
+
+    if (!loggedInUser) {
+      return;
+    }
+
+    return this.http.put(this.baseUrl + loggedInUser.id + '/photo', data);
+  }
+
 }
