@@ -1,0 +1,16 @@
+<div class="content">
+  <mat-accordion>
+    <mat-expansion-panel [ngClass]="{'mat-elevation-z8': openedPanel === ind}" *ngFor="let category of categoriesEditInfo; let ind = index" [expanded]="openedPanel === ind" (opened)="openPanel(ind)">
+      <mat-expansion-panel-header class="header">{{category.name}} ({{getProvidedSubcategoriesCount(category)}})</mat-expansion-panel-header>
+      <div *ngFor="let subcategory of category.subCategories; let i = index" class="line">
+        <div>
+          <span class="sub-cat">{{subcategory.name}}</span>
+          <mat-slide-toggle class="toggle" [(checked)]="subcategory.isProvided" (click)="toggleSubcategory(subcategory.id, subcategory.categoryId)"></mat-slide-toggle>
+        </div>
+        <div class="divider">
+          <mat-divider *ngIf="i !== category.subCategories.length - 1" class="line-len"></mat-divider>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
