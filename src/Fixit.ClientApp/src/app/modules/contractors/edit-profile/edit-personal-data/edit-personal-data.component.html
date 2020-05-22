@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="info">
+    <form [formGroup]="personalDataFormGroup" (ngSubmit)="update()">
+
+      <div class="form-group">
+        <div class="label">Imię</div>
+        <mat-form-field class="form-group" appearance="outline">
+          <input matInput formControlName="firstName">
+          <mat-error *ngIf="personalDataFormGroup.get('firstName').hasError('required')">
+            Podaj imię
+          </mat-error>
+          <mat-error *ngIf="personalDataFormGroup.get('firstName').hasError('maxlength') && !personalDataFormGroup.get('firstName').hasError('required')">
+            Imię jest zbyt długie
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <div class="label">Nazwisko</div>
+        <mat-form-field class="form-group" appearance="outline">
+          <input matInput formControlName="lastName">
+          <mat-error *ngIf="personalDataFormGroup.get('lastName').hasError('required')">
+            Podaj nazwisko
+          </mat-error>
+          <mat-error *ngIf="personalDataFormGroup.get('lastName').hasError('maxlength') && !personalDataFormGroup.get('lastName').hasError('required')">
+            Nazwisko jest zbyt długie
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <div class="label">Nazwa firmy</div>
+        <mat-form-field class="form-group" appearance="outline">
+          <input matInput formControlName="companyName">
+          <mat-error *ngIf="personalDataFormGroup.get('companyName').hasError('maxlength')">
+            Nazwa firmy jest zbyt długa
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <div class="label">Numer telefonu</div>
+        <mat-form-field class="form-group" appearance="outline">
+          <input matInput formControlName="phoneNumber">
+          <mat-error *ngIf="personalDataFormGroup.get('phoneNumber').hasError('required')">
+            Podaj numer telefonu
+          </mat-error>
+          <mat-error *ngIf="personalDataFormGroup.get('phoneNumber').hasError('maxlength') && !personalDataFormGroup.get('phoneNumber').hasError('required')">
+            Numer telefonu jest zbyt długi
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <div class="label">Własny opis</div>
+        <mat-form-field class="form-group" appearance="outline">
+          <textarea class="self-description" matInput formControlName="selfDescription"></textarea>
+          <mat-error *ngIf="personalDataFormGroup.get('selfDescription').hasError('maxlength')">
+            Opis jest zbyt długi
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-group">
+        <button class="saveButton" mat-raised-button color="primary" type="sumbit" [disabled]="!hasChanges() || !personalDataFormGroup.valid">
+          Zapisz
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="photo">
+    <div *ngIf="!display" mat-card-avatar class="person-icon">
+      <mat-icon class="icon-img">person</mat-icon>
+    </div>
+
+    <img *ngIf="display" class="photo-image" [src]="display">
+    <input class="photo-picker" id="filePicker" type="file" (change)="handleFileSelect($event)" accept=".png, .jpg, .jpeg" />
+
+    <button class="select-photo-button" mat-raised-button color="primary" (click)="selectPhoto()">
+      Wybierz zdjęcie
+    </button>
+  </div>
+
+</div>
