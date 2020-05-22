@@ -18,6 +18,9 @@ import { OpinionsListComponent } from './profile/opinions/opinions-list/opinions
 import { ProvidedServicesComponent } from './profile/provided-services/provided-services.component';
 import { ProvidedCategoriesComponent } from './profile/provided-services/provided-categories/provided-categories.component';
 import { ListElementComponent } from './profile/opinions/opinions-list/list-element/list-element.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { EditPersonalDataComponent } from './edit-profile/edit-personal-data/edit-personal-data.component';
+import { EditProvidedServicesComponent } from './edit-profile/edit-provided-services/edit-provided-services.component';
 
 @NgModule({
   imports: [
@@ -40,6 +43,9 @@ import { ListElementComponent } from './profile/opinions/opinions-list/list-elem
     OpinionsHeaderComponent,
     OpinionsListComponent,
     ListElementComponent,
+    EditProfileComponent,
+    EditPersonalDataComponent,
+    EditProvidedServicesComponent,
     ProvidedServicesComponent,
     ProvidedCategoriesComponent
   ],
