@@ -34,15 +34,6 @@ namespace Fixit.WebApi.Orders
             return await HandleCommandAsync(command);
         }
 
-        [HttpDelete("{orderId}")]
-        [ProducesResponseType(200)]
-        public async Task<IActionResult> CancelOrderAsync([FromRoute] int orderId, [FromBody] CancelOrderCommandDto command)
-        {
-            var cancelOrderCommand = Mapper.Map<CancelOrderCommand>(command);
-            cancelOrderCommand.OrderId = orderId;
-            return await HandleCommandAsync(cancelOrderCommand);
-        }
-
         [HttpPut("{orderId}/accept")]
         [Authorize(Policy = RolePolicies.RequireContractor)]
         [ProducesResponseType(200)]
@@ -57,17 +48,6 @@ namespace Fixit.WebApi.Orders
             }
 
             return await HandleCommandAsync(acceptOrderCommand);
-        }
-
-        [HttpPut("{orderId}/reject")]
-        [ProducesResponseType(200)]
-        public async Task<IActionResult> RejectOrderAsync([FromRoute] int orderId,
-            [FromBody] RejectOrderCommandDto command)
-        {
-            var rejectOrderCommand = Mapper.Map<RejectOrderCommand>(command);
-            rejectOrderCommand.OrderId = orderId;
-
-            return await HandleCommandAsync(rejectOrderCommand);
         }
 
         public OrdersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
