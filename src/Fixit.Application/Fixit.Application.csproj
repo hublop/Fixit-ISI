@@ -25,7 +25,6 @@
   <ItemGroup>
     <Folder Include="Common\Services\Identity\" />
     <Folder Include="Orders\Exceptions\" />
-    <Folder Include="Orders\Queries\" />
   </ItemGroup>
 
 </Project>
