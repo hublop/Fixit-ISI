@@ -2,10 +2,9 @@
 using AutoMapper;
 using Fixit.Application.Common.Services;
 using Fixit.Application.Orders.Commands.AcceptOrder;
-using Fixit.Application.Orders.Commands.CancelOrder;
 using Fixit.Application.Orders.Commands.CreateDirectOrder;
 using Fixit.Application.Orders.Commands.CreateDistributedOrder;
-using Fixit.Application.Orders.Commands.RejectOrder;
+using Fixit.Application.Orders.Queries.GetOffersForCustomer;
 using Fixit.WebApi.Common;
 using Fixit.WebApi.Controllers;
 using Fixit.WebApi.Orders.DTOs;
@@ -48,6 +47,14 @@ namespace Fixit.WebApi.Orders
             }
 
             return await HandleCommandAsync(acceptOrderCommand);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> GetOrderOffersForCustomerAsync([FromQuery] int customerId,
+            [FromQuery] int? orderId)
+        {
+            return await HandleQueryAsync(new GetOffersForCustomerQuery {CustomerId = customerId, OrderId = orderId});
         }
 
         public OrdersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
