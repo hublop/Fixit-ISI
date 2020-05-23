@@ -25,6 +25,10 @@ namespace Fixit.Persistance.Configurations
             builder.HasOne(x => x.Customer)
                 .WithMany(x => x.Orders)
                 .HasForeignKey(x => x.CustomerId);
+
+            builder.HasOne(x => x.Contractor)
+                .WithMany(x => x.DirectOrders)
+                .HasForeignKey(x => x.ContractorId);
         }
     }
 }

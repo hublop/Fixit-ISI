@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Fixit.Shared.CQRS;
 
 namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
@@ -10,6 +8,7 @@ namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
         public string Description { get; set; }
         public int SubcategoryId { get; set; }
         public int CustomerId { get; set; }
-        public int PlaceId { get; set; }
+        public string PlaceId { get; set; }
+        public List<string> Base64Photos { get; set; }
     }
 }

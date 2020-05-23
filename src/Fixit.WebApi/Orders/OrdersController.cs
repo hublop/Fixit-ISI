@@ -6,9 +6,11 @@ using Fixit.Application.Orders.Commands.CancelOrder;
 using Fixit.Application.Orders.Commands.CreateDirectOrder;
 using Fixit.Application.Orders.Commands.CreateDistributedOrder;
 using Fixit.Application.Orders.Commands.RejectOrder;
+using Fixit.WebApi.Common;
 using Fixit.WebApi.Controllers;
 using Fixit.WebApi.Orders.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fixit.WebApi.Orders
@@ -29,39 +31,23 @@ namespace Fixit.WebApi.Orders
         [ProducesResponseType(200)]
         public async Task<IActionResult> CreateDistributedOrderAsync([FromBody] CreateDistributedOrderCommand command)
         {
-
             return await HandleCommandAsync(command);
         }
 
-        [HttpDelete("{orderId}")]
-        [ProducesResponseType(200)]
-        public async Task<IActionResult> CancelOrderAsync([FromRoute] int orderId, [FromBody] CancelOrderCommandDto command)
-        {
-            var cancelOrderCommand = Mapper.Map<CancelOrderCommand>(command);
-            cancelOrderCommand.OrderId = orderId;
-            return await HandleCommandAsync(cancelOrderCommand);
-        }
-
         [HttpPut("{orderId}/accept")]
+        [Authorize(Policy = RolePolicies.RequireContractor)]
         [ProducesResponseType(200)]
         public async Task<IActionResult> AcceptOrderAsync([FromRoute] int orderId,
             [FromBody] AcceptOrderCommandDto command)
         {
             var acceptOrderCommand = Mapper.Map<AcceptOrderCommand>(command);
             acceptOrderCommand.OrderId = orderId;
+            if (!CurrentUserService.IsUser(command.ContractorId))
+            {
+                return BadRequest();
+            }
 
             return await HandleCommandAsync(acceptOrderCommand);
-        }
-
-        [HttpPut("{orderId}/reject")]
-        [ProducesResponseType(200)]
-        public async Task<IActionResult> RejectOrderAsync([FromRoute] int orderId,
-            [FromBody] RejectOrderCommandDto command)
-        {
-            var rejectOrderCommand = Mapper.Map<RejectOrderCommand>(command);
-            rejectOrderCommand.OrderId = orderId;
-
-            return await HandleCommandAsync(rejectOrderCommand);
         }
 
         public OrdersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)

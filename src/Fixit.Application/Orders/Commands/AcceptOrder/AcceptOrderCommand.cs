@@ -7,5 +7,7 @@ namespace Fixit.Application.Orders.Commands.AcceptOrder
     {
         public int OrderId { get; set; }
         public int ContractorId { get; set; }
+        public string Comment { get; set; }
+        public double PredictedPrice { get; set; }
     }
 }

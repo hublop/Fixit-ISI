@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Fixit.WebApi.Orders.DTOs
 {
@@ -10,6 +7,7 @@ namespace Fixit.WebApi.Orders.DTOs
         public string Description { get; set; }
         public int SubcategoryId { get; set; }
         public int CustomerId { get; set; }
-        public int PlaceId { get; set; }
+        public string PlaceId { get; set; }
+        public List<string> Base64Photos { get; set; }
     }
 }

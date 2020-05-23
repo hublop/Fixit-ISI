@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Fixit.Application.Orders.Commands.AcceptOrder;
 using Fixit.Application.Orders.Commands.CancelOrder;
 using Fixit.Application.Orders.Commands.CreateDirectOrder;

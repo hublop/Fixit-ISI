@@ -9,10 +9,13 @@ namespace Fixit.Domain.Entities
         public int LocationId { get; set; }
         public int CustomerId { get; set; }
         public int SubcategoryId { get; set; }
+        public bool IsDistributed { get; set; }
+        public int? ContractorId { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? LastNotificationDate { get; set; }
 
         public Customer Customer { get; set; }
+        public Contractor Contractor { get; set; }
         public Subcategory Subcategory { get; set; }
         public Location Location { get; set; }
         public ICollection<OrderOffer> OrderOffers { get; set; }

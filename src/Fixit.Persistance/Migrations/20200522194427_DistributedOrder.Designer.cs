@@ -4,14 +4,16 @@ using Fixit.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fixit.Persistance.Migrations
 {
     [DbContext(typeof(FixitDbContext))]
-    partial class FixitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200522194427_DistributedOrder")]
+    partial class DistributedOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +145,6 @@ namespace Fixit.Persistance.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ContractorId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
@@ -174,8 +173,6 @@ namespace Fixit.Persistance.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContractorId");
 
                     b.HasIndex("CustomerId");
 
@@ -610,11 +607,6 @@ namespace Fixit.Persistance.Migrations
 
             modelBuilder.Entity("Fixit.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("Fixit.Domain.Entities.Contractor", "Contractor")
-                        .WithMany("DirectOrders")
-                        .HasForeignKey("ContractorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Fixit.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
