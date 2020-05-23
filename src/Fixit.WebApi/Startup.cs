@@ -1,8 +1,13 @@
+using System.Reflection;
+using AutoMapper;
 using Fixit.Application;
 using Fixit.Application.Common.Interfaces;
+using Fixit.Application.Common.Services;
 using Fixit.Application.Contractors.Events.ActivateSubscription;
 using Fixit.Application.Contractors.Events.CancelSubscription;
 using Fixit.Application.Contractors.Events.DeactivateSubscription;
+using Fixit.Application.Orders.Events.DirectOrderCreated;
+using Fixit.Application.Orders.Events.OrderWithPhotosAdded;
 using Fixit.Domain.Common;
 using Fixit.EventBus.Abstractions;
 using Fixit.EventBus.RabbitMQ;
@@ -33,6 +38,7 @@ namespace Fixit.WebApi
             services.AddInfrastructure(Configuration);
             services.AddPersistence(Configuration);
             services.AddApplication(Configuration);
+            services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(ICurrentUserService)));
 
             services.RegisterEventBus(Configuration);
 
@@ -46,6 +52,8 @@ namespace Fixit.WebApi
             services.AddTransient<SubscriptionActivatedIntegrationEventHandler>();
             services.AddTransient<SubscriptionCancelledIntegrationEventHandler>();
             services.AddTransient<SubscriptionDeactivatedIntegrationEventHandler>();
+            services.AddTransient<OrderWithPhotosAddedIntegrationEventHandler>();
+            services.AddTransient<DirectOrderCreatedIntegrationEventHandler>();
 
             services.ConfigureJwt(Configuration);
 
@@ -67,6 +75,8 @@ namespace Fixit.WebApi
       eventBus.Subscribe<SubscriptionActivatedIntegrationEvent, SubscriptionActivatedIntegrationEventHandler>();
       eventBus.Subscribe<SubscriptionCancelledIntegrationEvent, SubscriptionCancelledIntegrationEventHandler>();
       eventBus.Subscribe<SubscriptionDeactivatedIntegrationEvent, SubscriptionDeactivatedIntegrationEventHandler>();
+      eventBus.Subscribe<OrderWithPhotosAddedIntegrationEvent, OrderWithPhotosAddedIntegrationEventHandler>();
+      eventBus.Subscribe<DirectOrderCreatedIntegrationEvent, DirectOrderCreatedIntegrationEventHandler>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
