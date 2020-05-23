@@ -9,6 +9,7 @@ namespace Fixit.Domain.Entities
         public int LocationId { get; set; }
         public int CustomerId { get; set; }
         public int SubcategoryId { get; set; }
+        public bool IsDistributed { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? LastNotificationDate { get; set; }
 

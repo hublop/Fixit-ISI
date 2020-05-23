@@ -4,14 +4,16 @@ using Fixit.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fixit.Persistance.Migrations
 {
     [DbContext(typeof(FixitDbContext))]
-    partial class FixitDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200522194427_DistributedOrder")]
+    partial class DistributedOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
