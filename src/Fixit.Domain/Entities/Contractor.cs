@@ -17,6 +17,7 @@ namespace Fixit.Domain.Entities
         //todo: to delete
         public bool IsPremium { get; set; }
         public ICollection<OrderOffer> OrderOffers { get; set; }
+        public ICollection<Order> DirectOrders { get; set; }
 
         public string ContractorUUID { get; set; }
 
