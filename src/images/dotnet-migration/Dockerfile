@@ -16,7 +16,7 @@ COPY Fixit.WebApi/*.csproj ./Fixit.WebApi/
 RUN dotnet restore
 COPY . .
 WORKDIR /src/Fixit.WebApi
-RUN dotnet build -c Release -o /app
+RUN dotnet build -c Development -o /app
 RUN dotnet tool install -g dotnet-ef
 RUN export PATH="$PATH:/root/.dotnet/tools"
 WORKDIR /src

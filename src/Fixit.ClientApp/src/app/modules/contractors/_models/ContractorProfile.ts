@@ -1,6 +1,6 @@
 import { CategoryInProfile } from './CategoryInProfile';
 import { OpinionInProfile } from './OpinionInProfile';
-export interface ContractorProfile {
+export class ContractorProfile {
     id: number;
     firstName: string;
     lastName: string;
@@ -17,5 +17,9 @@ export interface ContractorProfile {
     avgRating: number;
     categories: CategoryInProfile[];
     opinions: OpinionInProfile[];
+    contractorUUID: string;
     imageUrl: string;
+    subscriptionStatus: string;
+    subscriptionUUID: string;
+    nextPaymentDate: Date;
 }

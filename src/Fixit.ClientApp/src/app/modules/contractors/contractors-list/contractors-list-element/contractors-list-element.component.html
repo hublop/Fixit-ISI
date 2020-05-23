@@ -4,6 +4,7 @@
         <div class="header-container">
           <div mat-card-avatar class="person-icon" *ngIf="!contractor.imageUrl">
             <mat-icon class="icon-img ">person</mat-icon>
+            <mat-icon class="premium-icon" color="accent">stars</mat-icon>
           </div>
           <img [src]="contractor.imageUrl" mat-card-avatar class="photo-image" *ngIf="contractor.imageUrl">
           <button class="order-button" *ngIf="addOrderButtonVisible()" mat-raised-button color="primary" (click)="navigateToAddOrder()">
@@ -14,6 +15,7 @@
         <div class="details-container">
           <div class="titles">
             <mat-card-title (click)="navigateToProfile(contractor)">{{contractor.firstName}} {{contractor.lastName}}</mat-card-title>
+            <mat-card-subtitle  class="accent-color"  *ngIf="contractor.subscriptionStatus === 'Active' || contractor.subscriptionStatus === 'Cancelled'">Super fachowiec</mat-card-subtitle>
             <mat-card-subtitle>{{getDisplaySpec()}}</mat-card-subtitle>
             <div>
               <div class="grade-inscription">

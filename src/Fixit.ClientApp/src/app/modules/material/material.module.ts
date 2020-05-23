@@ -18,6 +18,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatExpansionModule,
     MatSlideToggleModule,
     MatSnackBarModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule,
   ],
   exports: [
     MatTooltipModule,
@@ -59,7 +61,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatExpansionModule,
     MatSlideToggleModule,
     MatSnackBarModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule
   ],
   declarations: []
 })

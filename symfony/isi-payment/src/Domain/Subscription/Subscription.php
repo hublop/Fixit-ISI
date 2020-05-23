@@ -126,6 +126,12 @@ class Subscription implements \JsonSerializable
         return Result::success();
     }
 
+    public function reactivate(): Result
+    {
+        $this->status          = Status::active();
+        return Result::success();
+    }
+
     public function disable(): Result
     {
         if ($this->status === Status::disabled()) {

@@ -1,0 +1,80 @@
+<div class="container">
+  <div class="form">
+      <mat-card-content>
+    <div class="premium-title">
+      <div *ngIf="isPremium">Twoje konto premium</div>
+      <div *ngIf="!isPremium">Aktywuj swoje konto premium już dziś</div>
+    </div>
+    <div *ngIf="isPremium">
+      <div>
+        <div>
+          <mat-icon>star</mat-icon>
+          <span style="vertical-align: super"><b>Status: </b>  <span>{{subsriptionStatus}}</span></span>
+
+        </div>
+        <div>
+          <mat-icon>calendar_today</mat-icon>
+          <span style="vertical-align: super"><b *ngIf="isCancelled">Premium aktywne do: </b> <b *ngIf="!isCancelled">Następna płatność: </b><span>{{contractorProfile.nextPaymentDate | date:'longDate':'+0000':'pl' }}</span></span>
+        </div>
+        <button *ngIf="!isCancelled" class="subscribe-button" mat-raised-button color="primary" (click)="cancelSubscription()">Anuluj subskrypcję</button>
+        <button *ngIf="isCancelled" class="subscribe-button" mat-raised-button color="primary" (click)="reactivateSubscription()">Przywróć subskrypcję</button>
+
+      </div>
+    </div>
+    <div *ngIf="!isPremium">
+      <form [formGroup]="subscriptionForm" (ngSubmit)="subscribe()" name="subscriptionForm" class="subscription-form">
+
+        <div class="form-element">
+          <mat-form-field class="form-field" appearance="outline" >
+            <input matInput placeholder="Imię" formControlName="firstname">
+            <mat-error *ngIf="subscriptionForm.get('firstname').hasError('required')">
+              Podaj imię
+            </mat-error>
+            <mat-error *ngIf="subscriptionForm.get('firstname').hasError('maxlength')">
+              Imię jest zbyt długie
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-element">
+          <mat-form-field class="form-field" appearance="outline">
+            <input matInput placeholder="Nazwisko" formControlName="lastname">
+            <mat-error *ngIf="subscriptionForm.get('lastname').hasError('required')">
+              Podaj nazwisko
+            </mat-error>
+            <mat-error *ngIf="subscriptionForm.get('lastname').hasError('maxlength')">
+              Nazwisko jest zbyt długie
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-element">
+          <mat-form-field class="form-field" appearance="outline">
+            <input matInput placeholder="Email" formControlName="userEmail">
+            <mat-error *ngIf="subscriptionForm.get('userEmail').hasError('required')">
+              Podaj email
+            </mat-error>
+            <mat-error *ngIf="subscriptionForm.get('userEmail').hasError('maxlength')">
+              Email jest zbyt długi
+            </mat-error>
+            <mat-error *ngIf="subscriptionForm.get('userEmail').hasError('email') && !subscriptionForm.get('userEmail').hasError('maxlength') && !subscriptionForm.get('userEmail').hasError('required')">
+              Podaj poprawny email
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-element">
+          <button class="subscribe-button" mat-raised-button color="primary" type="sumbit" [disabled]="!subscriptionForm.valid">Zakup subskrypcję</button>
+        </div>
+      </form>
+      <form method="post" [formGroup]="payForm">
+        <input id="orderId" name="orderId" type="hidden" [value]="orderId">
+        <button id="pay-button" style="display: none;" >Pay now</button>
+      </form>
+    </div>
+      </mat-card-content>
+  </div>
+  <div class="info" *ngIf="!isPremium">
+    <div class="premium-title">Zdobywaj kolejnych klientów!</div>
+    <app-add-subscription-info></app-add-subscription-info>
+  </div>
+</div>

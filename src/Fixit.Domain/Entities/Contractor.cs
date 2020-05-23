@@ -19,6 +19,7 @@ namespace Fixit.Domain.Entities
         public ICollection<OrderOffer> OrderOffers { get; set; }
 
         public string ContractorUUID { get; set; }
+        public string SubscriptionUUID { get; set; }
 
         public int? SubscriptionStatusId { get; set; }
         public SubscriptionStatus SubscriptionStatus { get; set; }

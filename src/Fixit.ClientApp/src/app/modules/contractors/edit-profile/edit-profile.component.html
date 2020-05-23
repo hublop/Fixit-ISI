@@ -17,6 +17,14 @@
         <app-edit-provided-services [contractorProfile]="contractorProfile" [allCategories]="categories" class="fit-edit-content"
           [contractorId]="userId"></app-edit-provided-services>
       </mat-tab>
+      <mat-tab label="" class="fit-edit-content">
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">stars</mat-icon>
+          Konto premium
+        </ng-template>
+        <app-edit-subscription [contractorProfile]="contractorProfile" id="subscriptionComponent"
+                                class="fit-edit-content"></app-edit-subscription>
+      </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="tab-icon">lock</mat-icon>

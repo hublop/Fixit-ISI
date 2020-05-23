@@ -15,6 +15,7 @@ use App\Domain\Subscription\Subscription;
 use App\Domain\Subscription\SubscriptionDeactivated;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Transport\AmqpExt\AmqpStamp;
 
 class DisableSubscriptionService
 {
@@ -37,7 +38,10 @@ class DisableSubscriptionService
             Status::disabled(),
             Clock::system()->currentDateTime()
         );
-        $this->messageBus->dispatch($event);
+        $this->messageBus->dispatch(
+            $event,
+            [new AmqpStamp('SubscriptionDeactivatedIntegrationEvent', AMQP_NOPARAM)]
+        );
         return Result::success([
             $event
         ]);

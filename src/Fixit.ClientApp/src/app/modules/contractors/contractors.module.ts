@@ -21,6 +21,8 @@ import { ListElementComponent } from './profile/opinions/opinions-list/list-elem
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditPersonalDataComponent } from './edit-profile/edit-personal-data/edit-personal-data.component';
 import { EditProvidedServicesComponent } from './edit-profile/edit-provided-services/edit-provided-services.component';
+import { EditSubscriptionComponent, PaymentContentDialog } from './edit-profile/edit-subscription/edit-subscription.component';
+import { AddSubscriptionInfoComponent } from './edit-profile/edit-subscription/add-subscription-info/add-subscription-info.component';
 
 @NgModule({
   imports: [
@@ -46,6 +48,9 @@ import { EditProvidedServicesComponent } from './edit-profile/edit-provided-serv
     EditProfileComponent,
     EditPersonalDataComponent,
     EditProvidedServicesComponent,
+    EditSubscriptionComponent,
+    AddSubscriptionInfoComponent,
+    PaymentContentDialog,
     ProvidedServicesComponent,
     ProvidedCategoriesComponent
   ],

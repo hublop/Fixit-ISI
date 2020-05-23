@@ -22,6 +22,7 @@ class PaymentWidget implements \JsonSerializable
     private LanguageCode $customerLanguage;
     private bool $storeCard;
     private bool $recurringPayment;
+    private string $successCallback;
     private Email $customerEmail;
     private Signature $signature;
 
@@ -43,6 +44,7 @@ class PaymentWidget implements \JsonSerializable
         $object->recurringPayment = $isRecurring;
         $object->merchantPosId    = $posId;
         $object->shopName         = $shopName;
+        $object->successCallback  = 'paymentResult';
         $object->signature        = Signature::getForPaymentWidget($object, $privateKey);
         return $object;
     }
@@ -50,13 +52,13 @@ class PaymentWidget implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'pay-button'        => $this->payButton,
             'merchant-pos-id'   => (string)$this->merchantPosId,
             'shop-name'         => (string)$this->shopName,
             'total-amount'      => (string)$this->totalAmount,
             'currency-code'     => (string)$this->currencyCode,
             'customer-language' => (string)$this->customerLanguage,
             'store-card'        => $this->storeCard,
+            'success-callback'  => $this->successCallback,
             'recurring-payment' => $this->recurringPayment,
             'customer-email'    => (string)$this->customerEmail,
             'sig'               => (string)$this->signature
@@ -119,5 +121,10 @@ class PaymentWidget implements \JsonSerializable
     public function getRecurringPayment(): bool
     {
         return $this->recurringPayment;
+    }
+
+    public function getSuccessCallback(): string
+    {
+        return $this->successCallback;
     }
 }
