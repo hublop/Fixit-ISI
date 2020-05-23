@@ -29,7 +29,6 @@ namespace Fixit.WebApi.Orders
         [ProducesResponseType(200)]
         public async Task<IActionResult> CreateDistributedOrderAsync([FromBody] CreateDistributedOrderCommand command)
         {
-
             return await HandleCommandAsync(command);
         }
 
