@@ -1,7 +1,7 @@
-import { CategoryInfoForList } from './../../categories/_models/CategoryInfoForList';
+import { CategoryInfoForList } from '../../categories/_models/CategoryInfoForList';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '../../../../../node_modules/@angular/forms';
-import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ContractorProfile } from '../_models/ContractorProfile';
 import { ContractorsService } from '../_services/contractors.service';
@@ -50,8 +50,10 @@ export class EditProfileComponent implements OnInit {
       this.selectedTab.setValue(0);
     } else if (this.type === 'services') {
       this.selectedTab.setValue(1);
-    } else if (this.type === 'change-password') {
+    } else if (this.type === 'subscription') {
       this.selectedTab.setValue(2);
+    } else if (this.type === 'change-password') {
+      this.selectedTab.setValue(3);
     }
   }
 
@@ -74,6 +76,8 @@ export class EditProfileComponent implements OnInit {
     if (index === 1) {
       editTypeName = 'services';
     } else if (index === 2) {
+      editTypeName = 'subscription';
+    } else if (index === 3) {
       editTypeName = 'change-password';
     }
     this.selectedTab.setValue(index);

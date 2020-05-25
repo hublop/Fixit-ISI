@@ -30,6 +30,7 @@ namespace Fixit.Application.Contractors.Events.ActivateSubscription
         await _dbContext.SubscriptionStatuses.SingleAsync(x => x.Status.Equals(SubscriptionStatus.Active));
 
       contractor.SubscriptionStatus = subscriptionStatus;
+      contractor.SubscriptionUUID = @event.SubscriptionId;
       contractor.NextPaymentDate = @event.NextPaymentDate;
 
       await _dbContext.SaveChangesAsync(CancellationToken.None);

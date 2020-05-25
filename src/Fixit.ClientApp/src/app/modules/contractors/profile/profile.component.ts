@@ -1,7 +1,7 @@
-import { AuthService } from './../../auth/_services/auth.service';
-import { ContractorProfile } from './../_models/ContractorProfile';
+import { AuthService } from '../../auth/_services/auth.service';
+import { ContractorProfile } from '../_models/ContractorProfile';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { InfoService } from '../../shared/info/info.service';
 

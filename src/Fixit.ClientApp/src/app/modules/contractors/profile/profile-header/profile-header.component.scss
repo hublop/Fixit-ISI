@@ -1,3 +1,8 @@
+@import '~@angular/material/theming';
+
+.accent-color {
+  color: #ff4081 !important;
+}
 .header {
     width: 100%;
 }
@@ -7,6 +12,12 @@
     height: 200px;
     width: 200px;
     background-color: gray !important;
+    position: relative;
+}
+.premium-icon {
+  position: absolute;
+  top:0px;
+  right: 15px;
 }
 
 .icon-img {

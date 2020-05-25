@@ -8,13 +8,14 @@ use App\Common\SystemClock;
 use App\Common\UUID;
 use App\Domain\Subscription\Status;
 use App\Domain\Subscription\Subscription;
+use App\Domain\Subscription\SubscriptionActivated;
 use App\Domain\Subscription\SubscriptionCancelled;
 use App\Infrastructure\Doctrine\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Transport\AmqpExt\AmqpStamp;
 
-final class CancelSubscriptionService
+final class ReactivateSubscriptionService
 {
     private SubscriptionRepository $subscriptionRepository;
     private EntityManagerInterface $entityManager;
@@ -33,27 +34,24 @@ final class CancelSubscriptionService
         $this->orderFacade            = $orderFacade;
     }
 
-    /**
-     * @param UUID $uuid
-     * @return Result
-     */
-    public function cancelSubscription(UUID $uuid): Result
+    public function reactivateSubscription(UUID $uuid)
     {
         $subscription = $this->subscriptionRepository->findByUUID($uuid);
         if (!$subscription instanceof Subscription) {
             return Result::failure(sprintf('Subscription with UUID \'%s\' was not found', (string)$uuid), 404);
         }
-        $result = $subscription->cancel();
+        $result = $subscription->reactivate();
         if (!$result instanceof Result\Success) {
             return $result;
         }
         $this->entityManager->persist($subscription);
         $this->entityManager->flush();
         $this->messageBus->dispatch(
-            new SubscriptionCancelled(
+            new SubscriptionActivated(
                 $subscription->id(),
                 $subscription->getUserId(),
-                Status::cancelled(),
+                Status::active(),
+                $subscription->getNextPaymentDate(),
                 SystemClock::system()->currentDateTime()
             )
         );

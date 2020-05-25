@@ -10,8 +10,13 @@
     height: 170px;
     width: 170px;
     background-color: gray !important;
+    position: relative;
 }
-
+.premium-icon {
+  position: absolute;
+  top:0px;
+  right: 15px;
+}
 .icon-img {
     width: 170px;
     height: 170px;
@@ -50,7 +55,7 @@
         width: 15px;
         height: 15px;
     }
-    width: 305px;   
+    width: 305px;
     margin-right: 10%;
     .name {
         margin-left: 10px;
@@ -127,4 +132,8 @@
 
 
 @media screen and (max-width: 1100px) {
+}
+
+.accent-color {
+  color: #ff4081 !important;
 }

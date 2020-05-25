@@ -20,6 +20,7 @@ use App\Domain\Subscription\SubscriptionActivated;
 use App\Domain\Subscription\SubscriptionDeactivated;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Transport\AmqpExt\AmqpStamp;
 
 class ProcessPaymentService
 {
@@ -96,21 +97,27 @@ class ProcessPaymentService
         $this->entityManager->persist($subscription);
         $this->entityManager->flush();
         if ($result->getStatus() == Status::success) {
-            $this->messageBus->dispatch(new SubscriptionActivated(
-                $subscription->id(),
-                $subscription->getUserId(),
-                \App\Domain\Subscription\Status::active(),
-                $subscription->getNextPaymentDate(),
-                $subscription->getDateTime()
-            ));
+            $this->messageBus->dispatch(
+                new SubscriptionActivated(
+                    $subscription->id(),
+                    $subscription->getUserId(),
+                    \App\Domain\Subscription\Status::active(),
+                    $subscription->getNextPaymentDate(),
+                    $subscription->getDateTime()
+                ),
+                [new AmqpStamp('SubscriptionActivatedIntegrationEvent', AMQP_NOPARAM)]
+            );
             return Result::success();
         } else {
-            $this->messageBus->dispatch(new SubscriptionDeactivated(
-                $subscription->id(),
-                $subscription->getUserId(),
-                \App\Domain\Subscription\Status::active(),
-                $subscription->getDateTime()
-            ));
+            $this->messageBus->dispatch(
+                new SubscriptionDeactivated(
+                    $subscription->id(),
+                    $subscription->getUserId(),
+                    \App\Domain\Subscription\Status::active(),
+                    $subscription->getDateTime()
+                ),
+                [new AmqpStamp('SubscriptionDeactivatedIntegrationEvent', AMQP_NOPARAM)]
+            );
             return Result::failure($result->getMessage(), 400);
         }
     }

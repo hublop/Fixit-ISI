@@ -8,5 +8,6 @@ export interface ContractorForList {
     opinionsCount: number;
     newestOpinion: string;
     specializations: string[];
+    subscriptionStatus: string;
     imageUrl: string;
 }

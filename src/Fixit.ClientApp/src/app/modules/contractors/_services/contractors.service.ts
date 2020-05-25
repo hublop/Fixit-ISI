@@ -33,7 +33,7 @@ export class ContractorsService {
   getContractorProfile(id): Observable<ContractorProfile> {
     return this.http.get<ContractorProfile>(this.baseUrl + id);
   }
-  
+
   getContractors(contractorsListFilter?: ContractorsListFilter, page?, itemsPerPage?): Observable<PaginatedResult<ContractorForList>> {
     let params: HttpParams = new HttpParams();
     params = appendPaginationParams(params, page, itemsPerPage);
@@ -109,5 +109,4 @@ export class ContractorsService {
 
     return this.http.put(this.baseUrl + loggedInUser.id + '/photo', data);
   }
-
 }

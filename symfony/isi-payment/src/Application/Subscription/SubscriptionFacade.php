@@ -2,6 +2,7 @@
 
 namespace App\Application\Subscription;
 
+use App\Action\Subscription\ReactivateSubscriptionAction;
 use App\Application\Payment\WidgetService;
 use App\Common\Email;
 use App\Common\Firstname;
@@ -25,10 +26,12 @@ final class SubscriptionFacade
     private WidgetService $paymentWidgetService;
     private array $configuration;
     private DisableSubscriptionService $disableService;
+    private ReactivateSubscriptionService $reactivateSubscriptionService;
 
     public function __construct(
         CreateSubscriptionService $createService,
         CancelSubscriptionService $cancelSubscriptionService,
+        ReactivateSubscriptionService $reactivateSubscriptionService,
         DisableSubscriptionService $disableService,
         SubscriptionRepository $subscriptionRepository,
         WidgetService $widgetService,
@@ -38,6 +41,7 @@ final class SubscriptionFacade
         $this->subscriptionRepository = $subscriptionRepository;
         $this->disableService = $disableService;
         $this->cancelSubscriptionService = $cancelSubscriptionService;
+        $this->reactivateSubscriptionService = $reactivateSubscriptionService;
         $this->paymentWidgetService = $widgetService;
         $this->configuration = $payuConfig;
     }
@@ -97,5 +101,10 @@ final class SubscriptionFacade
     public function disableSubscription(Subscription $subscription): Result
     {
         return $this->disableService->disableSubscription($subscription);
+    }
+
+    public function reactivateSubscription(string $uuid): Result
+    {
+        return $this->reactivateSubscriptionService->reactivateSubscription(new UUID($uuid));
     }
 }
