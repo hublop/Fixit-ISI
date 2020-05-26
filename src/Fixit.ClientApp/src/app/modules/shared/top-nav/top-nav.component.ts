@@ -69,6 +69,11 @@ export class TopNavComponent implements OnInit {
     this.router.navigate(['contractors/register']);
   }
 
+  goToCreateOrder() {
+    this.hideMenu();
+    this.router.navigate(['orders/new']);
+  }
+
   goToCustomerRegisterForm() {
     if (this.isLoggedIn()) {
       return;

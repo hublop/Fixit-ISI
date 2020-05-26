@@ -6,6 +6,8 @@
 
     <span class="fill-remaining-space"></span>
 
+    <button class="top-menu-item" mat-button (click)="goToCreateOrder()">Złóż zanówienie</button>
+
     <button class="top-menu-item" mat-button (click)="goToContractorsList()">Usługodawcy</button>
 
     <button class="top-menu-item" mat-button (click)="goToLogin()" *ngIf="!isLoggedIn()">Zaloguj się</button>
