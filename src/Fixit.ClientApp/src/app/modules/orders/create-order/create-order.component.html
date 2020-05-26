@@ -1,0 +1,161 @@
+<div class="container">
+  <div class="order-form">
+    <div class="order-content">
+      <div class="info-title">
+        Zamawianie usługi
+      </div>
+      <div>
+        <mat-card>
+          <mat-card-header *ngIf="isDirectCreateMode()">
+            <div mat-card-avatar class="person-icon" *ngIf="!contractorProfile.imageUrl">
+              <mat-icon class="icon-img ">person</mat-icon>
+            </div>
+            <img [src]="contractorProfile.imageUrl" mat-card-avatar class="contractor-image" *ngIf="contractorProfile.imageUrl">
+            <div class="titles">
+              <mat-card-title>{{contractorProfile.firstName}} {{contractorProfile.lastName}}</mat-card-title>
+              <mat-card-subtitle>{{getDisplaySpec()}}</mat-card-subtitle>
+            </div>
+          </mat-card-header>
+          <div *ngIf="isDirectCreateMode()"> 
+            <mat-divider class="divider"></mat-divider>
+          </div>
+
+          <div class="details">
+            <mat-horizontal-stepper linear>
+
+              <mat-step label="Szczegóły zamówienia" [stepControl]="orderForm">
+                <form [formGroup]="orderForm">
+                  <div class="form-field">
+                    <div class="opinion-rate">Jaką usługę chcesz zamówić?</div>
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>Zamawiana usługa</mat-label>
+                      <mat-select *ngIf="!isDirectCreateMode()" formControlName="subcategoryId" placeholder="Zamawiana usługa">
+                        <mat-option>-</mat-option>
+                        <mat-optgroup *ngFor="let category of categories" [label]="category.name">
+                          <mat-option *ngFor="let subcategory of category.subCategories" [value]="subcategory.id">{{subcategory.name}}</mat-option>
+                        </mat-optgroup>
+                      </mat-select>
+                      <mat-select *ngIf="isDirectCreateMode()" formControlName="subcategoryId" placeholder="Zamawiana usługa">
+                        <mat-option>-</mat-option>
+                        <mat-optgroup *ngFor="let category of contractorProfile.categories" [label]="category.name">
+                          <mat-option *ngFor="let subcategory of category.subcategories" [value]="subcategory.id">{{subcategory.name}}</mat-option>
+                        </mat-optgroup>
+                      </mat-select>
+                      <mat-error *ngIf="orderForm.get('subcategoryId').hasError('required')">
+                        Wybierz usługę
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-field">
+                    <div class="opinion-rate">Szczegóły zgłoszenia</div>
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>Szczegółowy opis zgłoszenia</mat-label>
+                      <textarea class="desc" matInput placeholder="Opiszcz szczegółowo zgłoszenie..." formControlName="description"></textarea>
+                      <mat-error *ngIf="orderForm.get('description').hasError('required')">
+                        Opisz szczegóły zgłoszenia
+                      </mat-error>
+                      <mat-error *ngIf="orderForm.get('description').hasError('maxlength')">
+                        Opis jest zbyt długi
+                      </mat-error>
+                      <mat-error *ngIf="orderForm.get('description').hasError('minlength') && !orderForm.get('description').hasError('required')">
+                        Opis jest zbyt krótki
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-field">
+                    <button class="form-field add-button" mat-raised-button matStepperNext color="primary" [disabled]="!orderForm.valid">
+                      Dalej
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+
+              <mat-step label="Lokalizacja" [stepControl]="locationForm">
+                <form [formGroup]="locationForm"> 
+                  <div class="form-field">
+                    <div>Miejsce wykonania usługi</div>
+                    <mat-form-field class="form-field" appearance="outline">
+                      <mat-label>Adres wykonania usługi</mat-label>
+                      <textarea class="desc" matInput placeholder="Podaj losowe miejsce poki nie ma google maps..." formControlName="placeId"></textarea>
+                      <mat-error *ngIf="locationForm.get('placeId').hasError('required')">
+                        Podaj miejsce wykonania usługi
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form-field">
+                    <button class="form-field add-button" mat-raised-button matStepperNext color="primary" [disabled]="!locationForm.valid">
+                      Dalej
+                    </button>
+                  </div>
+                </form>
+              </mat-step>
+
+              <mat-step label="Zdjęcia" [stepControl]="orderForm">
+                
+                <button class="select-photo-button" mat-raised-button color="primary" (click)="addPhoto()">
+                  Dodaj zdjęcia
+                </button>
+
+                <div style="padding-top: 20px; padding-bottom: 20px;">
+                  <div *ngFor="let base64photo of base64Photos">
+                    <div>
+                      <button mat-icon-button color="warn" style="float: right;" (click)="removePhoto(base64photo)">
+                        <mat-icon>close</mat-icon>
+                      </button>
+                    </div>
+                    <div>
+                      <img class="photo-image" [src]="base64photo">
+                    </div>
+                  
+                  </div>
+  
+                  <input class="photo-picker" id="filePicker" type="file" (change)="handleFileSelect($event)" accept=".png, .jpg, .jpeg" />
+                </div>
+                
+                
+                <div class="form-field">
+                  <button class="form-field add-button" mat-raised-button color="primary" [disabled]="!orderForm.valid"
+                    (click)="registerOrder()">
+                    Złóż zgłoszenie
+                  </button>
+                </div>
+
+            </mat-step>
+              
+            </mat-horizontal-stepper>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="info">
+    <div class="order-content">
+      <div class="info-title">
+        Jak działa system zgłoszeń?
+      </div>
+      <div class="list">
+        Składając zgłoszenie:
+        <ul>
+          <li>
+            postaraj się, aby opis zgłoszenia był jak najbardziej szczegółowy,
+          </li>
+          <li>
+            usługodawcy otrzymają szczegóły Twojego zgłoszenia oraz dostęp do Twoich danych kontaktowych,
+          </li>
+          <li *ngIf="!isDirectCreateMode()">
+            wielu usługodawców może złożyć Ci ofertę,
+          </li>
+          <li>
+            usługodawcy mogą chcieć się z Tobą kontaktować, w celu ustalenia szczegółów wykonania usługi (miejsca i czasu),
+          </li>
+          <li>
+            po wykonaniu usługi nie zapomnij dodać opinii usługodawcy!
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

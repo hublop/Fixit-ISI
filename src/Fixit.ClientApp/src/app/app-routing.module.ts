@@ -21,6 +21,11 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/customers/customers.module').then(m => m.CustomersModule)
   },
   {
+    path: 'orders',
+    runGuardsAndResolvers: 'always',
+    loadChildren: () => import('./modules/orders/orders.module').then(m => m.OrdersModule)
+  },
+  {
     path: 'login',
     canActivate: [LoginGuard],
     component: LoginComponent
