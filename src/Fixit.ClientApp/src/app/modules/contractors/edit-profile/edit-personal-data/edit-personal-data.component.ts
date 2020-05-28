@@ -71,7 +71,8 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
       phoneNumber: new FormControl(this.contractorProfile.phoneNumber, [
         Validators.required,
         Validators.maxLength(100)
-      ])
+      ]),
+      placeId: new FormControl(this.contractorProfile.placeId, []),
     });
   }
 
