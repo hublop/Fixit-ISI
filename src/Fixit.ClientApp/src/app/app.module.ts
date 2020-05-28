@@ -24,7 +24,8 @@ import { environment } from 'src/environments/environment';
     AuthModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: environment.googleMapKey
+      apiKey: environment.googleMapKey,
+      libraries: ['places']
     })
   ],
   providers: [],
