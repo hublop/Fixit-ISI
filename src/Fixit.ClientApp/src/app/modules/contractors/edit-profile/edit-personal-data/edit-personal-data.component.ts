@@ -1,10 +1,12 @@
+/// <reference types="@types/googlemaps" />
 import { UpdatePhotoData } from './../../_models/UpdatePhotoData';
 import { ContractorProfile } from './../../_models/ContractorProfile';
 import { ContractorsService } from './../../_services/contractors.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
 import { UpdatePersonalInfoData } from '../../_models/UpdatePersonalInfoData';
 import { InfoService } from '../../../shared/info/info.service';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-edit-personal-data',
@@ -23,10 +25,16 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
 
   personalDataFormGroup: FormGroup;
 
+  autocomplete: google.maps.places.Autocomplete;
+
+  @ViewChild('search')
+  public searchElement: ElementRef;
+
   constructor(
     private formBuilder: FormBuilder,
     private contractorsService: ContractorsService,
-    private infoService: InfoService
+    private infoService: InfoService,
+    private mapsApiLoader: MapsAPILoader
   ) {
     this.dataHasBeenChanged = new EventEmitter<boolean>();
   }
@@ -35,6 +43,19 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
     this.contractorProfileBeforeEdit = this.contractorProfile;
     this.display = this.contractorProfile.imageUrl;
     this.buildForm();
+
+    this.mapsApiLoader.load().then(() => {
+      this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
+      console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
+      google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
+        var place = this.autocomplete.getPlace();
+        var place_id = place.place_id;
+        var name = place.name;
+        var latLng = place.geometry.location;
+        console.log("Autocomplete result: " + name + ", id: " + place_id +", location: " + latLng );
+        this.personalDataFormGroup.get('placeId').setValue(name + ', ' + place_id);
+      });
+    });
   }
 
   ngOnChanges() {

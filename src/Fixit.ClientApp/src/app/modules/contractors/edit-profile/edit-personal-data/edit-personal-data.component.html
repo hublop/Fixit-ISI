@@ -1,8 +1,8 @@
-<agm-map 
+<!-- <agm-map
   [latitude]="51.10" 
   [longitude]="28.00" 
   [zoom]="5" >
-</agm-map>
+</agm-map> -->
 
 <div class="container">
   <div class="info">
@@ -68,25 +68,30 @@
       </div>
 
       <div class="form-group">
-        <button class="saveButton" mat-raised-button color="primary" type="sumbit" [disabled]="!hasChanges() || !personalDataFormGroup.valid">
-          Zapisz
-        </button>
-      </div>
-
-
-      <div class="form-group">
         <div class="label">Lokalizacja</div>
         <mat-form-field class="form-group" appearance="outline">
           <input matInput formControlName="placeId">
         </mat-form-field>
       </div>
 
-      <agm-map 
+    <!-- <agm-map
       [latitude]="51.10" 
       [longitude]="28.00" 
       [zoom]="5" >
-    </agm-map>
+    </agm-map> -->
 
+    <mat-form-field class="form-group" appearance="outline">
+      <input matInput id="pac-input"
+      class="controls"
+      type="text"
+      placeholder="Enter a location" #search>
+    </mat-form-field>
+
+    <div class="form-group">
+      <button class="saveButton" mat-raised-button color="primary" type="sumbit" [disabled]="!hasChanges() || !personalDataFormGroup.valid">
+        Zapisz
+      </button>
+    </div>
 
     </form>
   </div>
