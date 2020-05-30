@@ -22,6 +22,12 @@
         </mat-form-field>
       </div>
 
+      <div class="locationFilter filter-element">
+        <mat-form-field appearance="outline">
+          <mat-label>Miasto</mat-label>
+          <input matInput formControlName="placeId" placeholder="np. Wrocław" #search>
+        </mat-form-field>
+      </div>
       <button class="searchButton filter-element" type="submit" mat-raised-button color="primary">
         <mat-icon>search</mat-icon>
         <span>Szukaj</span>
