@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ElementRef, 
 import { UpdatePersonalInfoData } from '../../_models/UpdatePersonalInfoData';
 import { InfoService } from '../../../shared/info/info.service';
 import { MapsAPILoader } from '@agm/core';
+import { emit } from 'cluster';
 
 @Component({
   selector: 'app-edit-personal-data',
@@ -29,6 +30,7 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
 
   @ViewChild('search')
   public searchElement: ElementRef;
+  locationNameEmitter: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,6 +42,9 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.locationNameEmitter.subscribe(result => {
+      this.personalDataFormGroup.get('placeId').setValue(result);
+    });
     this.contractorProfileBeforeEdit = this.contractorProfile;
     this.display = this.contractorProfile.imageUrl;
     this.buildForm();
@@ -52,9 +57,27 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
         var place_id = place.place_id;
         var name = place.name;
         var latLng = place.geometry.location;
-        console.log("Autocomplete result: " + name + ", id: " + place_id +", location: " + latLng );
-        this.personalDataFormGroup.get('placeId').setValue(name + ', ' + place_id);
+        console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
+        this.locationNameEmitter.emit(name + ', ' + place_id)
       });
+
+      console.log('starting placeid: ' + this.contractorProfile.placeId);
+      var geocoder = new google.maps.Geocoder;
+      this.geocodePlaceId(this.locationNameEmitter, geocoder, this.contractorProfile.placeId);
+    });
+  }
+
+  geocodePlaceId(emitter,geocoder, placeId) {
+    geocoder.geocode({ 'placeId': placeId }, function (results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          emitter.emit(results[0].formatted_address);
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
     });
   }
 
@@ -93,7 +116,7 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
         Validators.required,
         Validators.maxLength(100)
       ]),
-      placeId: new FormControl(this.contractorProfile.placeId, []),
+      placeId: new FormControl('', []),
     });
   }
 
