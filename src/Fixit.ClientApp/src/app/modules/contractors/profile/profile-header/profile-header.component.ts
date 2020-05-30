@@ -28,7 +28,10 @@ export class ProfileHeaderComponent implements OnInit {
     });
     this.mapsApiLoader.load().then(() => {
       var geocoder = new google.maps.Geocoder;
-      this.geocodePlaceId(this.locationNameEmitter, geocoder, this.contractor.placeId);
+      var placeId = this.contractor.placeId;
+      if (placeId !== null) {
+        this.geocodePlaceId(this.locationNameEmitter, geocoder, placeId);
+      }
     });
   }
 
