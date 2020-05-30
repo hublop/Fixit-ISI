@@ -1,8 +1,10 @@
+/// <reference types="@types/googlemaps" />
 import { CategoryInfoForList } from './../../../categories/_models/CategoryInfoForList';
 import { ContractorsListFilter } from './../../_models/ContractorsListFilter';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { SubcategoryInfoForList } from '../../../categories/_models/SubcategoryInfoForList';
+import { MapsAPILoader } from '@agm/core';
 
 export const _filter = (opt: SubcategoryInfoForList[], value: string): SubcategoryInfoForList[] => {
   const filterValue = value.toLowerCase();
@@ -22,7 +24,14 @@ export class ContractorsListFilterComponent implements OnInit {
   @Input() categories: CategoryInfoForList[];
   options: CategoryInfoForList[];
 
-  constructor(private formBuilder: FormBuilder) {
+  autocomplete: google.maps.places.Autocomplete;
+
+  @ViewChild('search')
+  public searchElement: ElementRef;
+  private selectedPlaceId: string = '';
+
+  constructor(private formBuilder: FormBuilder,
+    private mapsApiLoader: MapsAPILoader) {
     this.contractorsListFilterChanged = new EventEmitter<ContractorsListFilter>();
   }
 
@@ -32,12 +41,22 @@ export class ContractorsListFilterComponent implements OnInit {
     this.listFilterGroup.get('subcategoryId').valueChanges.subscribe(val => {
       this.options = this._filterGroup(val);
     });
+
+    this.mapsApiLoader.load().then(() => {
+      this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
+      console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
+      google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
+        var place = this.autocomplete.getPlace();
+        this.selectedPlaceId = place.place_id;
+      });
+    });
   }
 
   createForm(): void {
     this.listFilterGroup = this.formBuilder.group({
       subcategoryId: new FormControl(null),
-      nameSearchString: new FormControl('')
+      nameSearchString: new FormControl(''),
+      placeId: new FormControl(this.selectedPlaceId)
     });
   }
 
@@ -58,6 +77,9 @@ export class ContractorsListFilterComponent implements OnInit {
     } else {
       this.contractorsListFilter.subcategoryId = null;
     }
+    if (this.listFilterGroup.get('placeId').value !== null) {
+      this.contractorsListFilter.placeId = this.selectedPlaceId;
+    }
     this.contractorsListFilterChanged.emit(this.contractorsListFilter);
   }
 
@@ -65,8 +87,10 @@ export class ContractorsListFilterComponent implements OnInit {
     if (value) {
       return this.categories
         .map(group =>
-          ({id: group.id, name: group.name, description: group.description,
-            subCategories: _filter(group.subCategories, value)} as CategoryInfoForList))
+          ({
+            id: group.id, name: group.name, description: group.description,
+            subCategories: _filter(group.subCategories, value)
+          } as CategoryInfoForList))
         .filter(group => group.subCategories.length > 0);
     }
 

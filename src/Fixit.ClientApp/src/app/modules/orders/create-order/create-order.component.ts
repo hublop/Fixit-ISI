@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+/// <reference types="@types/googlemaps" />
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../../auth/_services/auth.service';
 import { OrdersService } from '../_services/orders.service';
@@ -9,6 +10,7 @@ import { CategoryInfoForList } from '../../categories/_models/CategoryInfoForLis
 import { CreateOrderData } from '../_models/CreateOrderData';
 import { ContractorsService } from '../../contractors/_services/contractors.service';
 import { ContractorProfile } from '../../contractors/_models/ContractorProfile';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-create-order',
@@ -26,6 +28,12 @@ export class CreateOrderComponent implements OnInit {
   contractorId: number;
   contractorProfile: ContractorProfile;
 
+  autocomplete: google.maps.places.Autocomplete;
+
+  @ViewChild('search')
+  public searchElement: ElementRef;
+  private selectedPlaceId: string = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -34,11 +42,12 @@ export class CreateOrderComponent implements OnInit {
     private contractorsService: ContractorsService,
     private route: ActivatedRoute,
     private router: Router,
-    private infoService: InfoService
+    private infoService: InfoService,
+    private mapsApiLoader: MapsAPILoader
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(param =>  {
+    this.route.params.subscribe(param => {
       this.contractorId = param.id;
     });
     this.buildForm();
@@ -55,6 +64,18 @@ export class CreateOrderComponent implements OnInit {
         this.infoService.error('Nie udało sie wczytać danych');
       });
     }
+    this.mapsApiLoader.load().then(() => {
+      this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
+      console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
+      google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
+        var place = this.autocomplete.getPlace();
+        var place_id = place.place_id;
+        var name = place.name;
+        var latLng = place.geometry.location;
+        this.selectedPlaceId = place_id;
+        console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
+      });
+    });
   }
 
   buildForm(): void {
@@ -138,7 +159,7 @@ export class CreateOrderComponent implements OnInit {
       base64Photos: this.base64Photos,
       customerId: this.getCustomerId(),
       description: this.orderForm.controls.description.value,
-      placeId: this.locationForm.controls.placeId.value,
+      placeId: this.selectedPlaceId,
       subcategoryId: this.orderForm.controls.subcategoryId.value
     };
 
@@ -152,7 +173,7 @@ export class CreateOrderComponent implements OnInit {
 
     const orderData = this.getOrderData();
 
-    if (this.isDirectCreateMode()){
+    if (this.isDirectCreateMode()) {
       this.ordersService.createDirectOrder(this.contractorId, orderData).subscribe(() => {
         this.infoService.error('Złożono zamówienie');
         this.router.navigate(['/']);

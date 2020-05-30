@@ -1,7 +1,9 @@
+/// <reference types="@types/googlemaps" />
 import { AuthService } from './../../../auth/_services/auth.service';
 import { Router } from '@angular/router';
 import { ContractorProfile } from './../../_models/ContractorProfile';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { MapsAPILoader } from '@agm/core';
 
 @Component({
   selector: 'app-profile-header',
@@ -12,12 +14,25 @@ export class ProfileHeaderComponent implements OnInit {
 
   @Input() contractor: ContractorProfile;
 
+  locationNameEmitter: EventEmitter<string> = new EventEmitter();
+
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private mapsApiLoader: MapsAPILoader
   ) { }
 
   ngOnInit() {
+    this.locationNameEmitter.subscribe(result => {
+      document.getElementById("placeName").textContent = result + ', ';
+    });
+    this.mapsApiLoader.load().then(() => {
+      var geocoder = new google.maps.Geocoder;
+      var placeId = this.contractor.placeId;
+      if (placeId !== null) {
+        this.geocodePlaceId(this.locationNameEmitter, geocoder, placeId);
+      }
+    });
   }
 
   getDisplaySpec(): string {
@@ -67,5 +82,19 @@ export class ProfileHeaderComponent implements OnInit {
       return;
     }
     this.router.navigate(['/orders/new/' + this.contractor.id]);
+  }
+
+  geocodePlaceId(emitter, geocoder, placeId) {
+    geocoder.geocode({ 'placeId': placeId }, function (results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          emitter.emit(results[0].formatted_address);
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
   }
 }

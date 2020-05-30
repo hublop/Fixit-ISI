@@ -23,6 +23,7 @@ import { EditPersonalDataComponent } from './edit-profile/edit-personal-data/edi
 import { EditProvidedServicesComponent } from './edit-profile/edit-provided-services/edit-provided-services.component';
 import { EditSubscriptionComponent, PaymentContentDialog } from './edit-profile/edit-subscription/edit-subscription.component';
 import { AddSubscriptionInfoComponent } from './edit-profile/edit-subscription/add-subscription-info/add-subscription-info.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { AddSubscriptionInfoComponent } from './edit-profile/edit-subscription/a
     MaterialModule,
     SharedModule,
     AuthModule,
-    CategoriesModule
+    CategoriesModule,
+    AgmCoreModule
   ],
   declarations: [
     RegisterContractorComponent,

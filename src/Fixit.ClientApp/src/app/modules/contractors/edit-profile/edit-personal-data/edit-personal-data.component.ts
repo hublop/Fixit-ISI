@@ -1,10 +1,13 @@
+/// <reference types="@types/googlemaps" />
 import { UpdatePhotoData } from './../../_models/UpdatePhotoData';
 import { ContractorProfile } from './../../_models/ContractorProfile';
 import { ContractorsService } from './../../_services/contractors.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
 import { UpdatePersonalInfoData } from '../../_models/UpdatePersonalInfoData';
 import { InfoService } from '../../../shared/info/info.service';
+import { MapsAPILoader } from '@agm/core';
+import { emit } from 'cluster';
 
 @Component({
   selector: 'app-edit-personal-data',
@@ -23,23 +26,71 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
 
   personalDataFormGroup: FormGroup;
 
+  autocomplete: google.maps.places.Autocomplete;
+
+  @ViewChild('search')
+  public searchElement: ElementRef;
+  locationNameEmitter: EventEmitter<string> = new EventEmitter();
+
+  private selectedPlaceId: string = '';
+  private selectedPlaceName: string = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private contractorsService: ContractorsService,
-    private infoService: InfoService
+    private infoService: InfoService,
+    private mapsApiLoader: MapsAPILoader
   ) {
     this.dataHasBeenChanged = new EventEmitter<boolean>();
   }
 
   ngOnInit() {
+    this.locationNameEmitter.subscribe(result => {
+      this.personalDataFormGroup.get('placeId').setValue(result);
+    });
     this.contractorProfileBeforeEdit = this.contractorProfile;
     this.display = this.contractorProfile.imageUrl;
+    this.selectedPlaceId = this.contractorProfile.placeId;
     this.buildForm();
+
+    this.mapsApiLoader.load().then(() => {
+      this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
+      console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
+      google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
+        var place = this.autocomplete.getPlace();
+        var place_id = place.place_id;
+        var name = place.name;
+        var latLng = place.geometry.location;
+        console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
+        this.selectedPlaceId = place_id;
+        this.selectedPlaceName = name;
+        this.locationNameEmitter.emit(name);
+      });
+
+      console.log('starting placeid: ' + this.contractorProfile.placeId);
+      var geocoder = new google.maps.Geocoder;
+      this.geocodePlaceId(this.locationNameEmitter, geocoder, this.contractorProfile.placeId);
+    });
+  }
+
+  geocodePlaceId(emitter, geocoder, placeId) {
+    geocoder.geocode({ 'placeId': placeId }, function (results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          emitter.emit(results[0].formatted_address);
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
   }
 
   ngOnChanges() {
     this.contractorProfileBeforeEdit = this.contractorProfile;
     this.display = this.contractorProfile.imageUrl;
+    this.selectedPlaceId = this.contractorProfile.placeId;
     this.buildForm();
   }
 
@@ -49,7 +100,8 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
       this.contractorProfileBeforeEdit.companyName !== this.personalDataFormGroup.controls.companyName.value ||
       this.contractorProfileBeforeEdit.selfDescription !== this.personalDataFormGroup.controls.selfDescription.value ||
       this.contractorProfileBeforeEdit.phoneNumber !== this.personalDataFormGroup.controls.phoneNumber.value ||
-      this.contractorProfileBeforeEdit.imageUrl !== this.display;
+      this.contractorProfileBeforeEdit.imageUrl !== this.display ||
+      this.contractorProfileBeforeEdit.placeId !== this.selectedPlaceId;
   }
 
   buildForm(): void {
@@ -71,7 +123,8 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
       phoneNumber: new FormControl(this.contractorProfile.phoneNumber, [
         Validators.required,
         Validators.maxLength(100)
-      ])
+      ]),
+      placeId: new FormControl(this.selectedPlaceName, []),
     });
   }
 
@@ -86,8 +139,7 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
       companyName: this.personalDataFormGroup.controls.companyName.value,
       phoneNumber: this.personalDataFormGroup.controls.phoneNumber.value,
       selfDescription: this.personalDataFormGroup.controls.selfDescription.value,
-      // todo change later when google maps implemented
-      placeId: "ChIJv4q11MLpD0cR9eAFwq5WCbc"
+      placeId: this.selectedPlaceId
     };
 
     this.contractorsService.updatePersonalData(personalData).subscribe(result => {
