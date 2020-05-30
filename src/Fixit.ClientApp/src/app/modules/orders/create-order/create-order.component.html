@@ -75,12 +75,12 @@
               <mat-step label="Lokalizacja" [stepControl]="locationForm">
                 <form [formGroup]="locationForm"> 
                   <div class="form-field">
-                    <div>Miejsce wykonania usługi</div>
+                    <div>Adres wykonania usługi</div>
                     <mat-form-field class="form-field" appearance="outline">
                       <mat-label>Adres wykonania usługi</mat-label>
-                      <textarea class="desc" matInput placeholder="Podaj losowe miejsce poki nie ma google maps..." formControlName="placeId"></textarea>
+                          <input matInput formControlName="placeId" #search>
                       <mat-error *ngIf="locationForm.get('placeId').hasError('required')">
-                        Podaj miejsce wykonania usługi
+                        Podaj Adres wykonania usługi
                       </mat-error>
                     </mat-form-field>
                   </div>
