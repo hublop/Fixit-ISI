@@ -8,13 +8,13 @@ namespace Fixit.Application.Orders.Queries.GetOffersForCustomer
 {
     public class OrderOfferForCustomer
     {
-        public OrderInOffer Order { get; set; }
+       // public OrderWithOffer Order { get; set; }
         public ContractorInOffer Contractor { get; set; }
         public string Comment { get; set; }
         public double PredictedPrice { get; set; }
     }
 
-    public class OrderInOffer
+    public class OrderWithOffer
     {
         public int Id { get; set; }
         public string Description { get; set; }
@@ -25,6 +25,7 @@ namespace Fixit.Application.Orders.Queries.GetOffersForCustomer
         public int CategoryId { get; set; }
         public DateTime CreationDate { get; set; }
         public List<string> PhotoUrls { get; set; }
+        public List<OrderOfferForCustomer> OrderOffers { get; set; }
     }
 
     public class ContractorInOffer
@@ -45,7 +46,7 @@ namespace Fixit.Application.Orders.Queries.GetOffersForCustomer
                 .ForMember(dest => dest.PhotoUrl, opts => 
                     opts.MapFrom(src => src.ImageId.HasValue ? src.Image.Url : null));
 
-            CreateMap<Order, OrderInOffer>()
+            CreateMap<Order, OrderWithOffer>()
                 .ForMember(dest => dest.PlaceId, opts =>
                     opts.MapFrom(src => src.Location.PlaceId))
                 .ForMember(dest => dest.SubcategoryName, opts =>

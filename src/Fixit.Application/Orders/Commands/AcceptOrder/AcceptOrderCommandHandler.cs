@@ -28,10 +28,11 @@ namespace Fixit.Application.Orders.Commands.AcceptOrder
             }
 
             var order = await _dbContext.Orders
-                .FirstOrDefaultAsync(x => x.IsDistributed && x.Id == request.OrderId, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == request.OrderId, cancellationToken);
             if (order == null)
             {
-                throw new BadRequestException($"Distributed order does not exist: {request.OrderId}");
+                //throw new BadRequestException($"Distributed order does not exist: {request.OrderId}");
+                throw new BadRequestException($"Order does not exist: {request.OrderId}");
             }
 
             if (await _dbContext.OrderOffers.AnyAsync(x =>
