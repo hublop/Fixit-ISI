@@ -19,7 +19,8 @@ namespace Fixit.Application.Common.Interfaces
         DbSet<OrderImage> OrderImages { get; set; }
         DbSet<OrderOffer> OrderOffers { get; set; }
         DbSet<SubscriptionStatus> SubscriptionStatuses { get; set; }
+        DbSet<DistributedOrderContractor> DistributedOrderContractor { get; set; }
 
-        Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
+    Task<bool> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

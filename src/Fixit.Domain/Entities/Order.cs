@@ -10,7 +10,8 @@ namespace Fixit.Domain.Entities
         public int CustomerId { get; set; }
         public int SubcategoryId { get; set; }
         public bool IsDistributed { get; set; }
-        public int? ContractorId { get; set; }
+        public bool IsSentToAll { get; set; }
+    public int? ContractorId { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? LastNotificationDate { get; set; }
 

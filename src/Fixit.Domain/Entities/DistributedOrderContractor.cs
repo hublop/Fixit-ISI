@@ -6,6 +6,7 @@ namespace Fixit.Domain.Entities
 {
   public class DistributedOrderContractor: Entity
   {
+
     public int ContractorId { get; set; }
     public int OrderId { get; set; }
 

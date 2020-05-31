@@ -22,6 +22,8 @@ namespace Fixit.Persistance
         public DbSet<OrderOffer> OrderOffers { get; set; }
         public DbSet<SubscriptionStatus> SubscriptionStatuses { get; set; }
 
+        public DbSet<DistributedOrderContractor> DistributedOrderContractor { get; set; }
+
     public async Task<bool> SaveChangesAsync(CancellationToken cancellationToken)
         {
 
