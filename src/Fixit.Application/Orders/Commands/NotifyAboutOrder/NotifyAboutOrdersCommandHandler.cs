@@ -23,6 +23,7 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
             _dbContext = dbContext;
         }
 
+        //todo: add sms and mail notification sending
         public async Task<Unit> Handle(NotifyAboutOrdersCommand request, CancellationToken cancellationToken)
         {
             _logger.LogWarning(

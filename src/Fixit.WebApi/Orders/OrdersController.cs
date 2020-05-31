@@ -5,6 +5,7 @@ using Fixit.Application.Orders.Commands.AcceptOrder;
 using Fixit.Application.Orders.Commands.CreateDirectOrder;
 using Fixit.Application.Orders.Commands.CreateDistributedOrder;
 using Fixit.Application.Orders.Queries.GetOffersForCustomer;
+using Fixit.Application.Orders.Queries.GetOrdersForContractor;
 using Fixit.WebApi.Common;
 using Fixit.WebApi.Controllers;
 using Fixit.WebApi.Orders.DTOs;
@@ -62,7 +63,18 @@ namespace Fixit.WebApi.Orders
             });
         }
 
-        public OrdersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
+        [HttpGet("{contractorId}")]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> GetOrdersForContractorAsync([FromRoute] int contractorId)
+        {
+            return await HandleQueryAsync(
+                new GetOrdersForContractorQuery
+                {
+                    ContractorId = contractorId
+                });
+        }
+
+    public OrdersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
         {
         }
     }
