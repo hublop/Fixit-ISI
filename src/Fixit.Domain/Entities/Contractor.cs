@@ -26,7 +26,9 @@ namespace Fixit.Domain.Entities
         public SubscriptionStatus SubscriptionStatus { get; set; }
         public DateTime? NextPaymentDate { get; set; }
 
-    public void ProvideRepairService(int subcategoryId, double price)
+        public List<DistributedOrderContractor> DistributedOrders { get; set; }
+
+        public void ProvideRepairService(int subcategoryId, double price)
         {
             if (ProvidesRepairService(subcategoryId))
             {

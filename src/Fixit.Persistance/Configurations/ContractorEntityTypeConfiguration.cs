@@ -43,6 +43,10 @@ namespace Fixit.Persistance.Configurations
                 .HasForeignKey(x => x.SubscriptionStatusId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-        }
+            builder.HasMany(x => x.DistributedOrders)
+              .WithOne(x => x.Contractor)
+              .HasForeignKey(x => x.ContractorId)
+              .OnDelete(DeleteBehavior.Restrict);
+    }
     }
 }

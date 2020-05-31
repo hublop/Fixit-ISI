@@ -20,5 +20,6 @@ namespace Fixit.Domain.Entities
         public Location Location { get; set; }
         public ICollection<OrderOffer> OrderOffers { get; set; }
         public ICollection<OrderImage> OrderImages { get; set; }
-    }
+        public List<DistributedOrderContractor> DistributedOrders { get; set; }
+  }
 }
