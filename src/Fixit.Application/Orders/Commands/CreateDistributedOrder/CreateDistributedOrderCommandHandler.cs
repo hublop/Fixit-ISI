@@ -54,7 +54,7 @@ namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
             await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            if (request.Base64Photos.Any())
+            if (request.Base64Photos?.Any() ?? false)
             {
                 _eventBus.Publish(new OrderWithPhotosAddedIntegrationEvent
                 {

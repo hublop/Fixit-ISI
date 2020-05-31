@@ -51,10 +51,15 @@ namespace Fixit.WebApi.Orders
 
         [HttpGet]
         [ProducesResponseType(200)]
-        public async Task<IActionResult> GetOrderOffersForCustomerAsync([FromQuery] int customerId,
+        public async Task<IActionResult> GetOrdersAsync([FromQuery] int? customerId,
             [FromQuery] int? orderId)
         {
-            return await HandleQueryAsync(new GetOffersForCustomerQuery {CustomerId = customerId, OrderId = orderId});
+          return await HandleQueryAsync(
+            new GetOffersForCustomerQuery
+            {
+              CustomerId = customerId,
+              OrderId = orderId
+            });
         }
 
         public OrdersController(IMediator mediator, IMapper mapper, ICurrentUserService currentUserService) : base(mediator, mapper, currentUserService)
