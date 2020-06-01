@@ -29,6 +29,11 @@ namespace Fixit.Persistance.Configurations
             builder.HasOne(x => x.Contractor)
                 .WithMany(x => x.DirectOrders)
                 .HasForeignKey(x => x.ContractorId);
-        }
+
+            builder.HasMany(x => x.DistributedOrders)
+              .WithOne(x => x.Order)
+              .HasForeignKey(x => x.OrderId)
+              .OnDelete(DeleteBehavior.Restrict);
+    }
     }
 }
