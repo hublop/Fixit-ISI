@@ -25,7 +25,21 @@ namespace Fixit.Application.Orders.Queries.GetOrdersForContractor
   {
     public GetOrdersForContractorQueryMapping()
     {
-        CreateMap<Order, OrderForContractor>();
+
+      CreateMap<Order, OrderForContractor>()
+          .ForMember(dest => dest.PlaceId, opts =>
+              opts.MapFrom(src => src.Location.PlaceId))
+          .ForMember(dest => dest.SubcategoryName, opts =>
+              opts.MapFrom(src => src.Subcategory.Name))
+          .ForMember(dest => dest.CategoryName, opts =>
+              opts.MapFrom(src => src.Subcategory.Category.Name))
+          .ForMember(dest => dest.CategoryId, opts =>
+              opts.MapFrom(src => src.Subcategory.CategoryId))
+          .ForMember(dest => dest.PhotoUrls, opts =>
+              opts.MapFrom(src => src.OrderImages
+                  .Select(x => x.Image)
+                  .Select(x => x.Url)
+                  .Distinct()));
     }
   }
 }
