@@ -13,6 +13,7 @@ import {PaymentResult} from '../../_models/subscription/PaymentResult';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import {MatDialog} from '@angular/material/dialog';
+import {PayResultEvent} from '../../_events/PayResultEvent';
 registerLocaleData(localePl, 'pl');
 @Component({
   selector: 'app-edit-subscription',
@@ -68,7 +69,7 @@ export class EditSubscriptionComponent implements OnInit, AfterViewInit {
   }
 
   @HostListener('payResult', ['$event'])
-  public onPayResult(event: Event) {
+  public onPayResult(event: PayResultEvent) {
     const data = event.detail;
     data.orderId = this.orderId;
     this.subscriptionService.processPayment(data).subscribe((result: PaymentResult) => {

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { CustomerPersonalDataResolver } from './_resolvers/customer-profile.resolver';
 import { ProfileComponent } from './profile/profile.component';
 import { EditProfileGuard } from '../contractors/_guards/can-edit-profile.guard';
+import {MyOrdersComponent} from "./my-orders/my-orders.component";
 
 export const customersRoutes: Routes = [
     {
@@ -22,6 +23,14 @@ export const customersRoutes: Routes = [
         resolve: {
             profile: CustomerPersonalDataResolver
         }
+    },
+    {
+      path: ':id/orders',
+      component: MyOrdersComponent,
+      canActivate: [EditProfileGuard],
+      resolve: {
+        profile: CustomerPersonalDataResolver
+      }
     },
     {
         path: '**',

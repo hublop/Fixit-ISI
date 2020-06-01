@@ -4,10 +4,10 @@
       <div class="info-title">
         Zamawianie usługi
       </div>
-      <div>
+      <div *ngIf="isCatLoaded && isContractorLoaded">
         <mat-card>
           <mat-card-header *ngIf="isDirectCreateMode()">
-            <div mat-card-avatar class="person-icon" *ngIf="!contractorProfile.imageUrl">
+            <div mat-card-avatar class="person-icon" *ngIf="!contractorProfile || !contractorProfile.imageUrl">
               <mat-icon class="icon-img ">person</mat-icon>
             </div>
             <img [src]="contractorProfile.imageUrl" mat-card-avatar class="contractor-image" *ngIf="contractorProfile.imageUrl">
@@ -16,7 +16,7 @@
               <mat-card-subtitle>{{getDisplaySpec()}}</mat-card-subtitle>
             </div>
           </mat-card-header>
-          <div *ngIf="isDirectCreateMode()"> 
+          <div *ngIf="isDirectCreateMode()">
             <mat-divider class="divider"></mat-divider>
           </div>
 
@@ -73,7 +73,7 @@
               </mat-step>
 
               <mat-step label="Lokalizacja" [stepControl]="locationForm">
-                <form [formGroup]="locationForm"> 
+                <form [formGroup]="locationForm">
                   <div class="form-field">
                     <div>Adres wykonania usługi</div>
                     <mat-form-field class="form-field" appearance="outline">
@@ -94,7 +94,7 @@
               </mat-step>
 
               <mat-step label="Zdjęcia" [stepControl]="orderForm">
-                
+
                 <button class="select-photo-button" mat-raised-button color="primary" (click)="addPhoto()">
                   Dodaj zdjęcia
                 </button>
@@ -109,13 +109,13 @@
                     <div>
                       <img class="photo-image" [src]="base64photo">
                     </div>
-                  
+
                   </div>
-  
+
                   <input class="photo-picker" id="filePicker" type="file" (change)="handleFileSelect($event)" accept=".png, .jpg, .jpeg" />
                 </div>
-                
-                
+
+
                 <div class="form-field">
                   <button class="form-field add-button" mat-raised-button color="primary" [disabled]="!orderForm.valid"
                     (click)="registerOrder()">
@@ -124,7 +124,7 @@
                 </div>
 
             </mat-step>
-              
+
             </mat-horizontal-stepper>
           </div>
         </mat-card>

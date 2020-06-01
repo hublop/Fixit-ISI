@@ -30,9 +30,10 @@ export class CreateOrderComponent implements OnInit {
 
   autocomplete: google.maps.places.Autocomplete;
 
-  @ViewChild('search')
-  public searchElement: ElementRef;
-  private selectedPlaceId: string = '';
+  @ViewChild('search') searchElement: ElementRef;
+  private selectedPlaceId = '';
+  private isCatLoaded: boolean;
+  private isContractorLoaded: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,7 +52,10 @@ export class CreateOrderComponent implements OnInit {
       this.contractorId = param.id;
     });
     this.buildForm();
+    this.isCatLoaded = false;
+    this.isContractorLoaded = false;
     this.categoriesService.getAll().subscribe(result => {
+      this.isCatLoaded = true;
       this.categories = result;
     }, error => {
       this.infoService.error('Nie udało sie wczytać danych');
@@ -60,21 +64,27 @@ export class CreateOrderComponent implements OnInit {
     if (this.isDirectCreateMode()) {
       this.contractorsService.getContractorProfile(this.contractorId).subscribe(profile => {
         this.contractorProfile = profile;
+        this.isContractorLoaded = true;
       }, error => {
         this.infoService.error('Nie udało sie wczytać danych');
       });
+    } else {
+      this.isContractorLoaded = true;
     }
     this.mapsApiLoader.load().then(() => {
-      this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
-      console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
-      google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
-        var place = this.autocomplete.getPlace();
-        var place_id = place.place_id;
-        var name = place.name;
-        var latLng = place.geometry.location;
-        this.selectedPlaceId = place_id;
-        console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
-      });
+      if (this.searchElement) {
+        this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
+
+        console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
+        google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
+          var place = this.autocomplete.getPlace();
+          var place_id = place.place_id;
+          var name = place.name;
+          var latLng = place.geometry.location;
+          this.selectedPlaceId = place_id;
+          console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
+        });
+      }
     });
   }
 
