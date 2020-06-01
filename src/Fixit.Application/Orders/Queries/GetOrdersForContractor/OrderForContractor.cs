@@ -19,6 +19,7 @@ namespace Fixit.Application.Orders.Queries.GetOrdersForContractor
       public int CategoryId { get; set; }
       public DateTime CreationDate { get; set; }
       public List<string> PhotoUrls { get; set; }
+      public bool Status { get; set; }
 
   }
   public class GetOrdersForContractorQueryMapping : Profile
