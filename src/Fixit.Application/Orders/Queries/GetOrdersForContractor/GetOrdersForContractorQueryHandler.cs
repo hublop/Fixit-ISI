@@ -23,16 +23,28 @@ namespace Fixit.Application.Orders.Queries.GetOrdersForContractor
       _dbContext = dbContext;
     }
 
-    public Task<List<OrderForContractor>> Handle(GetOrdersForContractorQuery request, CancellationToken cancellationToken)
+    public async Task<List<OrderForContractor>> Handle(GetOrdersForContractorQuery request, CancellationToken cancellationToken)
     {
         var query = _dbContext.Orders
             .Include(x => x.DistributedOrders)
             .Where(x => x.ContractorId == request.ContractorId || x.DistributedOrders.Any(y => y.ContractorId == request.ContractorId));
 
 
-        return query
+        var ordersForContractor = await query
             .ProjectTo<OrderForContractor>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
+
+        var orderOffers = await _dbContext.OrderOffers
+            .Where(x => x.ContractorId == request.ContractorId)
+            .ToListAsync(cancellationToken: cancellationToken);
+
+        foreach (var orderForContractor in ordersForContractor)
+        {
+            orderForContractor.Status = orderOffers.Any(x =>
+                x.ContractorId == request.ContractorId && x.OrderId == orderForContractor.Id);
+        }
+
+        return ordersForContractor;
     }
   }
 }
