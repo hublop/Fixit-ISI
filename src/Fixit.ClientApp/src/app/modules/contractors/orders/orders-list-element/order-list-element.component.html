@@ -1,24 +1,32 @@
 <div class="element">
   <mat-card class="mat-elevation-z4">
     <mat-card-header>
-      <div class="header-container">
-        <div mat-card-avatar class="person-icon" *ngIf="!hasImage()">
-          <mat-icon class="icon-img ">person</mat-icon>
-        </div>
-        <img [src]="order.photoUrls[0]" mat-card-avatar class="photo-image" *ngIf="hasImage()">
-<!--        <button class="order-button" *ngIf="addOrderButtonVisible()" mat-raised-button color="primary" (click)="navigateToAddOrder()">-->
-<!--          <mat-icon class="ordering">calendar_today</mat-icon>-->
-<!--          <span>Złóż zgłoszenie</span>-->
-<!--        </button>-->
-      </div>
       <div class="details-container">
         <div class="titles">
+          <mat-card-subtitle>{{order.creationDate | date: 'dd.MM.yyyy'}}</mat-card-subtitle>
           <mat-card-title>{{order.subcategoryName}}</mat-card-title>
           <mat-card-subtitle>{{order.categoryName}}</mat-card-subtitle>
-          <div>
+          <button class="order-confirm" mat-raised-button color="primary" (click)="takeOffer()" *ngIf="!order.status">
+            <mat-icon class="ordering">done</mat-icon>
+            <span>Przyjmij ofertę</span>
+          </button>
+          <button class="order-confirm" mat-raised-button [disabled]="true"  *ngIf="order.status">
+            <mat-icon class="ordering">done</mat-icon>
+            <span>Przyjęta</span>
+          </button>
+          <mat-icon>room</mat-icon><span id="place-{{order.id}}"></span>
+          <div class="order-desc">
             <div>
-              <span class="opinions-count">({{order.description}}</span>
+              <span class="opinions-count">{{order.description}}</span>
             </div>
+            <mat-expansion-panel *ngIf="hasImage()">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                 Zdjęcia
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <img *ngFor="let url of order.photoUrls" [src]="url" class="description-image">
+            </mat-expansion-panel>
           </div>
         </div>
       </div>

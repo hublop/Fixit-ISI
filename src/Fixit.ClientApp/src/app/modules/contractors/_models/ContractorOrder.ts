@@ -8,4 +8,5 @@ export interface ContractorOrder {
   categoryId: number;
   creationDate: string;
   photoUrls: string[];
+  status: boolean;
 }

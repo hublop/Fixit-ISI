@@ -26,6 +26,8 @@ import { AddSubscriptionInfoComponent } from './edit-profile/edit-subscription/a
 import { AgmCoreModule } from '@agm/core';
 import {OrdersComponent} from './orders/orders.component';
 import {OrderListElementComponent} from './orders/orders-list-element/order-list-element.component';
+import {OrderTakeOfferPopupComponent} from './orders/orders-list-element/order-take-offer-popup/order-take-offer-popup.component';
+import {MatCurrencyFormatModule} from "mat-currency-format";
 
 @NgModule({
   imports: [
@@ -35,7 +37,8 @@ import {OrderListElementComponent} from './orders/orders-list-element/order-list
     SharedModule,
     AuthModule,
     CategoriesModule,
-    AgmCoreModule
+    AgmCoreModule,
+    MatCurrencyFormatModule
   ],
   declarations: [
     RegisterContractorComponent,
@@ -58,7 +61,8 @@ import {OrderListElementComponent} from './orders/orders-list-element/order-list
     ProvidedServicesComponent,
     ProvidedCategoriesComponent,
     OrdersComponent,
-    OrderListElementComponent
+    OrderListElementComponent,
+    OrderTakeOfferPopupComponent
   ],
   exports: [
     RegisterContractorComponent
