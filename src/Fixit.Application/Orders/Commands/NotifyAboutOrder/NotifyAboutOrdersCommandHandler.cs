@@ -3,7 +3,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Fixit.Application.Common.Interfaces;
+using Fixit.Application.Orders.Events.DirectOrderCreated;
+using Fixit.Application.Orders.Events.DistributedOrderSent;
 using Fixit.Domain.Entities;
+using Fixit.EventBus.Abstractions;
 using Fixit.Shared.CQRS;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +19,13 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
     {
         private readonly ILogger<NotifyAboutOrdersCommandHandler> _logger;
         private readonly IFixitDbContext _dbContext;
+        private readonly IEventBus _eventBus;
 
-        public NotifyAboutOrdersCommandHandler(ILogger<NotifyAboutOrdersCommandHandler> logger, IFixitDbContext dbContext)
+    public NotifyAboutOrdersCommandHandler(ILogger<NotifyAboutOrdersCommandHandler> logger, IFixitDbContext dbContext, IEventBus eventBus)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _eventBus = eventBus;
         }
 
         //todo: add sms and mail notification sending
@@ -47,15 +52,16 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
             {
                 // find closest
                 var closestContractors = premiumMembers;
-                foreach (var closestContractor in closestContractors)
+                foreach (var contractor in closestContractors)
                 {
                     await _dbContext.DistributedOrderContractor.AddAsync(
                         new DistributedOrderContractor
                         {
-                          Contractor = closestContractor,
+                          Contractor = contractor,
                           Order = order
                         },
                             cancellationToken);
+                    _eventBus.Publish(new DistributedOrderSentToContractorEvent { OrderId = order.Id, ContractorId = contractor.Id });
                 }
 
                 order.LastNotificationDate = DateTime.Now;
@@ -72,18 +78,19 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
           {
             // find closest
             var closestContractors = notPremiumMembers;
-            foreach (var closestContractor in closestContractors)
+            foreach (var contractor in closestContractors)
             {
                 await _dbContext.DistributedOrderContractor.AddAsync(
                 new DistributedOrderContractor
                 {
-                    Contractor = closestContractor,
-                    ContractorId = closestContractor.Id,
+                    Contractor = contractor,
+                    ContractorId = contractor.Id,
                     Order = order,
                     OrderId = order.Id
                 },
                 cancellationToken);
-            }
+                _eventBus.Publish(new DistributedOrderSentToContractorEvent{ OrderId = order.Id, ContractorId = contractor.Id});
+        }
 
             order.LastNotificationDate = DateTime.Now;
             order.IsSentToAll = true;
