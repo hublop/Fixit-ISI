@@ -25,6 +25,7 @@ export class ContractorsService {
   ) { }
 
   baseUrl = environment.apiUrl + 'contractors/';
+  contractorOrdersUrl = environment.apiUrl + 'orders/';
 
   register(registerData: RegisterContractorData) {
     return this.http.post(this.baseUrl, registerData);

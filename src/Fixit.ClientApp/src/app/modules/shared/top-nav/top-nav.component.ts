@@ -56,7 +56,7 @@ export class TopNavComponent implements OnInit {
       return;
     }
 
-    const navigateUrl = '/contractors/' + this.authService.getloggedInUser().id + '/orders';
+    const navigateUrl = '/contractors/orders/' + this.authService.getloggedInUser().id;
     this.router.navigate([navigateUrl]);
     this.hideMenu();
   }
@@ -122,5 +122,14 @@ export class TopNavComponent implements OnInit {
 
   isContractor() {
     return this.authService.isLoggedIn() && this.authService.isContractor();
+  }
+
+  goToMyOrders() {
+    this.hideMenu();
+    this.router.navigate(['orders/my']);
+  }
+  goToCreateDistributedOrder() {
+    this.hideMenu();
+    this.router.navigate(['orders/new']);
   }
 }

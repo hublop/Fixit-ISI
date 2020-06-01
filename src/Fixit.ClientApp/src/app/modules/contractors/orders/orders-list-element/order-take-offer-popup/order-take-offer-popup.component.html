@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Twoja oferta</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Kwota</mat-label>
+    <input matInput mvndrMatCurrencyFormat [currencyCode]="'PLN'" [(ngModel)]="data.predictedPrice" (blur)="updateAmount($event)">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Komentarz</mat-label>
+    <input matInput [(ngModel)]="data.comment">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Przyjmij</button>
+</div>

@@ -22,4 +22,5 @@ export class ContractorProfile {
     subscriptionStatus: string;
     subscriptionUUID: string;
     nextPaymentDate: Date;
+    repairServices: RepairService[];
 }

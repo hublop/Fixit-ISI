@@ -24,6 +24,10 @@ import { EditProvidedServicesComponent } from './edit-profile/edit-provided-serv
 import { EditSubscriptionComponent, PaymentContentDialog } from './edit-profile/edit-subscription/edit-subscription.component';
 import { AddSubscriptionInfoComponent } from './edit-profile/edit-subscription/add-subscription-info/add-subscription-info.component';
 import { AgmCoreModule } from '@agm/core';
+import {OrdersComponent} from './orders/orders.component';
+import {OrderListElementComponent} from './orders/orders-list-element/order-list-element.component';
+import {OrderTakeOfferPopupComponent} from './orders/orders-list-element/order-take-offer-popup/order-take-offer-popup.component';
+import {MatCurrencyFormatModule} from "mat-currency-format";
 
 @NgModule({
   imports: [
@@ -33,7 +37,8 @@ import { AgmCoreModule } from '@agm/core';
     SharedModule,
     AuthModule,
     CategoriesModule,
-    AgmCoreModule
+    AgmCoreModule,
+    MatCurrencyFormatModule
   ],
   declarations: [
     RegisterContractorComponent,
@@ -54,7 +59,10 @@ import { AgmCoreModule } from '@agm/core';
     AddSubscriptionInfoComponent,
     PaymentContentDialog,
     ProvidedServicesComponent,
-    ProvidedCategoriesComponent
+    ProvidedCategoriesComponent,
+    OrdersComponent,
+    OrderListElementComponent,
+    OrderTakeOfferPopupComponent
   ],
   exports: [
     RegisterContractorComponent

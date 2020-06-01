@@ -6,7 +6,8 @@
 
     <span class="fill-remaining-space"></span>
 
-    <button class="top-menu-item" mat-button (click)="goToCreateOrder()">Złóż zanówienie</button>
+    <button class="top-menu-item" mat-button (click)="goToCreateOrder()" *ngIf="isLoggedIn()">Złóż zlecenie</button>
+    <button class="top-menu-item" mat-button (click)="goToMyOrders()" *ngIf="isLoggedIn()">Moje zlecenia</button>
 
     <button class="top-menu-item" mat-button (click)="goToContractorsList()">Usługodawcy</button>
 
@@ -76,17 +77,22 @@
     </button>
   </mat-toolbar-row>
 
-  <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible">
-    <button mat-button class="menu-item-row-element">
-      <mat-icon class="element-icon">accessibility_new</mat-icon>
-      <span>Kategorie</span>
-    </button>
-  </mat-toolbar-row>
-
+<!--  <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible">-->
+<!--    <button mat-button class="menu-item-row-element">-->
+<!--      <mat-icon class="element-icon">accessibility_new</mat-icon>-->
+<!--      <span>Kategorie</span>-->
+<!--    </button>-->
+<!--  </mat-toolbar-row>-->
   <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible">
     <button mat-button class="menu-item-row-element" (click)="goToContractorsList()">
       <mat-icon class="element-icon">build</mat-icon>
-      <span>Usługodawcy</span>
+      <span>Znajdź specjalistę</span>
+    </button>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="menu-item-row" *ngIf="isMenuVisible">
+    <button mat-button class="menu-item-row-element" (click)="goToCreateDistributedOrder()">
+      <mat-icon class="element-icon">build</mat-icon>
+      <span>Złóż zlecenie</span>
     </button>
   </mat-toolbar-row>
 

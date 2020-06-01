@@ -6,6 +6,7 @@ import { environment } from '../../../../environments/environment';
 import { Observable } from '../../../../../node_modules/rxjs';
 import { CustomerPersonalData } from '../_models/CustomerPersonalData';
 import { UpdateCustomerPersonalData } from '../_models/UpdateCustomerPersonalData';
+import {CustomerOrdersData} from '../_models/CustomerOrdersData';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,9 @@ export class CustomerService {
     }
 
     return this.http.put(this.baseUrl + loggedInUser.id, data);
+  }
+
+  getOrders(id: any): Observable<CustomerOrdersData> {
+    return this.http.get<CustomerOrdersData>(this.baseUrl);
   }
 }

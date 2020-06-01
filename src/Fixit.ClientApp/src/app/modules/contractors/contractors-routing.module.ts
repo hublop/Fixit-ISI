@@ -8,6 +8,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { ContractorProfileResolver } from './_resolvers/contractor-profile.resolver';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { EditProfileGuard } from './_guards/can-edit-profile.guard';
+import {OrdersComponent} from "./orders/orders.component";
+import {ContractorOrdersResolver} from "./_resolvers/contractor-orders.resolver";
 
 export const contractorsRoutes: Routes = [
     {
@@ -41,6 +43,13 @@ export const contractorsRoutes: Routes = [
         resolve: {
             categories: CategoriesListResolver,
             contractors: ContractorsListResolver
+        }
+    },
+    {
+        path: 'orders/:id',
+        component: OrdersComponent,
+        resolve: {
+            orders: ContractorOrdersResolver
         }
     }
 ];
