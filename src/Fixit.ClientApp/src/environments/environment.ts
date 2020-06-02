@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:59110/api/',
   paymentUrl: 'http://localhost:8080/',
-  googleMapKey: 'AIzaSyAHgcXryJbqFY9Dp1L1xu-nSBFJ0uL_31A'
+  googleMapKey: ''
 };
 
 /*
