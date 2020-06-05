@@ -67,7 +67,7 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
                 order.LastNotificationDate = DateTime.Now;
             }
 
-            var query = await distributedOrdersQuery.Where(x => x.LastNotificationDate != null && x.IsSentToAll).ToListAsync(cancellationToken: cancellationToken);
+            var query = await distributedOrdersQuery.Where(x => x.LastNotificationDate != null && x.IsSentToAll == false).ToListAsync(cancellationToken: cancellationToken);
             var ordersToBeSentToNormal = query.Where(x =>
                 ((TimeSpan) (DateTime.Now - x.LastNotificationDate))
                 .TotalMinutes >=
