@@ -37,6 +37,7 @@ namespace Fixit.Application.Contractors.Commands.UpdatePersonalData
             _mapper.Map(request, contractor);
 
             Location location;
+            //todo: [JB] remove when implementation is synchronised with front end application
             if (request.PlaceId != null)
             {
                 location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);

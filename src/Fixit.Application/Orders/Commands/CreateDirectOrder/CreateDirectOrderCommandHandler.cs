@@ -60,6 +60,7 @@ namespace Fixit.Application.Orders.Commands.CreateDirectOrder
                 SubcategoryId = request.SubcategoryId,
             };
             Location location;
+            //todo: [JB] remove when implementation is synchronised with front end application
             if (request.PlaceId != null)
             {
                 location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);

@@ -50,6 +50,7 @@ namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
             };
 
               Location location;
+              //todo: [JB] remove when implementation is synchronised with front end application
               if (request.PlaceId != null)
               {
                   location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
@@ -64,7 +65,7 @@ namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
               }
               else
               {
-                  location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.Latitude - request.Latitude < c_accuracy && x.Longitude - request.Longitude < c_accuracy, cancellationToken: cancellationToken);
+                  location = await _dbContext.Locations.FirstOrDefaultAsync(x => Math.Abs(x.Latitude ?? 0 - request.Latitude ?? 0) < c_accuracy && Math.Abs(x.Longitude ?? 0- request.Longitude ?? 0) < c_accuracy, cancellationToken: cancellationToken);
 
                   if (location == null)
                   {
