@@ -6,9 +6,9 @@
 
     <span class="fill-remaining-space"></span>
 
-    <button class="top-menu-item" mat-button (click)="goToCreateOrder()" *ngIf="isLoggedIn()">Złóż zlecenie</button>
-    <button class="top-menu-item" mat-button (click)="goToMyOrders()" *ngIf="isLoggedIn()">Moje zlecenia</button>
-
+    <button class="top-menu-item" mat-button (click)="goToCreateOrder()" *ngIf="isLoggedIn() && !isContractor()">Złóż zlecenie</button>
+    <button class="top-menu-item" mat-button (click)="goToMyOrders()" *ngIf="isLoggedIn() && !isContractor()">Moje zlecenia</button>
+    <button class="top-menu-item" mat-button (click)="goToContractorsOrders()" *ngIf="isContractor()">Zlecenia</button>
     <button class="top-menu-item" mat-button (click)="goToContractorsList()">Usługodawcy</button>
 
     <button class="top-menu-item" mat-button (click)="goToLogin()" *ngIf="!isLoggedIn()">Zaloguj się</button>
@@ -35,10 +35,6 @@
       <button mat-menu-item (click)="goToProfile()" *ngIf="isContractor()">
         <mat-icon>assignment_ind</mat-icon>
         <span>Profil</span>
-      </button>
-      <button mat-menu-item (click)="goToContractorsOrders()" *ngIf="isContractor()">
-        <mat-icon>event</mat-icon>
-        <span>Zamówienia</span>
       </button>
       <button mat-menu-item (click)="goToSettings()">
         <mat-icon>settings</mat-icon>

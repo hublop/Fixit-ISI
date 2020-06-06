@@ -8,7 +8,8 @@ import { RegisterInfoComponent } from './register-customer/register-info/registe
 import { MaterialModule } from '../material/material.module';
 import { ProfileComponent } from './profile/profile.component';
 import { EditPersonalDataComponent } from './profile/edit-personal-data/edit-personal-data.component';
-import {MyOrdersComponent} from "./my-orders/my-orders.component";
+import {MyOrdersComponent} from './my-orders/my-orders.component';
+import {MyOrderListElementComponent} from './my-orders/my-order-list-element/my-order-list-element.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import {MyOrdersComponent} from "./my-orders/my-orders.component";
     RegisterInfoComponent,
     ProfileComponent,
     EditPersonalDataComponent,
-    MyOrdersComponent
+    MyOrdersComponent,
+    MyOrderListElementComponent
   ]
 })
 export class CustomersModule { }

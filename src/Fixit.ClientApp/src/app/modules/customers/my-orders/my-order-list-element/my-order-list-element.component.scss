@@ -1,0 +1,26 @@
+.description-image {
+  max-width: 150px;
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.order-desc {
+  margin-top:10px;
+}
+
+
+.details-container {
+  width: 100%;
+}
+
+.contractor {
+  font-size: 21px;
+  &:hover {
+    color: #0074D9;
+    text-decoration: underline;
+  }
+  cursor: pointer;
+}
+.element {
+  margin-bottom: 30px;
+}

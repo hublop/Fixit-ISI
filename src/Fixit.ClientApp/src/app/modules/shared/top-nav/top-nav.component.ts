@@ -125,8 +125,12 @@ export class TopNavComponent implements OnInit {
   }
 
   goToMyOrders() {
+    const loggedInUser = this.authService.getloggedInUser();
+    if (!loggedInUser) {
+      return;
+    }
     this.hideMenu();
-    this.router.navigate(['orders/my']);
+    this.router.navigate([ 'customers/profile/' + loggedInUser.id + '/orders']);
   }
   goToCreateDistributedOrder() {
     this.hideMenu();
