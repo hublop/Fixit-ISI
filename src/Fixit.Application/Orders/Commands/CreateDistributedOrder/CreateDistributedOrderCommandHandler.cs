@@ -16,7 +16,8 @@ namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
 {
     public class CreateDistributedOrderCommandHandler : ICommandHandler<CreateDistributedOrderCommand>
     {
-        private readonly IFixitDbContext _dbContext;
+        private const double c_accuracy = 0.00001;
+    private readonly IFixitDbContext _dbContext;
         private readonly IEventBus _eventBus;
 
         public CreateDistributedOrderCommandHandler(IFixitDbContext dbContext, IEventBus eventBus)
@@ -48,18 +49,35 @@ namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
                 SubcategoryId = request.SubcategoryId,
             };
 
-            var location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
+              Location location;
+              if (request.PlaceId != null)
+              {
+                  location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
 
-            if (location == null)
-            {
-                location = new Location()
-                {
-                    PlaceId = request.PlaceId
-                };
-            }
+                  if (location == null)
+                  {
+                      location = new Location()
+                      {
+                          PlaceId = request.PlaceId
+                      };
+                  }
+              }
+              else
+              {
+                  location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.Latitude - request.Latitude < c_accuracy && x.Longitude - request.Longitude < c_accuracy, cancellationToken: cancellationToken);
 
-            orderEntity.Location = location;
-      await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
+                  if (location == null)
+                  {
+                      location = new Location()
+                      {
+                          Latitude = request.Latitude,
+                          Longitude = request.Longitude
+                      };
+                  }
+              }
+
+          orderEntity.Location = location;
+          await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             if (request.Base64Photos?.Any() ?? false)
