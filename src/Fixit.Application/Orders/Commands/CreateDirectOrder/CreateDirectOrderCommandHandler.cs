@@ -58,36 +58,13 @@ namespace Fixit.Application.Orders.Commands.CreateDirectOrder
                 IsDistributed = false,
                 CustomerId = request.CustomerId,
                 SubcategoryId = request.SubcategoryId,
+                Location = new Location()
+                {
+                    PlaceId = request.PlaceId,
+                    Longitude = request.Longitude,
+                    Latitude = request.Latitude
+                }
             };
-            Location location;
-            //todo: [JB] remove when implementation is synchronised with front end application
-            if (request.PlaceId != null)
-            {
-                location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
-
-                if (location == null)
-                {
-                    location = new Location()
-                    {
-                        PlaceId = request.PlaceId
-                    };
-                }
-            }
-            else
-            {
-                location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.Latitude - request.Latitude < c_accuracy && x.Longitude - request.Longitude < c_accuracy, cancellationToken: cancellationToken);
-
-                if (location == null)
-                {
-                    location = new Location()
-                    {
-                        Latitude = request.Latitude,
-                        Longitude = request.Longitude
-                    };
-                }
-            }
-
-      orderEntity.Location = location;
 
             await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
