@@ -12,6 +12,7 @@ using Fixit.Domain.Entities;
 using Fixit.EventBus.Abstractions;
 using Fixit.Shared.CQRS;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fixit.Application.Orders.Commands.CreateDirectOrder
 {
@@ -56,11 +57,18 @@ namespace Fixit.Application.Orders.Commands.CreateDirectOrder
                 IsDistributed = false,
                 CustomerId = request.CustomerId,
                 SubcategoryId = request.SubcategoryId,
-                Location = new Location
-                {
-                    PlaceId = request.PlaceId
-                }
             };
+            var location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
+
+          if (location == null)
+          {
+              location = new Location()
+              {
+                  PlaceId = request.PlaceId
+              };
+          }
+
+            orderEntity.Location = location;
 
             await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);

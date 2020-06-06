@@ -10,6 +10,7 @@ using Fixit.Domain.Entities;
 using Fixit.EventBus.Abstractions;
 using Fixit.Shared.CQRS;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
 {
@@ -45,13 +46,20 @@ namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
                 IsDistributed = true,
                 CustomerId = request.CustomerId,
                 SubcategoryId = request.SubcategoryId,
-                Location = new Location
-                {
-                    PlaceId = request.PlaceId
-                }
             };
 
-            await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
+            var location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
+
+            if (location == null)
+            {
+                location = new Location()
+                {
+                    PlaceId = request.PlaceId
+                };
+            }
+
+            orderEntity.Location = location;
+      await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             if (request.Base64Photos?.Any() ?? false)

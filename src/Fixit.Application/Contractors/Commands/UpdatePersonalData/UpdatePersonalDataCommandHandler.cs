@@ -35,15 +35,17 @@ namespace Fixit.Application.Contractors.Commands.UpdatePersonalData
 
             _mapper.Map(request, contractor);
 
-            if (contractor.Location != null)
+            var location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
+
+            if (location == null)
             {
-                contractor.Location.PlaceId = request.PlaceId;
+                location = new Location()
+                {
+                    PlaceId = request.PlaceId
+                };
             }
-            else
-            {
-                contractor.Location = new Location();
-                contractor.Location.PlaceId = request.PlaceId;
-            }
+
+            contractor.Location = location;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
