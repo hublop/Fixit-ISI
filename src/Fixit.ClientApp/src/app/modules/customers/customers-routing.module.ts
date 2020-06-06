@@ -5,6 +5,8 @@ import { CustomerPersonalDataResolver } from './_resolvers/customer-profile.reso
 import { ProfileComponent } from './profile/profile.component';
 import { EditProfileGuard } from '../contractors/_guards/can-edit-profile.guard';
 import {MyOrdersComponent} from "./my-orders/my-orders.component";
+import {AuthCustomerGuard} from "../auth/_guards/auth.guard";
+import {CustomerOrdersResolver} from "./_resolvers/customer-orders.resolver";
 
 export const customersRoutes: Routes = [
     {
@@ -23,6 +25,14 @@ export const customersRoutes: Routes = [
         resolve: {
             profile: CustomerPersonalDataResolver
         }
+    },
+    {
+      path: 'profile/:id/orders',
+      component: MyOrdersComponent,
+      canActivate: [AuthCustomerGuard],
+      resolve: {
+        orders: CustomerOrdersResolver
+      }
     },
     {
       path: ':id/orders',

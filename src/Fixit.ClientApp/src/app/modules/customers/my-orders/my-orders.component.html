@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="title">Moje oferty</div>
+
+  <div class="orders-list">
+    <div *ngFor="let order of getsortData()">
+      <app-customer-orders-list-element [order]="order"></app-customer-orders-list-element>
+    </div>
+  </div>
+</div>

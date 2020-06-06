@@ -93,7 +93,7 @@ export class ProfileHeaderComponent implements OnInit {
           window.alert('No results found');
         }
       } else {
-        window.alert('Geocoder failed due to: ' + status);
+        //window.alert('Geocoder failed due to: ' + status);
       }
     });
   }

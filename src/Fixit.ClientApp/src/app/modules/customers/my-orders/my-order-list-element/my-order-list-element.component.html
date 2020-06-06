@@ -1,0 +1,52 @@
+<div class="element">
+  <mat-card class="mat-elevation-z4">
+    <mat-card-header>
+      <div class="details-container">
+        <div class="titles">
+          <mat-card-subtitle>{{order.creationDate | date: 'dd.MM.yyyy'}}</mat-card-subtitle>
+          <mat-card-title>{{order.subcategoryName}}</mat-card-title>
+          <mat-card-subtitle>{{order.categoryName}}</mat-card-subtitle>
+          <mat-icon>room</mat-icon><span id="place-{{order.id}}"></span>
+          <div class="order-desc">
+            <div>
+              <span class="opinions-count">{{order.description}}</span>
+            </div>
+            <mat-expansion-panel *ngIf="hasImage()">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Zdjęcia
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <img *ngFor="let url of order.photoUrls" [src]="url" class="description-image">
+            </mat-expansion-panel>
+            <mat-expansion-panel *ngIf="hasOffers()">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Oferty
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div *ngFor="let offer of order.orderOffers">
+                <mat-card>
+                  <mat-card-header>
+                    <div class="details-container">
+
+                    <mat-card-title class="contractor" (click)="navigateToProfile(offer.contractor.id)" >{{offer.contractor.firstName}} {{offer.contractor.lastName}}</mat-card-title>
+                    <mat-card-subtitle>Telefon: {{offer.contractor.phoneNumber}}</mat-card-subtitle>
+                    <mat-card-subtitle>Email: {{offer.contractor.email}}</mat-card-subtitle>
+                    <div><b>Szacowany koszt:</b> {{offer.predictedPrice}}</div>
+                    <div><b>Komentarz: </b> {{offer.comment}}</div>
+                    </div>
+                  </mat-card-header>
+                </mat-card>
+              </div>
+            </mat-expansion-panel>
+            <b *ngIf="!hasOffers()">
+              Brak ofert
+            </b>
+          </div>
+        </div>
+      </div>
+
+    </mat-card-header>
+  </mat-card>
+</div>

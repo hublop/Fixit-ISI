@@ -4,7 +4,7 @@
         <div class="header-container">
           <div mat-card-avatar class="person-icon" *ngIf="!contractor.imageUrl">
             <mat-icon class="icon-img ">person</mat-icon>
-            <mat-icon class="premium-icon" color="accent">stars</mat-icon>
+            <mat-icon class="premium-icon" color="accent" *ngIf="contractor.subscriptionStatus === 'Active' || contractor.subscriptionStatus === 'Cancelled'">stars</mat-icon>
           </div>
           <img [src]="contractor.imageUrl" mat-card-avatar class="photo-image" *ngIf="contractor.imageUrl">
           <button class="order-button" *ngIf="addOrderButtonVisible()" mat-raised-button color="primary" (click)="navigateToAddOrder()">
