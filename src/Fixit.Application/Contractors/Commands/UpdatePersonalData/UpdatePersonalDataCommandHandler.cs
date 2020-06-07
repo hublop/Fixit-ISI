@@ -13,6 +13,7 @@ namespace Fixit.Application.Contractors.Commands.UpdatePersonalData
 {
     public class UpdatePersonalDataCommandHandler : ICommandHandler<UpdateContractorPersonalDataCommand>
     {
+        private const double c_accuracy = 0.00001;
         private readonly IFixitDbContext _dbContext;
         private readonly IMapper _mapper;
 
@@ -35,15 +36,35 @@ namespace Fixit.Application.Contractors.Commands.UpdatePersonalData
 
             _mapper.Map(request, contractor);
 
-            if (contractor.Location != null)
+            Location location;
+            //todo: [JB] remove when implementation is synchronised with front end application
+            if (request.PlaceId != null)
             {
-                contractor.Location.PlaceId = request.PlaceId;
+                location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.PlaceId == request.PlaceId, cancellationToken: cancellationToken);
+
+                if (location == null)
+                {
+                    location = new Location()
+                    {
+                        PlaceId = request.PlaceId
+                    };
+                }
             }
             else
             {
-                contractor.Location = new Location();
-                contractor.Location.PlaceId = request.PlaceId;
+                location = await _dbContext.Locations.FirstOrDefaultAsync(x => x.Latitude - request.Latitude < c_accuracy && x.Longitude - request.Longitude < c_accuracy, cancellationToken: cancellationToken);
+
+                if (location == null)
+                {
+                    location = new Location()
+                    {
+                        Latitude = request.Latitude,
+                        Longitude = request.Longitude
+                    };
+                }
             }
+
+            contractor.Location = location;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

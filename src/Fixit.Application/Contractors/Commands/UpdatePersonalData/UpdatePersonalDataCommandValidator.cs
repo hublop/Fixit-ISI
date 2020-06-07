@@ -24,6 +24,12 @@ namespace Fixit.Application.Contractors.Commands.UpdatePersonalData
             RuleFor(x => x.PlaceId)
                 .NotNull()
                 .NotEmpty();
-        }
+            RuleFor(x => x.Latitude)
+                .NotNull();
+            RuleFor(x => x.Longitude)
+                .NotNull();
+
+      
+    }
     }
 }

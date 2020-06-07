@@ -10,12 +10,14 @@ using Fixit.Domain.Entities;
 using Fixit.EventBus.Abstractions;
 using Fixit.Shared.CQRS;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
 {
     public class CreateDistributedOrderCommandHandler : ICommandHandler<CreateDistributedOrderCommand>
     {
-        private readonly IFixitDbContext _dbContext;
+        private const double c_accuracy = 0.00001;
+    private readonly IFixitDbContext _dbContext;
         private readonly IEventBus _eventBus;
 
         public CreateDistributedOrderCommandHandler(IFixitDbContext dbContext, IEventBus eventBus)
@@ -45,13 +47,16 @@ namespace Fixit.Application.Orders.Commands.CreateDistributedOrder
                 IsDistributed = true,
                 CustomerId = request.CustomerId,
                 SubcategoryId = request.SubcategoryId,
-                Location = new Location
+                Location = new Location()
                 {
-                    PlaceId = request.PlaceId
+                    PlaceId = request.PlaceId,
+                    Longitude = request.Longitude,
+                    Latitude = request.Latitude
                 }
             };
 
-            await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
+              
+          await _dbContext.Orders.AddAsync(orderEntity, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             if (request.Base64Photos?.Any() ?? false)

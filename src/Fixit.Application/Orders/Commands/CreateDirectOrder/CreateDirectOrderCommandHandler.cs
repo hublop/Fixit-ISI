@@ -12,12 +12,14 @@ using Fixit.Domain.Entities;
 using Fixit.EventBus.Abstractions;
 using Fixit.Shared.CQRS;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fixit.Application.Orders.Commands.CreateDirectOrder
 {
     public class CreateDirectOrderCommandHandler : ICommandHandler<CreateDirectOrderCommand>
     {
-        private readonly IFixitDbContext _dbContext;
+        private const double c_accuracy = 0.00001;
+    private readonly IFixitDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IEventBus _eventBus;
 
@@ -56,9 +58,11 @@ namespace Fixit.Application.Orders.Commands.CreateDirectOrder
                 IsDistributed = false,
                 CustomerId = request.CustomerId,
                 SubcategoryId = request.SubcategoryId,
-                Location = new Location
+                Location = new Location()
                 {
-                    PlaceId = request.PlaceId
+                    PlaceId = request.PlaceId,
+                    Longitude = request.Longitude,
+                    Latitude = request.Latitude
                 }
             };
 
