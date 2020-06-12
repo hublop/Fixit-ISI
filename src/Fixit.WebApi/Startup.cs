@@ -13,6 +13,7 @@ using Fixit.EventBus.Abstractions;
 using Fixit.EventBus.RabbitMQ;
 using Fixit.Infrastructure;
 using Fixit.Persistance;
+using Fixit.Persistance.ExampleData;
 using Fixit.WebApi.Extensions;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -79,7 +80,7 @@ namespace Fixit.WebApi
       eventBus.Subscribe<DirectOrderCreatedIntegrationEvent, DirectOrderCreatedIntegrationEventHandler>();
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, GlobalSeed seed)
         {
             if (env.IsDevelopment())
             {
@@ -106,6 +107,8 @@ namespace Fixit.WebApi
             
 
             ConfigureEventBus(app);
-        }
+
+            seed.Seed().GetAwaiter().GetResult();
+    }
     }
 }

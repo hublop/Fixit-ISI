@@ -1,5 +1,6 @@
 ﻿using Fixit.Application.Common.Interfaces;
 using Fixit.Domain.Entities;
+using Fixit.Persistance.ExampleData;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,9 @@ namespace Fixit.Persistance
 
             services.AddScoped<IFixitDbContext>(provider => provider.GetService<FixitDbContext>());
 
-            return services;
+            services.AddScoped(typeof(GlobalSeed));
+
+      return services;
         }
     }
 }
