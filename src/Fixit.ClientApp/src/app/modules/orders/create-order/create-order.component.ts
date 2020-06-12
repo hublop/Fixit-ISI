@@ -30,10 +30,13 @@ export class CreateOrderComponent implements OnInit {
 
   autocomplete: google.maps.places.Autocomplete;
 
-  @ViewChild('search') searchElement: ElementRef;
+  @ViewChild('search')
+  public searchElement: ElementRef;
   private selectedPlaceId = '';
-  private isCatLoaded: boolean;
-  private isContractorLoaded: boolean;
+  private selectedLat: number = 0;
+  private selectedLng: number = 0;
+  isCatLoaded: boolean;
+  isContractorLoaded: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,6 +60,21 @@ export class CreateOrderComponent implements OnInit {
     this.categoriesService.getAll().subscribe(result => {
       this.isCatLoaded = true;
       this.categories = result;
+
+      this.mapsApiLoader.load().then(() => {
+        this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
+        console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
+        google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
+          var place = this.autocomplete.getPlace();
+          var place_id = place.place_id;
+          var name = place.name;
+          var latLng = place.geometry.location;
+          this.selectedPlaceId = place_id;
+          this.selectedLat = latLng.lat();
+          this.selectedLng = latLng.lng();
+          console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
+        });
+      });
     }, error => {
       this.infoService.error('Nie udało sie wczytać danych');
     });
@@ -71,21 +89,6 @@ export class CreateOrderComponent implements OnInit {
     } else {
       this.isContractorLoaded = true;
     }
-    this.mapsApiLoader.load().then(() => {
-      if (this.searchElement) {
-        this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
-
-        console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
-        google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
-          var place = this.autocomplete.getPlace();
-          var place_id = place.place_id;
-          var name = place.name;
-          var latLng = place.geometry.location;
-          this.selectedPlaceId = place_id;
-          console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
-        });
-      }
-    });
   }
 
   buildForm(): void {
@@ -170,6 +173,8 @@ export class CreateOrderComponent implements OnInit {
       customerId: this.getCustomerId(),
       description: this.orderForm.controls.description.value,
       placeId: this.selectedPlaceId,
+      latitude: this.selectedLat,
+      longitude: this.selectedLng,
       subcategoryId: this.orderForm.controls.subcategoryId.value
     };
 

@@ -7,7 +7,6 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, ElementRef, 
 import { UpdatePersonalInfoData } from '../../_models/UpdatePersonalInfoData';
 import { InfoService } from '../../../shared/info/info.service';
 import { MapsAPILoader } from '@agm/core';
-import { emit } from 'cluster';
 
 @Component({
   selector: 'app-edit-personal-data',
@@ -34,6 +33,8 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
 
   private selectedPlaceId: string = '';
   private selectedPlaceName: string = '';
+  private selectedLat: number = 0;
+  private selectedLng: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,6 +65,8 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
         console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
         this.selectedPlaceId = place_id;
         this.selectedPlaceName = name;
+        this.selectedLat = latLng.lat();
+        this.selectedLng = latLng.lng();
         this.locationNameEmitter.emit(name);
       });
 
@@ -139,7 +142,9 @@ export class EditPersonalDataComponent implements OnInit, OnChanges {
       companyName: this.personalDataFormGroup.controls.companyName.value,
       phoneNumber: this.personalDataFormGroup.controls.phoneNumber.value,
       selfDescription: this.personalDataFormGroup.controls.selfDescription.value,
-      placeId: this.selectedPlaceId
+      placeId: this.selectedPlaceId,
+      latitude: this.selectedLat,
+      longitude: this.selectedLng
     };
 
     this.contractorsService.updatePersonalData(personalData).subscribe(result => {
