@@ -63,7 +63,6 @@ export class CreateOrderComponent implements OnInit {
 
       this.mapsApiLoader.load().then(() => {
         this.autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement);
-        console.log('autocomplete type ' + (this.autocomplete instanceof google.maps.places.Autocomplete));
         google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
           var place = this.autocomplete.getPlace();
           var place_id = place.place_id;
@@ -72,7 +71,6 @@ export class CreateOrderComponent implements OnInit {
           this.selectedPlaceId = place_id;
           this.selectedLat = latLng.lat();
           this.selectedLng = latLng.lng();
-          console.log("Autocomplete result: " + name + ", id: " + place_id + ", location: " + latLng);
         });
       });
     }, error => {
