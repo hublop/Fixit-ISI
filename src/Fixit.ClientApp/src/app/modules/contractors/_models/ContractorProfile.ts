@@ -1,5 +1,6 @@
 import { CategoryInProfile } from './CategoryInProfile';
 import { OpinionInProfile } from './OpinionInProfile';
+import { RepairService } from './RepairService';
 export class ContractorProfile {
     id: number;
     firstName: string;

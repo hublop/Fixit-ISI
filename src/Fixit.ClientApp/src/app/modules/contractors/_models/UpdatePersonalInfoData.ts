@@ -5,4 +5,6 @@ export interface UpdatePersonalInfoData {
     phoneNumber: string;
     selfDescription: string;
     placeId: string;
+    latitude: number;
+    longitude: number;
 }
