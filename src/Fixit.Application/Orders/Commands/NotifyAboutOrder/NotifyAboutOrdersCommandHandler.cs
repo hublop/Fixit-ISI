@@ -47,12 +47,14 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
             var premiumMembers = await _dbContext.Contractors
                 .Include(x => x.Location)
                 .Include(x => x.RepairServices)
+                .Include(x => x.SubscriptionStatus)
                 .Where(x => x.SubscriptionStatus.Status.Equals(SubscriptionStatus.Active) ||
                             x.SubscriptionStatus.Status.Equals(SubscriptionStatus.Cancelled))
                 .ToListAsync(cancellationToken: cancellationToken);
             var notPremiumMembers = await _dbContext.Contractors
                 .Include(x => x.Location)
                 .Include(x => x.RepairServices)
+                .Include(x => x.SubscriptionStatus)
                 .Where(x => x.SubscriptionStatus == null || x.SubscriptionStatus.Status.Equals(SubscriptionStatus.Deactivated))
                 .ToListAsync(cancellationToken: cancellationToken);
 
@@ -112,8 +114,14 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
             order.IsSentToAll = true;
           }
 
-
-              await _dbContext.SaveChangesAsync(cancellationToken);
+      try
+      {
+        await _dbContext.SaveChangesAsync(cancellationToken);
+      }catch(Exception e)
+      {
+        throw e;
+      }
+              
 
           
 
