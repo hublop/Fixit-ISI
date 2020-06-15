@@ -65,7 +65,7 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
                 var orderCoordinates = new GeoCoordinate(order.Location.Latitude ?? 0, order.Location.Longitude ?? 0);
                 var contractorsWithRepairService = premiumMembers.Where(x =>
                     x.RepairServices.Select(x => x.SubCategoryId).Contains(order.SubcategoryId));
-                var closestContractors = contractorsWithRepairService.Where(x => CalculateDistance(orderCoordinates, x.Location.Latitude ?? 0, x.Location.Longitude ?? 0) < distance);
+                var closestContractors = contractorsWithRepairService.Where(x => CalculateDistance(orderCoordinates, x.Location?.Latitude ?? 0, x.Location?.Longitude ?? 0) < distance);
                 foreach (var contractor in closestContractors)
                 {
                     await _dbContext.DistributedOrderContractor.AddAsync(
@@ -93,7 +93,7 @@ namespace Fixit.Application.Orders.Commands.NotifyAboutOrder
               var orderCoordinates = new GeoCoordinate(order.Location.Latitude ?? 0, order.Location.Longitude ?? 0);
               var contractorsWithRepairService = notPremiumMembers.Where(x =>
                   x.RepairServices.Select(x => x.SubCategoryId).Contains(order.SubcategoryId));
-        var closestContractors = contractorsWithRepairService.Where(x => CalculateDistance(orderCoordinates, x.Location.Latitude ?? 0, x.Location.Longitude ?? 0) < distance);
+        var closestContractors = contractorsWithRepairService.Where(x => CalculateDistance(orderCoordinates, x.Location?.Latitude ?? 0, x.Location?.Longitude ?? 0) < distance);
         foreach (var contractor in closestContractors)
             {
                 await _dbContext.DistributedOrderContractor.AddAsync(
